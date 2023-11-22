@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relativeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/weekRecyclerList"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="1dp"
+        android:background="@color/white"
+        android:layout_below="@+id/relativeHeader"
+        android:overScrollMode="never"
+        android:scrollbars="vertical" />
+    <View
+        android:layout_width="match_parent"
+        android:id="@+id/listDivider"
+        android:layout_height="1dp"
+        android:visibility="visible"
+        android:layout_below="@+id/weekRecyclerList"
+
+        android:layout_gravity="center_horizontal"
+        android:background="@color/grey" />
+
+    <RelativeLayout
+        android:id="@+id/weekRel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/listDivider"
+        >
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+            android:id="@+id/textViewCCAaSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select CCA Choices for:"
+            android:layout_margin="5dp"
+            android:textColor="#ff000000"
+            android:textSize="15sp" />
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/TVselectedForWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sunday"
+            android:layout_toRightOf="@+id/textViewCCAaSelect"
+            android:layout_margin="5dp"
+            android:textColor="@color/dark_grey1"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+        android:id="@+id/textViewStudName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Krishna"
+        android:layout_below="@+id/weekRel"
+        android:layout_margin="5dp"
+        android:textColor="@color/dark_grey1"
+        android:textSize="15sp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_cca"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submitBtn"
+        android:layout_below="@+id/textViewStudName"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        android:overScrollMode="never"
+        android:scrollbars="vertical" />
+
+    <com.mobatia.nasmanila.custom_views.custom_button.CustomButtonFontSansButton
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CONTINUE"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:background="@drawable/button_new"
+        android:layout_above="@+id/imageViewInfo"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="visible" />
+    <com.mobatia.nasmanila.custom_views.custom_button.CustomButtonFontSansButton
+        android:id="@+id/nextBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NEXT"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:background="@drawable/button_new"
+        android:layout_above="@+id/imageViewInfo"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageViewInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/infoforccaregistration_new"/>
+
+    <!--        android:background="@drawable/curved_filled_layout_parents_association"
+-->
+</RelativeLayout>

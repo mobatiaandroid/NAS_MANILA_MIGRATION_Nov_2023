@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+    <LinearLayout
+        android:id="@+id/deptLayout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/split_bg"
+        android:layout_marginTop="5dp">
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhite
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/departmentName"
+            android:layout_gravity="center"
+            android:text="hh"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:weightSum="20">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/staffImg"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/default_image_staff"
+                app:siBorderColor="#D5D5D5"
+                app:siBorderWidth="1dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+            <!--android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:src="@drawable/student"
+                    app:siBorderColor="#A0DAE5"
+                    app:siBorderWidth="1dp"-->
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/staffName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/staffImg"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/staffImg"
+                android:text="Eve"
+                android:textSize="18sp" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+                android:id="@+id/staffRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/staffName"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@+id/staffImg"
+                android:lines="2"
+                android:text="Teacher"
+                android:textColor="@color/grey"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="right|center">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/mailImage"
+                android:src="@drawable/maillist"
+                android:gravity="right|center"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/list_divider"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+
+        ></View>
+
+</LinearLayout>

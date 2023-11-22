@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearChoice"
+        android:layout_toLeftOf="@+id/statusImageView"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+            android:id="@+id/textViewCCAaItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#ff000000" />
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+            android:id="@+id/textViewCCAaDateItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:textColor="#ff000000" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/statusImageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/edit"/>
+
+</RelativeLayout>

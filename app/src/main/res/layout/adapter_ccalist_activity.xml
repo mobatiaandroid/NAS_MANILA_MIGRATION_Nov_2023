@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearChoice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/confirmationImageview"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/close_icon_with_white"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+
+        android:orientation="vertical">
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+            android:id="@+id/textViewCCAaItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="None"
+            android:layout_gravity="center_vertical"
+            android:textColor="#ff000000"
+            android:textSize="16sp" />
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+            android:id="@+id/textViewCCAaDateItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="None"
+            android:textColor="@color/dark_grey1"
+            android:textSize="14sp" />
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+            android:id="@+id/textViewCCAVenue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Venue:"
+            android:textColor="@color/dark_grey1"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,175 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/titleRel"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontDJ5TextWhite
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:background="@color/split_bg"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:gravity="center"
+            android:text="Title"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/infoImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/infoptaicon"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:layout_below="@+id/titleRel"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:id="@+id/studentRelative"
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#FBB425"
+            android:layout_margin="10dp"
+            android:layout_weight="50">
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/selectStudentTitle"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Select Child"
+                android:singleLine="true" />
+
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/selectStudentImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/addiconinparentsevng"
+                app:siBorderColor="#FBB425"
+                app:siBorderWidth="1dp" />
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentNameTV"
+                style="@style/textstyleblack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_alignParentBottom="true"
+                android:textSize="16dp"
+                android:layout_margin="20dp"
+                android:textStyle="bold"
+                android:text="Student Name:-"
+                />
+            <ImageView
+                android:id="@+id/reviewImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/review_confirm"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+                android:id="@+id/reviewTitle"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_alignParentRight="true"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:text="Review &amp; \nConfirm"
+                android:singleLine="false" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/staffRelative"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#43C8D8"
+            android:visibility="invisible"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="50">
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/selectTeacherTitle"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:text="Select Staff"
+                android:singleLine="true" />
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/selectStaffImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                app:siBorderWidth="1dp"
+                app:siBorderColor="#43C8D8"
+                android:src="@drawable/addiconinparentsevng"/>
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/staffNameTV"
+                style="@style/textstyleblack"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_alignParentBottom="true"
+                android:textSize="16dp"
+                android:layout_margin="20dp"
+                android:textStyle="bold"
+                android:layout_toLeftOf="@+id/next"
+                android:text="Staff Name:-"
+                />
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:src="@drawable/continueiconcalender"/>
+
+        </RelativeLayout>
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhite
+            android:id="@+id/contactTeacher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:layout_gravity="center"
+            android:text="Contact Teacher"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:layout_marginBottom="5dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

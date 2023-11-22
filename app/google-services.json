@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "808713614223",
+    "project_id": "nais-manila",
+    "storage_bucket": "nais-manila.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808713614223:android:cb3cf385c38e60e5c7d1fa",
+        "android_client_info": {
+          "package_name": "com.mobatia.nasmanila"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808713614223-92bcjeu6ut6dccsm0i83bcmmvti3l70i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC79eunbiySHkUEJMP8dpKGMcfX13_Bws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808713614223-92bcjeu6ut6dccsm0i83bcmmvti3l70i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "808713614223-es49oa6ujsgfvsr5d6piblgv2c8f43fp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobatia.NAISManila",
+                "app_store_id": "1447087546"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

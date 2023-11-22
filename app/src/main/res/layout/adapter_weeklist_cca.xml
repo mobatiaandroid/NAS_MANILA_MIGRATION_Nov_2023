@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearChoice"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="horizontal">
+    <!--    android:background="@drawable/rectangular_border_cca_week"
+    -->
+    <LinearLayout
+        android:id="@+id/linearBg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="2dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+            android:id="@+id/textViewCCAaItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="WED"
+            android:layout_marginTop="20dp"
+
+            android:textColor="#ff000000"
+            android:textSize="17sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/selectionCompletedView"
+            android:background="@drawable/curve_filled_cca_pending" />
+
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/triangle"
+            android:visibility="invisible"
+            android:id="@+id/weekSelectedImageView"
+            android:layout_marginTop="5dp"
+            android:rotation="180"/>
+    </LinearLayout>
+    <View
+        android:layout_width="1dp"
+        android:id="@+id/listDivider"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/grey" />
+
+</LinearLayout>

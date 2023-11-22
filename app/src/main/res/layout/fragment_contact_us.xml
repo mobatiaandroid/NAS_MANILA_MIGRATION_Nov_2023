@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontDJ5TextWhite
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:background="@color/split_bg"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:gravity="center"
+        android:text="Title"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleTextView">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+            <fragment
+                android:id="@+id/googleMap"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/description"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:text=""/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mnewsLetterListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:scrollbars="vertical"
+                android:background="@color/white"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

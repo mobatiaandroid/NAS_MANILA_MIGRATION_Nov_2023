@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontBoldWithoutColor
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/contactName"
+        android:textColor="@color/black"
+        android:text=""
+        android:layout_toLeftOf="@+id/arrowImg"
+        android:gravity="left|center"
+        />
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cotactNumber"
+        android:textColor="@color/black"
+        android:text=""
+        android:layout_toLeftOf="@+id/arrowImg"
+        android:layout_below="@+id/contactName"
+        android:gravity="left|center"
+        />
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cotactEmail"
+        android:textColor="@color/black"
+        android:text=""
+        android:layout_toLeftOf="@+id/arrowImg"
+        android:layout_below="@+id/cotactNumber"
+        android:gravity="left|center"/>
+
+    <ImageView
+        android:id="@+id/arrowImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+
+        android:background="@drawable/arrow" />
+</RelativeLayout>

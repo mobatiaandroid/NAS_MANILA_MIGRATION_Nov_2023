@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/relativeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+    <LinearLayout
+        android:layout_above="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/relativeHeader"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/studentSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/event_spinnerbg"
+            android:weightSum="100"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <com.github.siyamed.shapeimageview.RoundedImageView
+                android:id="@+id/studImg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="2dp"
+                android:padding="5dp"
+                android:background="@drawable/round"
+                android:src="@drawable/student" />
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="left|center"
+                android:paddingLeft="10dp"
+                android:text="Select a child"
+                android:textSize="16sp"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="match_parent"
+                />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="12"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:src="@drawable/arrowdownnew"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+            android:id="@+id/textViewYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class:"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:textColor="#ff000000" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:visibility="gone"
+
+            android:background="@color/light_grey"
+            />
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+            android:textSize="16sp"
+
+            android:id="@+id/enterTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter CCA Choices:"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#ff000000" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_cca"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/infoccafirstlistbanner_new"/>
+
+</RelativeLayout>

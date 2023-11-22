@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearChoice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+
+        android:id="@+id/textViewCCADay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/light_grey"
+        android:padding="5dp"
+        android:text="Day"
+        android:textColor="#ff000000"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/linearChoice1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="top"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/point1Img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/tealdot_icon"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+                android:id="@+id/textViewCCAChoice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:text="Choice 1:"
+                android:textColor="#ff000000"
+                android:textSize="16sp" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+                android:id="@+id/textViewCCAaDateItemChoice1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:text="None"
+                android:textColor="@color/dark_grey1"
+                android:textSize="14sp" />
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+                android:id="@+id/textViewCCAVenue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Venue:"
+                android:textColor="@color/dark_grey1"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearChoice2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="top"
+
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/point2Img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="2dp"
+
+            android:background="@drawable/tealdot_icon"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+                android:id="@+id/textViewCCAChoice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:text="Choice 2:"
+                android:textColor="#ff000000"
+                android:textSize="16sp" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+                android:id="@+id/textViewCCAaDateItemChoice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:text="None"
+                android:textColor="@color/dark_grey1"
+                android:textSize="14sp" />
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+                android:id="@+id/textViewCCAVenueChoice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="Venue:"
+                android:textColor="@color/dark_grey1"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

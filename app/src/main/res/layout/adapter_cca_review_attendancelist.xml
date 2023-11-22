@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearChoice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackBold
+
+        android:id="@+id/bulletTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="∙"
+        android:textColor="#ff000000"
+        android:textSize="25sp" />
+
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+
+        android:id="@+id/ccaDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/bulletTV"
+        android:layout_toLeftOf="@+id/ccaDateStatus"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="ccaDate"
+        android:textColor="#ff000000"
+        android:textSize="16sp" />
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+
+        android:id="@+id/ccaDateStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_centerVertical="true"
+        android:gravity="left"
+        android:layout_alignParentRight="true"
+        android:text="ccaDate"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/rel_six"
+        android:textSize="16sp" />
+
+</RelativeLayout>

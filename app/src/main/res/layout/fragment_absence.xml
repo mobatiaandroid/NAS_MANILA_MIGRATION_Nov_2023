@@ -1,0 +1,190 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontDJ5TextWhite
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/split_bg"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="Title"
+        android:textColor="@color/white"
+        android:textSize="17dp" />
+
+    <RelativeLayout
+        android:id="@+id/belowViewRelative"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleTextView"
+        android:visibility="invisible"
+
+        >
+
+        <LinearLayout
+            android:id="@+id/studentSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/event_spinnerbg"
+            android:weightSum="100"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/studImg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="2dp"
+                android:padding="5dp"
+                android:background="@drawable/round"
+                android:src="@drawable/student" />
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="80"
+                android:gravity="left|center"
+                android:paddingLeft="10dp"
+                android:text="Select a child"
+                android:textSize="16sp"
+                />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:layout_height="match_parent"
+                />
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="12"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:src="@drawable/arrowdownnew"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+            android:id="@+id/appregisteredHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/studentSpinner"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="@string/appregisteredHint"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/viewDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/appregisteredHint"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/rel_eight">
+
+        </View>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mAbsenceListView"
+            style="@style/ListStyleBlackTextTransparentSelector"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/newRequest"
+            android:layout_below="@+id/viewDivider"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontBoldWithoutColor
+            android:id="@+id/newRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/requestHint"
+            android:layout_margin="10dp"
+            android:background="@drawable/buttonred_new"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/regNewAbsence"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:visibility="invisible" />
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhiteWithoutColor
+            android:id="@+id/requestHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="left|center_vertical"
+            android:text="@string/requestHint"
+            android:textColor="@color/rel_eight"
+            android:textSize="16dp"
+            android:visibility="visible" />
+
+
+        <!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/titleTextView"
+                android:orientation="vertical"
+                android:weightSum="100">
+
+
+                <ImageView
+                    android:id="@+id/bannerImagePager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="30"
+                    android:focusable="true"
+                    android:background="@drawable/default_banner"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="70">
+
+                    <ScrollView
+                        android:id="@+id/scrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:overScrollMode="never"
+                        android:scrollbars="none">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusableInTouchMode="true">
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/mAboutUsListView"
+                                style="@style/ListStyleBlackTextTransparentSelector"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/weburl" />
+
+                        </RelativeLayout>
+
+                    </ScrollView>
+                </RelativeLayout>
+
+            </LinearLayout>
+        -->
+
+    </RelativeLayout>
+</RelativeLayout>
