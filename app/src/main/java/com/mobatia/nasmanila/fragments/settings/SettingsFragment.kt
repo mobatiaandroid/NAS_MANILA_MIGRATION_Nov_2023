@@ -24,6 +24,7 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.R
@@ -516,7 +517,16 @@ class SettingsFragment() : Fragment() {
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 activity.startActivity(mIntent)
             } else {
-                callLogoutApi(activity, dialog)
+                if (AppUtils.checkInternet(mContext!!)) {
+                    callLogoutApi(activity, dialog)
+                }else{
+                    Toast.makeText(
+                        mContext,
+                        mContext!!.resources.getString(R.string.no_internet),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
         val dialogButtonCancel = dialog.findViewById(R.id.btn_Cancel) as Button
@@ -554,7 +564,16 @@ fun showDialogAlertDeleteaccount(
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             activity.startActivity(mIntent)
         } else {
-            calldeleteaccountapi(activity, dialog)
+            if (AppUtils.checkInternet(mContext!!)) {
+                calldeleteaccountapi(activity, dialog)
+            }else{
+                Toast.makeText(
+                    mContext,
+                    mContext!!.resources.getString(R.string.no_internet),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
         }
     }
     val dialogButtonCancel = dialog.findViewById(R.id.btn_Cancel) as Button

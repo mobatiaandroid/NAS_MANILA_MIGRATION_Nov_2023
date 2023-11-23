@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.mobatia.nasmanila.R
+import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
+import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
 import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
@@ -371,7 +373,50 @@ mAboutUsListArray=ArrayList()
     }
 
     private fun sendEmailToStaff() {
-        val call: Call<ResponseBody> = ApiClient.getClient.sendEmailToStaffCall(
+        var homebannerbody= SendemailApiModel(email_nas!!,PreferenceManager.getUserID(mContext),
+            text_dialog!!.text.toString(),
+            text_content!!.text.toString())
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
+            homebannerbody)
+        progressBarDialog!!.show()
+        call.enqueue(object : Callback<SendemailResponseModel> {
+            override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {
+                progressBarDialog!!.dismiss()
+                val responseData = response.body()
+                if (response.body()!!.responsecode.equals("200")){
+                    progressBarDialog!!.dismiss()
+                    var status_code=response.body()!!.response.statuscode
+
+                    if (status_code == "303") {
+                        dialog!!.dismiss()
+                        val toast = Toast.makeText(
+                            mContext,
+                            "Successfully sent email to staff",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    } else {
+                        val toast =
+                            Toast.makeText(mContext, "Email not sent", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+
+                } else {
+                    progressBarDialog!!.dismiss()
+                    AppUtils.showDialogAlertDismiss(
+                        mContext,
+                        "Alert",
+                        mContext!!.getString(R.string.common_error),
+                        R.drawable.exclamationicon,
+                        R.drawable.round
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<SendemailResponseModel>, t: Throwable) {
+                progressBarDialog!!.dismiss()            }
+        })
+        /*val call: Call<ResponseBody> = ApiClient.getClient.sendEmailToStaffCall(
             email_nas!!,
             text_dialog!!.text.toString(),
             text_content!!.text.toString()
@@ -411,7 +456,7 @@ mAboutUsListArray=ArrayList()
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-        })
+        })*/
     }
 
     private fun initialiseUI() {

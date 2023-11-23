@@ -144,7 +144,16 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
         back!!.setOnClickListener {
             finish()
         }
-        studentlistcall()
+        if (AppUtils.checkInternet(mContext)) {
+            studentlistcall()
+        }else{
+            Toast.makeText(
+                mContext,
+                mContext.resources.getString(R.string.no_internet),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         mStudentSpinner!!.setOnClickListener {
             if (studentsModelArrayList.size > 0) {
                 showSocialmediaList(studentsModelArrayList)

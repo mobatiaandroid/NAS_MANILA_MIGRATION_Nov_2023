@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListActivity
+import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
+import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.pdf.PDFViewActivity
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
 import com.mobatia.nasmanila.api.ApiClient
@@ -36,6 +38,7 @@ class FacilityActivity : AppCompatActivity() {
     var extras: Bundle? = null
     var aboutusModelArrayList: ArrayList<AboutUsModel> = ArrayList<AboutUsModel>()
     private var mContext: Context = this
+    var progressBarDialog: ProgressBarDialog? = null
     private var mAboutUsList: RecyclerView? = null
     private val mBannerImage: ImageView? = null
     private  var sendEmail: ImageView? = null
@@ -63,6 +66,7 @@ class FacilityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_facility)
         mContext = this
+        progressBarDialog = ProgressBarDialog(mContext!!)
         initialiseUI()
     }
 
@@ -224,7 +228,7 @@ class FacilityActivity : AppCompatActivity() {
                         )
                     } else {
                         if (AppUtils.checkInternet(mContext)) {
-                            sendEmailToStaff()
+                            sendEmailToStaff(dialog)
                         } else {
                             AppUtils.showDialogAlertDismiss(
                                 mContext as Activity,
@@ -249,8 +253,51 @@ class FacilityActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendEmailToStaff() {
-        val call: Call<ResponseBody> = ApiClient.getClient.sendEmailToStaffCall(
+    private fun sendEmailToStaff(dialog:Dialog) {
+        var homebannerbody= SendemailApiModel(contactEmail!!,PreferenceManager.getUserID(mContext),
+            text_dialog!!.text.toString(),
+            text_content!!.text.toString())
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
+            homebannerbody)
+        progressBarDialog!!.show()
+        call.enqueue(object : Callback<SendemailResponseModel> {
+            override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {
+                progressBarDialog!!.dismiss()
+                val responseData = response.body()
+                if (response.body()!!.responsecode.equals("200")){
+                    progressBarDialog!!.dismiss()
+                    var status_code=response.body()!!.response.statuscode
+
+                    if (status_code == "303") {
+                        dialog!!.dismiss()
+                        val toast = Toast.makeText(
+                            mContext,
+                            "Successfully sent email to staff",
+                            Toast.LENGTH_SHORT
+                        )
+                        toast.show()
+                    } else {
+                        val toast =
+                            Toast.makeText(mContext, "Email not sent", Toast.LENGTH_SHORT)
+                        toast.show()
+                    }
+
+                } else {
+                    progressBarDialog!!.dismiss()
+                    AppUtils.showDialogAlertDismiss(
+                        mContext,
+                        "Alert",
+                        mContext!!.getString(R.string.common_error),
+                        R.drawable.exclamationicon,
+                        R.drawable.round
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<SendemailResponseModel>, t: Throwable) {
+                progressBarDialog!!.dismiss()            }
+        })
+       /* val call: Call<ResponseBody> = ApiClient.getClient.sendEmailToStaffCall(
             contactEmail!!,
             text_dialog!!.text.toString(),
             text_content!!.text.toString()
@@ -289,7 +336,7 @@ class FacilityActivity : AppCompatActivity() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-        })
+        })*/
     }
 
 }

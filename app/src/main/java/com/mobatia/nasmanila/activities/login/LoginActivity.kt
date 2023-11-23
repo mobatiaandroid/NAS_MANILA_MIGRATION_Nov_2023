@@ -129,26 +129,35 @@ class LoginActivity : AppCompatActivity() {
         }
         loginBtn.setOnClickListener {
             AppUtils.hideKeyboard(context)
-            if (userNameEdtTxt.text.toString().trim().equals("", ignoreCase = true))
+            if (userNameEdtTxt.text.toString().trim().equals("", ignoreCase = true)) {
                 AppUtils.showDialogAlertDismiss(
                     context as Activity?, getString(R.string.alert_heading), getString(
                         R.string.enter_email
                     ), R.drawable.exclamationicon, R.drawable.round
                 )
-            else if (!AppUtils.isValidEmail(userNameEdtTxt?.text.toString()))
+            } else if (!AppUtils.isValidEmail(userNameEdtTxt?.text.toString())) {
                 AppUtils.showDialogAlertDismiss(
                     context as Activity?, getString(R.string.alert_heading), getString(
                         R.string.enter_valid_email
                     ), R.drawable.exclamationicon, R.drawable.round
                 )
-            else if (passwordEdtTxt.text.toString().equals("", ignoreCase = true))
+            }else if (passwordEdtTxt.text.toString().equals("", ignoreCase = true)) {
                 AppUtils.showDialogAlertDismiss(
                     context as Activity?, getString(R.string.alert_heading), getString(
                         R.string.enter_password
                     ), R.drawable.exclamationicon, R.drawable.round
                 )
-            else
-                loginApiCall()
+            }else {
+              if (AppUtils.checkInternet(context)) {
+                  loginApiCall()
+              }else{
+                  Toast.makeText(
+                      context,
+                      resources.getString(R.string.no_internet),
+                      Toast.LENGTH_SHORT
+                  ).show()
+              }
+            }
         }
         guestUserButton.setOnClickListener {
             AppUtils.hideKeyboard(context)

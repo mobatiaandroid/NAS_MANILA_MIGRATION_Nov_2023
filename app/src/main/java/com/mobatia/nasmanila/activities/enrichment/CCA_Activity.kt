@@ -147,7 +147,16 @@ class CCA_Activity:AppCompatActivity() {
                     mContext,
                     position.toString() + ""
                 )
-                getCCAListAPI(stud_id)
+                if (AppUtils.checkInternet(mContext!!)) {
+                    getCCAListAPI(stud_id)
+                }else{
+                    Toast.makeText(
+                        mContext,
+                        mContext!!.resources.getString(R.string.no_internet),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
 
         })
@@ -249,7 +258,16 @@ class CCA_Activity:AppCompatActivity() {
                                     "Class : " + studentsModelArrayList!![studentSelectPosition].mClass
                                 
                             }
-                            getCCAListAPI(stud_id)
+                            if (AppUtils.checkInternet(mContext!!)) {
+                                getCCAListAPI(stud_id)
+                            }else{
+                                Toast.makeText(
+                                    mContext,
+                                    mContext!!.resources.getString(R.string.no_internet),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                         } else {
                             //CustomStatusDialog();
                             Toast.makeText(mContext, "No Student Found.", Toast.LENGTH_SHORT).show()

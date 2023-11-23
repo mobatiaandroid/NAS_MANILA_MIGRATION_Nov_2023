@@ -22,6 +22,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.mobatia.nasmanila.R
@@ -70,8 +71,17 @@ class CalendarWebViewFragment() : Fragment() {
         activity = getActivity()
         progressBarDialog = ProgressBarDialog(mContext!!)
         initialiseUI()
-        callCalendarApi()
-        getWebViewSettings()
+        if (AppUtils.checkInternet(requireContext())) {
+            callCalendarApi()
+            getWebViewSettings()
+        }else{
+            Toast.makeText(
+                mContext,
+                requireContext().resources.getString(R.string.no_internet),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         return mRootView
     }
 

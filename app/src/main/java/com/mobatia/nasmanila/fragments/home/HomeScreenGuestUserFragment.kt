@@ -820,7 +820,16 @@ class HomeScreenGuestUserFragment(
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 activity.startActivity(mIntent)
             } else {
-                callLogoutApi(activity, dialog)
+                if (AppUtils.checkInternet(mContext!!)) {
+                    callLogoutApi(activity, dialog)
+                }else{
+                    Toast.makeText(
+                        mContext,
+                        mContext!!.resources.getString(R.string.no_internet),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
             }
         }
         val dialogButtonCancel = dialog.findViewById<View>(R.id.btn_Cancel) as Button

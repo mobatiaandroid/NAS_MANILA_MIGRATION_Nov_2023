@@ -17,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -141,10 +142,18 @@ class CustomStaffDeptRecyclerAdapter(
                     if (AppUtils.isNetworkConnected(mContext)) {
                         println("clicked position count$position")
                         System.out.println("Email id Passing" + mStaffList[position].staffEmail)
-                        sendEmailToStaff(
-                            
-                            mStaffList[position].staffEmail,text_dialog.text.toString(),text_content.text.toString(),dialog
-                        )
+                        if (AppUtils.checkInternet(mContext)) {
+                            sendEmailToStaff(
+                                mStaffList[position].staffEmail,text_dialog.text.toString(),text_content.text.toString(),dialog
+                            )
+                        }else{
+                            Toast.makeText(
+                                mContext,
+                                mContext.resources.getString(R.string.no_internet),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
                     } else {
                         AppUtils.showDialogAlertDismiss(
                             mContext as Activity,

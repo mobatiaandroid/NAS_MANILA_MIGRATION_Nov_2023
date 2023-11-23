@@ -136,7 +136,16 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         locationPermissionStatus = getSharedPreferences("locationPermissionStatus", MODE_PRIVATE)
 
         extras = intent.extras
-        callCalendarAPI()
+        if (AppUtils.checkInternet(mContext)) {
+            callCalendarAPI()
+        }else{
+            Toast.makeText(
+                mContext,
+                mContext.resources.getString(R.string.no_internet),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         if (extras != null) {
             notificationRecieved = extras!!.getInt("Notification_Recieved", 0)
         } /*Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this,
