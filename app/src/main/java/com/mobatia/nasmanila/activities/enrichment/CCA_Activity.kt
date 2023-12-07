@@ -216,7 +216,6 @@ class CCA_Activity:AppCompatActivity() {
                                 try {
                                     val jsonObject = JSONObject(eventJson)
                                     studentsModelArrayList!!.add(addStudentDetails(jsonObject))
-                                    // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
@@ -574,20 +573,18 @@ var ccadetailbody=Cca_detailsApiModel(studId)
         textViewYear = findViewById<View>(R.id.textViewYear) as TextView
         recycler_review!!.addOnItemClickListener(object :OnItemClickListener{
             override fun onItemClicked(position: Int, view: View) {
-                Log.e(
-                    "submissiondateover",
-                    mCCAmodelArrayList!!.get(position).isSubmissiondateOver.toString()
-                )
+
                 if (mCCAmodelArrayList!!.get(position).isAttendee.equals("0")) {
                     if (mCCAmodelArrayList!!.get(position).isSubmissiondateOver
                             .equals("0")
                     ) {
                         if (mCCAmodelArrayList!!.get(position).details!!.size > 0) {
+                            PreferenceManager.setccadetailarray(mCCAmodelArrayList!!.get(position).details,mContext)
                             val intent = Intent(mContext, CCASelectionActivity::class.java)
-                            intent.putExtra(
+                            /*intent.putExtra(
                                 "CCA_Detail",
                                 mCCAmodelArrayList!!.get(position).details
-                            )
+                            )*/
                             intent.putExtra("tab_type", tab_type)
                             PreferenceManager.setStudIdForCCA(mContext, stud_id)
                             PreferenceManager.setStudNameForCCA(mContext, stud_name)

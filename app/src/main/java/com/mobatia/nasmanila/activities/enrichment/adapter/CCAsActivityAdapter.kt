@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,12 +18,17 @@ import com.mobatia.nasmanila.common.common_classes.OnItemClickListener
 import com.mobatia.nasmanila.common.common_classes.addOnItemClickListener
 import com.mobatia.nasmanila.common.constants.AppController
 
-class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
+class CCAsActivityAdapter(
+    var mContext: Context, var mcount: Int,
+    var submitBtn:Button,
+    var nextBtn:Button,
+    var mCCAmodelArrayList: ArrayList<CCADetailModel?>? = null,
+    var filled: Boolean,var ccaDetailpos:Int) :
     RecyclerView.Adapter<CCAsActivityAdapter.ViewHolder>() {
 
     var recyclerViewLayoutManager: GridLayoutManager? = null
     var recyclerViewLayoutManager2: GridLayoutManager? = null
-    var mCCAmodelArrayList: ArrayList<CCADetailModel?>? = null
+    //var mCCAmodelArrayList: ArrayList<CCADetailModel?>? = null
     var mCCAchoiceModel2: ArrayList<CCAchoiceModel?>? = null
     var mCCAchoiceModel1: ArrayList<CCAchoiceModel?>? = null
     var weekList: ArrayList<WeekListModel>? = null
@@ -55,7 +61,7 @@ class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
             if (position == 0) {
                 if (mCCAchoiceModel1!!.size > 0) {
                     if (mCCAchoiceModel2!!.size <= 0) {
-                        AppController().weekList!!.get(dayPosition).choiceStatus1="1"
+                        AppController.weekList!!.get(dayPosition).choiceStatus1="1"
                     }
                     holder.listTxtView.text = "Choose First Choice : " // + (position + 1)
                     val mCCAsActivityAdapter = CCAsChoiceListActivityAdapter(
@@ -64,14 +70,14 @@ class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
                         dayPosition,
                         weekList,
                         0,
-                        recyclerWeek
+                        recyclerWeek,submitBtn,nextBtn,mCCAmodelArrayList,filled,ccaDetailpos
                     )
                     holder.recycler_review.adapter = mCCAsActivityAdapter
                 }
             } else {
                 if (mCCAchoiceModel2!!.size > 0) {
                     if (mCCAchoiceModel1!!.size <= 0) {
-                        AppController().weekList!!.get(dayPosition).choiceStatus="1"
+                        AppController.weekList!!.get(dayPosition).choiceStatus="1"
                     }
                     //                    holder.listTxtView.setText("Choice:" + (position + 1));
                     holder.listTxtView.text = "Choose Second Choice : " // + (position + 1)
@@ -81,7 +87,7 @@ class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
                         dayPosition,
                         weekList,
                         1,
-                        recyclerWeek
+                        recyclerWeek,submitBtn,nextBtn,mCCAmodelArrayList,filled,ccaDetailpos
                     )
                     holder.recycler_review2.adapter = mCCAsActivityAdapter
                 }
@@ -108,7 +114,7 @@ class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
                         dayPosition,
                         weekList,
                         0,
-                        recyclerWeek
+                        recyclerWeek,submitBtn,nextBtn,mCCAmodelArrayList,filled,ccaDetailpos
                     )
                     mCCAsActivityAdapter.notifyDataSetChanged()
                     holder.recycler_review.adapter = mCCAsActivityAdapter
@@ -130,7 +136,7 @@ class CCAsActivityAdapter (var mContext: Context, var mcount: Int) :
                        dayPosition,
                        weekList,
                        1,
-                       recyclerWeek
+                       recyclerWeek,submitBtn,nextBtn,mCCAmodelArrayList,filled,ccaDetailpos
                    )
                    mCCAsActivityAdapter.notifyDataSetChanged()
                    holder.recycler_review2.adapter = mCCAsActivityAdapter

@@ -105,13 +105,11 @@ class ParentEssentialActivity :AppCompatActivity(){
             override fun onItemClicked(position: Int, view: View) {
                 if (list!!.size <= 1) {
                     if (list!![position]!!.filename.endsWith(".pdf")) {
-                        Log.e("view","PdfReaderActivity")
 
                         val intent = Intent(mContext, PdfReaderActivity::class.java)
                         intent.putExtra("pdf_url", list!![position]!!.filename)
                         startActivity(intent)
                     } else {
-                        Log.e("view","LoadUrlWebViewActivity")
 
                         val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
                         intent.putExtra("url", list!![position]!!.filename)
@@ -124,7 +122,6 @@ class ParentEssentialActivity :AppCompatActivity(){
                             ignoreCase = true
                         )
                     ) {
-                        Log.e("view","PdfReaderNextActivity")
                         val intent = Intent(mContext, PdfReaderNextActivity::class.java)
                         intent.putExtra("position", position)
                         intent.putExtra("submenuArray", list)
@@ -142,7 +139,6 @@ class ParentEssentialActivity :AppCompatActivity(){
                                 )
                             )*/
                         } else {
-                            Log.e("view","PDFViewActivity")
                             val intent = Intent(mContext, PDFViewActivity::class.java)
                             intent.putExtra("pdf_url", list!![position]!!.filename)
                             startActivity(intent)
@@ -151,7 +147,6 @@ class ParentEssentialActivity :AppCompatActivity(){
 //                                intent.putExtra("pdf_url", list.get(position).getFilename());
 //                                startActivity(intent);
                     } else {
-                        Log.e("view","loadweb")
                         val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
                         intent.putExtra("url", list!![position]!!.filename)
                         intent.putExtra("tab_type", tab_type)

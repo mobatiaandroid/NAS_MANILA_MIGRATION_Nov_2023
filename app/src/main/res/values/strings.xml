@@ -508,5 +508,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <string name="enter_subjects">Please enter your subject</string>
+    <string name="enter_contents">Please enter your content</string>
+    <string name="enter_valid_contents"> Please enter your valid content</string>
+    <string name="enter_valid_subjects"> Please enter your valid subject</string>
+    <string name="enter_valid_mail">Please enter a valid email</string>
 </resources>

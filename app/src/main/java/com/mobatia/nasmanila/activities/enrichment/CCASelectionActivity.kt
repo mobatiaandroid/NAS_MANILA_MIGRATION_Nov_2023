@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -54,7 +55,7 @@ class CCASelectionActivity :AppCompatActivity(){
     var ccaDetailpos = 0
     var submitBtn: Button? = null
     var nextBtn: Button? = null
-    var filled = false
+   // var AppController.filled = false
     var weekSelected = false
     var weekPosition = 0
     var mCCAsWeekListAdapter: CCAsWeekListAdapter? = null
@@ -72,11 +73,12 @@ class CCASelectionActivity :AppCompatActivity(){
         if (extras != null) {
             tab_type = extras!!.getString("tab_type")!!
             //            pos = extras.getInt("pos");
-            CCADetailModelArrayList =
-                extras!!.getSerializable("CCA_Detail") as ArrayList<CCADetailModel?>?
+           /* CCADetailModelArrayList =
+                extras!!.getSerializable("CCA_Detail") as ArrayList<CCADetailModel?>?*/
         }
-        AppController().weekList = ArrayList()
-        AppController().weekListWithData = ArrayList()
+        CCADetailModelArrayList=PreferenceManager.getccadetailarray(mContext)
+        AppController.weekList = ArrayList()
+        AppController.weekListWithData = ArrayList()
 //        weekList.add("Sunday");
 //        weekList.add("Monday");
 //        weekList.add("Tuesday");
@@ -91,14 +93,19 @@ class CCASelectionActivity :AppCompatActivity(){
 //        weekList.add("Thursday");
 //        weekList.add("Friday");
 //        weekList.add("Saturday");
+
+        var weektemparray:ArrayList<WeekListModel>
+        weektemparray= ArrayList()
         for (i in 0..6) {
             val mWeekListModel = WeekListModel()
             mWeekListModel.weekDay=getWeekday(i)
             mWeekListModel.weekDayMMM=getWeekdayMMM(i)
             mWeekListModel.choiceStatus="0"
             mWeekListModel.choiceStatus1="0"
-            AppController().weekList!!.add(mWeekListModel)
+            weektemparray.add(mWeekListModel)
+            //AppController.weekList!!.add(mWeekListModel)
         }
+        AppController.weekList!!.addAll(weektemparray)
         relativeHeader = findViewById(R.id.relativeHeader)
         recycler_review = findViewById(R.id.recycler_view_cca) as RecyclerView
         weekRecyclerList = findViewById(R.id.weekRecyclerList) as RecyclerView
@@ -136,8 +143,14 @@ class CCASelectionActivity :AppCompatActivity(){
             //                  System.out.println("Choice1 "+CCADetailModelArrayList!!.get(i).getDay()+":"+CCADetailModelArrayList!!.get(i).getChoice1());
             //                  System.out.println("Choice2 "+CCADetailModelArrayList!!.get(i).getDay()+":"+CCADetailModelArrayList!!.get(i).getChoice2());
             //              }
-            if (filled) {
+            //if(AppController.AppController.filledFlag == 1){
+            if (AppController.filled) {
+
                 val mInent = Intent(mContext, CCAsReviewActivity::class.java)
+                AppController.CCADetailModelArrayList.clear()
+                for (i in CCADetailModelArrayList!!.indices){
+                    AppController.CCADetailModelArrayList.add(CCADetailModelArrayList!![i]!!)
+                }
                 startActivity(mInent)
             } else {
                 AppUtils.showDialogAlertDismiss(
@@ -170,7 +183,7 @@ class CCASelectionActivity :AppCompatActivity(){
 //            if (CCADetailModelArrayList!!.get(i).getDay().equals("Sunday")) {
 //                {
 //                    ccaDetailpos=i;
-//                    CCAsActivityAdapter mCCAsActivityAdapter = new CCAsActivityAdapter(mContext, CCADetailModelArrayList!!.get(i).getCcaChoiceModel(), CCADetailModelArrayList!!.get(i).getCcaChoiceModel2(),0,AppController().weekList);
+//                    CCAsActivityAdapter mCCAsActivityAdapter = new CCAsActivityAdapter(mContext, CCADetailModelArrayList!!.get(i).getCcaChoiceModel(), CCADetailModelArrayList!!.get(i).getCcaChoiceModel2(),0,AppController.weekList);
 //                    recycler_review.setAdapter(mCCAsActivityAdapter);
 //                    break;
 //                }
@@ -180,56 +193,56 @@ class CCASelectionActivity :AppCompatActivity(){
 //            if (CCADetailModelArrayList!!.get(i).getDay().equals("Sunday")) {
 //                {
 //                    ccaDetailpos=i;
-//                    CCAsActivityAdapter mCCAsActivityAdapter = new CCAsActivityAdapter(mContext, CCADetailModelArrayList!!.get(i).getCcaChoiceModel(), CCADetailModelArrayList!!.get(i).getCcaChoiceModel2(),0,AppController().weekList);
+//                    CCAsActivityAdapter mCCAsActivityAdapter = new CCAsActivityAdapter(mContext, CCADetailModelArrayList!!.get(i).getCcaChoiceModel(), CCADetailModelArrayList!!.get(i).getCcaChoiceModel2(),0,AppController.weekList);
 //                    recycler_review.setAdapter(mCCAsActivityAdapter);
 //                    break;
 //                }
 //            }
         TVselectedForWeek!!.text = "Sunday"
-//        for (int j = 0; j < AppController().weekList.size(); j++) {
+//        for (int j = 0; j < AppController.weekList.size(); j++) {
 //            for (int i = 0; i < CCADetailModelArrayList!!.size(); i++) {
-//                if (!AppController().weekList.get(j).getWeekDay().equals(CCADetailModelArrayList!!.get(i).getDay())) {
-//                    AppController().weekList.get(j).setChoiceStatus("2");
-//                    AppController().weekList.get(j).setChoiceStatus1("2");
+//                if (!AppController.weekList.get(j).getWeekDay().equals(CCADetailModelArrayList!!.get(i).getDay())) {
+//                    AppController.weekList.get(j).setChoiceStatus("2");
+//                    AppController.weekList.get(j).setChoiceStatus1("2");
 //                }
 //                else
 //                {
-//                    AppController().weekList.get(j).setChoiceStatus("0");
-//                    AppController().weekList.get(j).setChoiceStatus1("0");
+//                    AppController.weekList.get(j).setChoiceStatus("0");
+//                    AppController.weekList.get(j).setChoiceStatus1("0");
 //                }
 //            }
 //        }
 
-        //        for (int j = 0; j < AppController().weekList.size(); j++) {
+        //        for (int j = 0; j < AppController.weekList.size(); j++) {
 //            for (int i = 0; i < CCADetailModelArrayList!!.size(); i++) {
-//                if (!AppController().weekList.get(j).getWeekDay().equals(CCADetailModelArrayList!!.get(i).getDay())) {
-//                    AppController().weekList.get(j).setChoiceStatus("2");
-//                    AppController().weekList.get(j).setChoiceStatus1("2");
+//                if (!AppController.weekList.get(j).getWeekDay().equals(CCADetailModelArrayList!!.get(i).getDay())) {
+//                    AppController.weekList.get(j).setChoiceStatus("2");
+//                    AppController.weekList.get(j).setChoiceStatus1("2");
 //                }
 //                else
 //                {
-//                    AppController().weekList.get(j).setChoiceStatus("0");
-//                    AppController().weekList.get(j).setChoiceStatus1("0");
+//                    AppController.weekList.get(j).setChoiceStatus("0");
+//                    AppController.weekList.get(j).setChoiceStatus1("0");
 //                }
 //            }
 //        }
-        for (i in 0 until AppController().weekList!!.size) {
-            AppController().weekList!!.get(i).choiceStatus="2"
-            AppController().weekList!!.get(i).choiceStatus1="2"
-            AppController().weekList!!.get(i).dataInWeek="0"
+        for (i in 0 until AppController.weekList!!.size) {
+            AppController.weekList!!.get(i).choiceStatus="2"
+            AppController.weekList!!.get(i).choiceStatus1="2"
+            AppController.weekList!!.get(i).dataInWeek="0"
         }
 
 
-        for (i in 0 until AppController().weekList!!.size) {
+        for (i in 0 until AppController.weekList!!.size) {
             for (j in CCADetailModelArrayList!!.indices) {
-                if (AppController().weekList!!.get(i).weekDay.equals(
+                if (AppController.weekList!!.get(i).weekDay.equals(
                         CCADetailModelArrayList!!.get(j)!!.day
                     )
                 ) {
-                    AppController().weekList!!.get(i).choiceStatus="0"
-                    AppController().weekList!!.get(i).choiceStatus1="0"
-                    AppController().weekList!!.get(i).dataInWeek="1"
-                    AppController().weekListWithData!!.add(i)
+                    AppController.weekList!!.get(i).choiceStatus="0"
+                    AppController.weekList!!.get(i).choiceStatus1="0"
+                    AppController.weekList!!.get(i).dataInWeek="1"
+                    AppController.weekListWithData!!.add(i)
                 }
             }
         }
@@ -240,12 +253,13 @@ class CCASelectionActivity :AppCompatActivity(){
                 ccaDetailpos = i
                 textViewCCAaSelect!!.visibility = View.VISIBLE
                 TVselectedForWeek!!.visibility = View.VISIBLE
+
                var mCCAsActivityAdapter = CCAsActivityAdapterr(mContext,
                     CCADetailModelArrayList!!.get(i)!!.choice1,
                    CCADetailModelArrayList!!.get(i)!!.choice2,
                     0,
-                    AppController().weekList,
-                    weekRecyclerList!!
+                    AppController.weekList,
+                    weekRecyclerList!!, submitBtn!!, nextBtn!!,CCADetailModelArrayList!!,AppController.filled,ccaDetailpos
                 )
                 recycler_review!!.adapter = mCCAsActivityAdapter
                 break
@@ -253,12 +267,13 @@ class CCASelectionActivity :AppCompatActivity(){
                 if (!CCADetailModelArrayList!!.get(i)!!.day
                         .equals("Sunday")
                 ) {
-                    mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0)
+                    mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0, submitBtn!!, nextBtn!!,
+                        CCADetailModelArrayList!!,AppController.filled,ccaDetailpos)
                     recycler_review!!.adapter = mCCAsActivityAdapter
                     textViewCCAaSelect!!.visibility = View.GONE
                     TVselectedForWeek!!.visibility = View.GONE
-                    AppController().weekList!!.get(0).choiceStatus="2"
-                    AppController().weekList!!.get(0).choiceStatus1="2"
+                    AppController.weekList!!.get(0).choiceStatus="2"
+                    AppController.weekList!!.get(0).choiceStatus1="2"
                     //                    Toast.makeText(mContext, "CCA choice not available.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -286,12 +301,12 @@ class CCASelectionActivity :AppCompatActivity(){
 //        weekRecyclerList.setLayoutManager(recyclerweekViewLayoutManager);
         //        weekRecyclerList.setLayoutManager(recyclerweekViewLayoutManager);
         mCCAsWeekListAdapter = CCAsWeekListAdapter(mContext,
-            AppController().weekList!!, weekPosition)
+            AppController.weekList!!, weekPosition)
         weekRecyclerList!!.adapter = mCCAsWeekListAdapter
 weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
     override fun onItemClicked(position: Int, view: View) {
         for (i in CCADetailModelArrayList!!.indices) {
-            if (AppController().weekList!!.get(position).weekDay
+            if (AppController.weekList!!.get(position).weekDay
                     .equals(CCADetailModelArrayList!!.get(i)!!.day)
             ) {
                 pos = i
@@ -308,45 +323,48 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
         if (!weekSelected) {
             textViewCCAaSelect!!.visibility = View.GONE
             TVselectedForWeek!!.visibility = View.GONE
-            val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0)
+            val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0,submitBtn!!,nextBtn!!,
+                CCADetailModelArrayList!!,AppController.filled,ccaDetailpos)
             recycler_review!!.adapter = mCCAsActivityAdapter
             mCCAsActivityAdapter.notifyDataSetChanged()
-            AppController().weekList!!.get(position).choiceStatus="2"
-            AppController().weekList!!.get(position).choiceStatus1="2"
+            AppController.weekList!!.get(position).choiceStatus="2"
+            AppController.weekList!!.get(position).choiceStatus1="2"
             Toast.makeText(mContext, "CCA choice not available.", Toast.LENGTH_SHORT).show()
         } else {
             textViewCCAaSelect!!.visibility = View.VISIBLE
             TVselectedForWeek!!.visibility = View.VISIBLE
+
             val mCCAsActivityAdapter = CCAsActivityAdapterr(
                 mContext,
                 CCADetailModelArrayList!!.get(pos)!!.choice1,
                 CCADetailModelArrayList!!.get(pos)!!.choice2,
                 position,
-                AppController().weekList,
-                weekRecyclerList!!
+                AppController.weekList,
+                weekRecyclerList!!, submitBtn!!, nextBtn!!,CCADetailModelArrayList!!,AppController.filled,ccaDetailpos
             )
             recycler_review!!.adapter = mCCAsActivityAdapter
             mCCAsActivityAdapter.notifyDataSetChanged()
         }
-        for (j in 0 until AppController().weekList!!.size) {
-            if (AppController().weekList!!.get(j).choiceStatus
-                    .equals("0") || AppController().weekList!!.get(j).choiceStatus1
+        for (j in 0 until AppController.weekList!!.size) {
+            if (AppController.weekList!!.get(j).choiceStatus
+                    .equals("0") || AppController.weekList!!.get(j).choiceStatus1
                     .equals("0")
             ) {
-                filled = false
+                AppController.filled = false
                 break
             } else {
-                filled = true
+                AppController.filled = true
             }
-            if (!filled) {
+            if (!AppController.filled) {
                 break
             }
         }
-        if (filled) {
+        if (AppController.filled) {
             submitBtn!!.getBackground().setAlpha(255)
             submitBtn!!.setVisibility(View.VISIBLE)
             nextBtn!!.getBackground().setAlpha(255)
             nextBtn!!.setVisibility(View.GONE)
+           // AppController.AppController.filledFlag = 1
         } else {
             submitBtn!!.getBackground().setAlpha(150)
             submitBtn!!.setVisibility(View.INVISIBLE)
@@ -355,9 +373,9 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
         }
         weekPosition = position
         mCCAsWeekListAdapter = CCAsWeekListAdapter(mContext,
-            AppController().weekList!!, weekPosition)
+            AppController.weekList!!, weekPosition)
         weekRecyclerList!!.adapter = mCCAsWeekListAdapter
-        TVselectedForWeek!!.setText(AppController().weekList!!.get(position).weekDay)
+        TVselectedForWeek!!.setText(AppController.weekList!!.get(position).weekDay)
 //                        horizontalScrollView
         //                        horizontalScrollView
         if (weekPosition == 6) weekRecyclerList!!.scrollToPosition(6) else weekRecyclerList!!.scrollToPosition(
@@ -366,10 +384,10 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
     }
 
 })
-        for (j in 0 until AppController().weekList!!.size) {
-            if (AppController().weekList!!.get(j).dataInWeek.equals("1")) {
+        for (j in 0 until AppController.weekList!!.size) {
+            if (AppController.weekList!!.get(j).dataInWeek.equals("1")) {
                 for (i in CCADetailModelArrayList!!.indices) {
-                    if (AppController().weekList!!.get(j).weekDay.equals(
+                    if (AppController.weekList!!.get(j).weekDay.equals(
                             CCADetailModelArrayList!!.get(i)!!.day
                         )
                     ) {
@@ -387,45 +405,48 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                 if (!weekSelected) {
                     textViewCCAaSelect!!.visibility = View.GONE
                     TVselectedForWeek!!.visibility = View.GONE
-                    val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0)
+                    val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0,submitBtn!!,nextBtn!!,
+                        CCADetailModelArrayList!!,AppController.filled,ccaDetailpos)
                     recycler_review!!.adapter = mCCAsActivityAdapter
                     mCCAsActivityAdapter.notifyDataSetChanged()
-                    AppController().weekList!!.get(j).choiceStatus="2"
-                    AppController().weekList!!.get(j).choiceStatus1="2"
+                    AppController.weekList!!.get(j).choiceStatus="2"
+                    AppController.weekList!!.get(j).choiceStatus1="2"
                     Toast.makeText(mContext, "CCA choice not available.", Toast.LENGTH_SHORT).show()
                 } else {
                     textViewCCAaSelect!!.visibility = View.VISIBLE
                     TVselectedForWeek!!.visibility = View.VISIBLE
+
                     val mCCAsActivityAdapter = CCAsActivityAdapterr(
                         mContext,
                         CCADetailModelArrayList!!.get(pos)!!.choice1,
                         CCADetailModelArrayList!!.get(pos)!!.choice2,
                         j,
-                        AppController().weekList,
-                        weekRecyclerList!!
+                        AppController.weekList,
+                        weekRecyclerList!!, submitBtn!!, nextBtn!!,CCADetailModelArrayList!!,AppController.filled,ccaDetailpos
                     )
                     recycler_review!!.adapter = mCCAsActivityAdapter
                     mCCAsActivityAdapter.notifyDataSetChanged()
                 }
-                for (k in 0 until AppController().weekList!!.size) {
-                    if (AppController().weekList!!.get(k).choiceStatus
-                            .equals("0") || AppController().weekList!!.get(k)
+                for (k in 0 until AppController.weekList!!.size) {
+                    if (AppController.weekList!!.get(k).choiceStatus
+                            .equals("0") || AppController.weekList!!.get(k)
                             .choiceStatus1.equals("0")
                     ) {
-                        filled = false
+                        AppController.filled = false
                         break
                     } else {
-                        filled = true
+                        AppController.filled = true
                     }
-                    if (!filled) {
+                    if (!AppController.filled) {
                         break
                     }
                 }
-                if (filled) {
+                if (AppController.filled) {
                     submitBtn!!.getBackground().setAlpha(255)
                     submitBtn!!.setVisibility(View.VISIBLE)
                     nextBtn!!.getBackground().setAlpha(255)
                     nextBtn!!.setVisibility(View.GONE)
+                   // AppController.AppController.filledFlag = 1
                 } else {
                     submitBtn!!.getBackground().setAlpha(150)
                     submitBtn!!.setVisibility(View.INVISIBLE)
@@ -434,14 +455,14 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                 }
                 weekPosition = j
                 mCCAsWeekListAdapter =
-                    CCAsWeekListAdapter(mContext, AppController().weekList!!, weekPosition)
+                    CCAsWeekListAdapter(mContext, AppController.weekList!!, weekPosition)
                 weekRecyclerList!!.adapter = mCCAsWeekListAdapter
-                TVselectedForWeek!!.setText(AppController().weekList!!.get(j).weekDay)
+                TVselectedForWeek!!.setText(AppController.weekList!!.get(j).weekDay)
                 break
             }
         }
 
-        if (AppController().weekListWithData!!.size > 0) {
+        if (AppController.weekListWithData!!.size > 0) {
             nextBtn!!.getBackground().setAlpha(255)
             nextBtn!!.setVisibility(View.VISIBLE)
         } else {
@@ -451,53 +472,53 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
 
         nextBtn!!.setOnClickListener(View.OnClickListener {
             weekPosition = weekPosition + 1
-            if (AppController().weekListWithData!!.contains(weekPosition)) {
-                for (a in 0 until AppController().weekListWithData!!.size) {
-                    if (AppController().weekListWithData!!.get(a) === weekPosition) {
+            if (AppController.weekListWithData!!.contains(weekPosition)) {
+                for (a in 0 until AppController.weekListWithData!!.size) {
+                    if (AppController.weekListWithData!!.get(a) === weekPosition) {
                         //weekPosition = a;
-                        weekPosition = AppController().weekListWithData!!.get(a)
+                        weekPosition = AppController.weekListWithData!!.get(a)
                         break
                     }
                 }
 
-                /*           for (int a=0;a<AppController().weekListWithData.size();a++)
+                /*           for (int a=0;a<AppController.weekListWithData.size();a++)
                         {
-                            if (weekPosition==AppController().weekListWithData.get(a)) {
-                                weekPosition = AppController().weekListWithData.get(a);
+                            if (weekPosition==AppController.weekListWithData.get(a)) {
+                                weekPosition = AppController.weekListWithData.get(a);
                             }
                         }
-                        weekPosition = AppController().weekListWithData.get(weekPosition);*/
+                        weekPosition = AppController.weekListWithData.get(weekPosition);*/
             } else {
-                if (weekPosition >= AppController().weekList!!.size - 1) {
+                if (weekPosition >= AppController.weekList!!.size - 1) {
                     weekPosition = 0
                 }
-                if (AppController().weekListWithData!!.contains(weekPosition)) {
-                    //                        weekPosition = AppController().weekListWithData.get(weekPosition);
-                    for (a in 0 until AppController().weekListWithData!!.size) {
-                        //                            if (AppController().weekListWithData.contains(weekPosition)) {
-                        if (AppController().weekListWithData!!.get(a) === weekPosition) {
+                if (AppController.weekListWithData!!.contains(weekPosition)) {
+                    //                        weekPosition = AppController.weekListWithData.get(weekPosition);
+                    for (a in 0 until AppController.weekListWithData!!.size) {
+                        //                            if (AppController.weekListWithData.contains(weekPosition)) {
+                        if (AppController.weekListWithData!!.get(a) === weekPosition) {
                             //                                weekPosition = a;
-                            weekPosition = AppController().weekListWithData!!.get(a)
+                            weekPosition = AppController.weekListWithData!!.get(a)
                             break
                         }
                     }
                 } else {
-                    for (m in weekPosition until AppController().weekList!!.size) {
-                        if (AppController().weekListWithData!!.contains(m)) {
+                    for (m in weekPosition until AppController.weekList!!.size) {
+                        if (AppController.weekListWithData!!.contains(m)) {
                             weekPosition = m
                             println("weekposition:m:$weekPosition")
                             break
                         }
                     }
-                    if (!AppController().weekListWithData!!.contains(weekPosition)) {
+                    if (!AppController.weekListWithData!!.contains(weekPosition)) {
                         weekPosition = 0
                     }
                 }
             }
-            for (j in weekPosition until AppController().weekList!!.size) {
-                if (AppController().weekList!!.get(j).dataInWeek.equals("1")) {
+            for (j in weekPosition until AppController.weekList!!.size) {
+                if (AppController.weekList!!.get(j).dataInWeek.equals("1")) {
                     for (i in CCADetailModelArrayList!!.indices) {
-                        if (AppController().weekList!!.get(j).weekDay.equals(
+                        if (AppController.weekList!!.get(j).weekDay.equals(
                                 CCADetailModelArrayList!!.get(i)!!.day
                             )
                         ) {
@@ -515,46 +536,49 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                     if (!weekSelected) {
                         textViewCCAaSelect!!.visibility = View.GONE
                         TVselectedForWeek!!.visibility = View.GONE
-                        val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0)
+                        val mCCAsActivityAdapter = CCAsActivityAdapter(mContext, 0,submitBtn!!,nextBtn!!,
+                            CCADetailModelArrayList!!,AppController.filled,ccaDetailpos)
                         recycler_review!!.adapter = mCCAsActivityAdapter
                         mCCAsActivityAdapter.notifyDataSetChanged()
-                        AppController().weekList!!.get(j).choiceStatus="2"
-                        AppController().weekList!!.get(j).choiceStatus1="2"
+                        AppController.weekList!!.get(j).choiceStatus="2"
+                        AppController.weekList!!.get(j).choiceStatus1="2"
                         //                            Toast.makeText(mContext, "CCA choice not available.", Toast.LENGTH_SHORT).show();
                     } else {
                         textViewCCAaSelect!!.visibility = View.VISIBLE
                         TVselectedForWeek!!.visibility = View.VISIBLE
+
                         val mCCAsActivityAdapter = CCAsActivityAdapterr(
                             mContext,
                             CCADetailModelArrayList!!.get(pos)!!.choice1,
                             CCADetailModelArrayList!!.get(pos)!!
                                 .choice2,
                             j,
-                            AppController().weekList,
-                            weekRecyclerList!!
+                            AppController.weekList,
+                            weekRecyclerList!!, submitBtn!!, nextBtn!!,CCADetailModelArrayList!!,AppController.filled,ccaDetailpos
                         )
                         recycler_review!!.adapter = mCCAsActivityAdapter
                         mCCAsActivityAdapter.notifyDataSetChanged()
                     }
-                    for (k in 0 until AppController().weekList!!.size) {
-                        if (AppController().weekList!!.get(k).choiceStatus
-                                .equals("0") || AppController().weekList!!.get(k)
+                    for (k in 0 until AppController.weekList!!.size) {
+                        if (AppController.weekList!!.get(k).choiceStatus
+                                .equals("0") || AppController.weekList!!.get(k)
                                 .choiceStatus1.equals("0")
                         ) {
-                            filled = false
+                            AppController.filled = false
                             break
                         } else {
-                            filled = true
+                            AppController.filled = true
                         }
-                        if (!filled) {
+                        if (!AppController.filled) {
                             break
                         }
                     }
-                    if (filled) {
+                    if (AppController.filled) {
                         submitBtn!!.getBackground().setAlpha(255)
                         submitBtn!!.setVisibility(View.VISIBLE)
                         nextBtn!!.getBackground().setAlpha(255)
                         nextBtn!!.setVisibility(View.GONE)
+                        //AppController.AppController.filledFlag = 1
                     } else {
                         submitBtn!!.getBackground().setAlpha(150)
                         submitBtn!!.setVisibility(View.INVISIBLE)
@@ -563,9 +587,9 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                     }
                     weekPosition = j
                     mCCAsWeekListAdapter =
-                        CCAsWeekListAdapter(mContext, AppController().weekList!!, weekPosition)
+                        CCAsWeekListAdapter(mContext, AppController.weekList!!, weekPosition)
                     weekRecyclerList!!.adapter = mCCAsWeekListAdapter
-                    TVselectedForWeek!!.setText(AppController().weekList!!.get(j).weekDay)
+                    TVselectedForWeek!!.setText(AppController.weekList!!.get(j).weekDay)
                     break
                 }
             }

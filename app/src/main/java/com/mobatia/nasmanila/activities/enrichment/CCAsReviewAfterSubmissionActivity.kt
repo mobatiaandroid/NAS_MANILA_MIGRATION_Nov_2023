@@ -159,7 +159,6 @@ var reviewbody=Cca_reviewsApiModel(PreferenceManager.getStudIdForCCA(mContext),P
                                     val eventJson = gson.toJson(item)
                                     try {
                                         val jsonObject = JSONObject(eventJson)
-                                        Log.e("Json", jsonObject.toString())
                                         if (jsonObject.optString("day")
                                                 .equals(weekList!![j])
                                         ) {
@@ -251,18 +250,14 @@ var reviewbody=Cca_reviewsApiModel(PreferenceManager.getStudIdForCCA(mContext),P
     private fun addCCAReviewlist(dataObject: JSONObject): CCAReviewAfterSubmissionModel {
         val mCCAModel = CCAReviewAfterSubmissionModel()
         if (dataObject.has("day")){
-            Log.e("dayhas","dayhas")
         }
         mCCAModel.day=dataObject.optString("day")
-        Log.e("day",dataObject.optString("day"))
         datestringChoice1 = ArrayList()
         datestringChoice2 = ArrayList()
         if (dataObject.has("choice1")) {
-            Log.e("choice1","haschoice1")
             val choice1: JSONObject = dataObject.optJSONObject("choice1")
             if (choice1 != null) {
                 if (choice1.has("cca_item_name")) {
-                    Log.e("itemname",choice1.optString("cca_item_name"))
                     mCCAModel.choicee1=choice1.optString("cca_item_name")
                     mCCAModel.cca_item_start_time=choice1.optString("cca_item_start_time")
                     mCCAModel.cca_item_end_time=choice1.optString("cca_item_end_time")

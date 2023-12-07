@@ -371,7 +371,78 @@ mAboutUsListArray=ArrayList()
         }
         return mAboutUsModel
     }
+    fun emailvalidationcheck(text_dialog:String,text_content:String){
+        val EMAIL_PATTERN :String=
+            "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+        val pattern :String= "^([a-zA-Z ]*)$"
 
+        if (text_dialog.equals("")) {
+            val toast: Toast = Toast.makeText(
+                mContext, mContext!!.getResources().getString(
+                    R.string.enter_subjects
+                ), Toast.LENGTH_SHORT
+            )
+            toast.show()
+        } else {
+            if (text_content.equals("")) {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext!!.getResources().getString(
+                        R.string.enter_contents
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            } else if (email_nas!!.matches(EMAIL_PATTERN.toRegex())) {
+                if (text_dialog.toString().trim().matches(pattern.toRegex())) {
+                    if (text_dialog.toString().length>=500){
+                        Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
+
+                    }else{
+                        if (text_content.toString().trim().matches(pattern.toRegex())) {
+                            if (text_content.length<=500) {
+                                if (AppUtils.checkInternet(mContext!!)) {
+                                    sendEmailToStaff(
+                                    )
+                                }else{
+                                    Toast.makeText(
+                                        mContext,
+                                        mContext!!.resources.getString(R.string.no_internet),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }else{
+                                Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT).show()
+
+                            }
+
+                        } else {
+                            val toast: Toast = Toast.makeText(
+                                mContext, mContext!!.getResources().getString(
+                                    R.string.enter_valid_contents
+                                ), Toast.LENGTH_SHORT
+                            )
+                            toast.show()
+                        }
+                    }
+                } else {
+                    val toast: Toast = Toast.makeText(
+                        mContext, mContext!!.getResources().getString(
+                            R.string.enter_valid_subjects
+                        ), Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                }
+            } else {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext!!.getResources().getString(
+                        R.string.enter_valid_mail
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            }
+        }
+
+
+    }
     private fun sendEmailToStaff() {
         var homebannerbody= SendemailApiModel(email_nas!!,PreferenceManager.getUserID(mContext),
             text_dialog!!.text.toString(),
@@ -540,7 +611,9 @@ mAboutUsListArray=ArrayList()
                             R.drawable.round
                         )
                     } else {
-                        if (AppUtils.checkInternet(mContext!!)) {
+                        emailvalidationcheck( text_dialog!!.text.toString(),
+                            text_content!!.text.toString())
+                       /* if (AppUtils.checkInternet(mContext!!)) {
                             sendEmailToStaff()
                         } else {
                             AppUtils.showDialogAlertDismiss(
@@ -550,7 +623,7 @@ mAboutUsListArray=ArrayList()
                                 R.drawable.nonetworkicon,
                                 R.drawable.roundred
                             )
-                        }
+                        }*/
                     }
                 }
                 dialog!!.show()
@@ -566,8 +639,7 @@ mAboutUsListArray=ArrayList()
         }
         mAboutUsList!!.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                Log.e("array",mAboutUsListArray!!.size.toString())
-                Log.e("click pos",mAboutUsListArray!![position].tab_type.toString())
+
                 if (mAboutUsListArray!![position].tab_type.equals("Facilities")) {
                     PreferenceManager.setaboutusarray(mAboutUsListArray!![position].items,mContext!!)
                     val mIntent = Intent(activity, FacilityActivity::class.java)
@@ -618,7 +690,7 @@ mAboutUsListArray=ArrayList()
                     mIntent.putExtra("banner_image", mAboutUsListArray!![position].image)
                     mContext!!.startActivity(mIntent)
                 } else {
-                    Log.e("load","web")
+
                     if (mAboutUsListArray!![position]!!.url!!
                             .endsWith(".pdf")
                     ) {

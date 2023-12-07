@@ -125,7 +125,6 @@ class ParentEssentialsFragment() : Fragment() {
                         "Lunch Menu"
                     )
                 ) {
-                    Log.e("view","new")
                     val intent = Intent(mContext, ParentEssentialActivityNew::class.java)
                     PreferenceManager.setparentEssentials(
                         newsLetterModelArrayList[position].submenu,
@@ -143,17 +142,14 @@ class ParentEssentialsFragment() : Fragment() {
                     intent.putExtra("description", newsLetterModelArrayList[position].description)
                     mContext!!.startActivity(intent)
                 } else if (newsLetterModelArrayList[position].name.equals(
-                        "Parent Portal",
-                        ignoreCase = true
+                        "Parent Portal"
                     )
                 ) {
-                    Log.e("view","web")
                     val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
                     intent.putExtra("tab_type", NaisClassNameConstants.PARENT_ESSENTIALS)
                     intent.putExtra("url", newsLetterModelArrayList[position].link)
                     (mContext as Activity).startActivity(intent)
                 } else {
-                    Log.e("view","act")
                     val intent = Intent(mContext, ParentEssentialActivity::class.java)
                     PreferenceManager.setparentEssentials(
                         newsLetterModelArrayList[position].submenu,
@@ -218,7 +214,9 @@ class ParentEssentialsFragment() : Fragment() {
                             R.drawable.round
                         )
                     } else {
-                        if (AppUtils.checkInternet(mContext as Activity)) {
+                        emailvalidationcheck( text_dialog!!.text.toString(),
+                            text_content!!.text.toString(),dialog)
+                       /* if (AppUtils.checkInternet(mContext as Activity)) {
                             sendEmailToStaff(dialog)
                         } else {
                             AppUtils.showDialogAlertDismiss(
@@ -228,7 +226,7 @@ class ParentEssentialsFragment() : Fragment() {
                                 R.drawable.nonetworkicon,
                                 R.drawable.roundred
                             )
-                        }
+                        }*/
                     }
                 }
                 dialog.show()
@@ -258,7 +256,6 @@ class ParentEssentialsFragment() : Fragment() {
                         description = response.body()!!.response.description
                         contactEmail = response.body()!!.response.contact_email
                         if (!bannerImage.equals("")) {
-                            Log.e("banner","banner")
                             Glide.with(mContext!!).load(bannerImage).centerCrop().into(bannerImagePager!!)
                            /* Glide.with(mContext!!).load(AppUtils.replace(bannerImage)).centerCrop()
                                 .placeholder(R.drawable.default_bannerr)
@@ -266,7 +263,6 @@ class ParentEssentialsFragment() : Fragment() {
                                     bannerImagePager!!
                                 )*/
                 } else {
-                            Log.e("banner","default")
                             Glide.with(mContext!!).load(R.drawable.default_bannerr).centerCrop().into(bannerImagePager!!)
                             //bannerImagePager!!.setImageResource(R.drawable.default_bannerr)
                         }
@@ -303,9 +299,7 @@ class ParentEssentialsFragment() : Fragment() {
                                 val eventJson = gson.toJson(item)
                                 try {
                                     val jsonObject = JSONObject(eventJson)
-                                    Log.e("json", jsonObject.toString())
                                     newsLetterModelArrayList.add(addNewsLetterDetails(jsonObject))
-                                    Log.e("Parentessentialsq", newsLetterModelArrayList.toString())
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
@@ -403,7 +397,6 @@ class ParentEssentialsFragment() : Fragment() {
                 model.link = ""
             }
             val submenuArray: JSONArray = obj.optJSONArray("submenu")
-            Log.e("submenu", submenuArray.toString())
             val subMenNewsLetterModels: ArrayList<SubmenuParentEssentials> =
                 ArrayList<SubmenuParentEssentials>()
             for (i in 0 until submenuArray.length()) {
@@ -414,7 +407,6 @@ class ParentEssentialsFragment() : Fragment() {
                 newsModel.submenu=subObj.optString("submenu")
 
                 subMenNewsLetterModels.add(newsModel)
-                Log.e("sub", subMenNewsLetterModels.toString())
             }
             model.submenu=subMenNewsLetterModels
         } catch (ex: Exception) {
@@ -423,7 +415,78 @@ class ParentEssentialsFragment() : Fragment() {
 
         return model
     }
+    fun emailvalidationcheck(text_dialog:String,text_content:String,dialog:Dialog){
+        val EMAIL_PATTERN :String=
+            "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+        val pattern :String= "^([a-zA-Z ]*)$"
 
+        if (text_dialog.equals("")) {
+            val toast: Toast = Toast.makeText(
+                mContext, mContext!!.getResources().getString(
+                    R.string.enter_subjects
+                ), Toast.LENGTH_SHORT
+            )
+            toast.show()
+        } else {
+            if (text_content.equals("")) {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext!!.getResources().getString(
+                        R.string.enter_contents
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            } else if (contactEmail!!.matches(EMAIL_PATTERN.toRegex())) {
+                if (text_dialog.toString().trim().matches(pattern.toRegex())) {
+                    if (text_dialog.toString().length>=500){
+                        Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
+
+                    }else{
+                        if (text_content.toString().trim().matches(pattern.toRegex())) {
+                            if (text_content.length<=500) {
+                                if (AppUtils.checkInternet(mContext!!)) {
+                                    sendEmailToStaff(dialog
+                                    )
+                                }else{
+                                    Toast.makeText(
+                                        mContext,
+                                        mContext!!.resources.getString(R.string.no_internet),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }else{
+                                Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT).show()
+
+                            }
+
+                        } else {
+                            val toast: Toast = Toast.makeText(
+                                mContext, mContext!!.getResources().getString(
+                                    R.string.enter_valid_contents
+                                ), Toast.LENGTH_SHORT
+                            )
+                            toast.show()
+                        }
+                    }
+                } else {
+                    val toast: Toast = Toast.makeText(
+                        mContext, mContext!!.getResources().getString(
+                            R.string.enter_valid_subjects
+                        ), Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                }
+            } else {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext!!.getResources().getString(
+                        R.string.enter_valid_mail
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            }
+        }
+
+
+    }
     private fun sendEmailToStaff(dialog:Dialog) {
         var homebannerbody= SendemailApiModel(contactEmail!!,PreferenceManager.getUserID(mContext),
             text_dialog!!.text.toString(),

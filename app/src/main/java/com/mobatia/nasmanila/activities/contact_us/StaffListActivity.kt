@@ -102,9 +102,7 @@ class StaffListActivity:AppCompatActivity() {
                                     for ((key, value)in departmentMap) {
                                         val directory = Categori(key, value)
                                         listt.add(directory)
-                                        Log.e("list", listt.toString())
-                                        //Log.e("list1", String.valueOf(listt.get(0).getDepartmentName()));
-                                        // Log.e("list1", String.valueOf(listt.get(0).getStaffList().get(0).getStaffName()));
+
                                     }
                                 }
                                 val customStaffDeptAdapter = StaffAdapterAdapterNew(mContext, listt)
@@ -137,7 +135,7 @@ class StaffListActivity:AppCompatActivity() {
                                     try {
                                         JSONObject jsonObject = new JSONObject(eventJson);
 
-                                        mStaffDeptList.add(addStaffDeptDetails(jsonObject));                                        // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
+                                        mStaffDeptList.add(addStaffDeptDetails(jsonObject));
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();

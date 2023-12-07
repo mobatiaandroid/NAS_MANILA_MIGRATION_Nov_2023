@@ -180,7 +180,6 @@ progressBar.visibility=View.VISIBLE
 
 
 
-        Log.e("fa",mLoadUrl)
         //   webView.getSettings().setUserAgentString("ur user agent");
         mWebView!!.loadUrl(mLoadUrl!!)
 
@@ -323,12 +322,10 @@ progressBar.visibility=View.VISIBLE
         override fun shouldOverrideUrlLoading(webView: WebView, url: String): Boolean {
             var overrideUrlLoading = false
             if (url != null && url.contains("whatsapp")) {
-                Log.e("su","su")
                 webView.getContext().startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 overrideUrlLoading = true
             }
             else {
-                Log.e("fa","fa")
                 webView.loadUrl(url)
             }
 
@@ -338,7 +335,6 @@ progressBar.visibility=View.VISIBLE
 
         override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
             //progressDialogAdd.visibility= View.GONE
-            Log.e("ERROR",error.toString())
             System.out.println("ERROR"+error)
             //Toast.makeText(activity, "Got Error! $error", Toast.LENGTH_SHORT).show()
         }

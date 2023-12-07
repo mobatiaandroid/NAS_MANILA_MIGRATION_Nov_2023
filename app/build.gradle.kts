@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -59,6 +59,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     implementation("com.github.siyamed:android-shape-imageview:0.9.+@aar")
     implementation("androidx.multidex:multidex:2.0.0")
+    implementation("com.scottyab:rootbeer-lib:0.1.0")
 
 
 }

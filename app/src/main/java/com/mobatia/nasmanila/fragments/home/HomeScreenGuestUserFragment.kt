@@ -704,7 +704,6 @@ class HomeScreenGuestUserFragment(
     }
 
     fun getBanner() {
-        Log.e("home","banner")
         var homebannerbody= HomeBannerApiModel(versionName,
             PreferenceManager.getUserID(mContext!!),"2")
         val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner("Bearer "+PreferenceManager.getAccessToken(mContext),
@@ -719,13 +718,11 @@ class HomeScreenGuestUserFragment(
                     var status_code=response.body()!!.response.statuscode
                     if (status_code.equals("303")){
                         if (responseData!!.response.data.size > 0) {
-                            Log.e("banner","data not 0")
                             homeBannerUrlImageArray.addAll(responseData!!.response.data)
 
                             bannerImagePager!!.adapter =
                                 ImagePagerDrawableAdapter(mContext,homeBannerUrlImageArray)
                         } else {
-                            Log.e("banner","data 0")
                             bannerImagePager!!.setBackgroundResource(R.drawable.default_bannerr)
 //
                         }
@@ -844,11 +841,9 @@ class HomeScreenGuestUserFragment(
         val fToken = arrayOf("")
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
-                Log.d("Token", "retrieve token successful : $token")
                 fToken[0] = token
                 PreferenceManager.setFCMID(mContext!!, token)
             } else {
-                Log.w("Token", "token should not be null...")
             }
         }
         var logoutmodel= LogoutApiModel(PreferenceManager.getUserID(activity), fToken.get(0),"2")

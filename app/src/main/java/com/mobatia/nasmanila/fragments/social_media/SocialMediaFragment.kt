@@ -372,7 +372,6 @@ class SocialMediaFragment() : Fragment() {
         }
         socialMediaList.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                Log.e("type",type.toString())
                 if (type == "facebook") {
                     val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
 //                    val intent = Intent(mContext, FullscreenWebViewActivityNoHeader::class.java)
@@ -380,7 +379,6 @@ class SocialMediaFragment() : Fragment() {
                     intent.putExtra("tab_type", mSocialMediaArraylistFacebook[position].tab_type)
                     startActivity(intent)
                 } else if (type == "twitter") {
-                    Log.e("url",mSocialMediaArraylistTwitter[position].url.toString())
                     val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
 //                    val intent = Intent(mContext, FullscreenWebViewActivityNoHeader::class.java)
                     intent.putExtra("url", mSocialMediaArraylistTwitter[position].url)

@@ -149,7 +149,6 @@ class NotificationsFragment() : Fragment() {
                                  val eventJson = gson.toJson(item)
                                  try {
                                      val jsonObject = JSONObject(eventJson)
-                                     Log.e("json", jsonObject.toString())
                                      pushNotificationArrayList.add(getSearchValues(jsonObject))
                                  } catch (e: JSONException) {
                                      e.printStackTrace()
@@ -157,7 +156,6 @@ class NotificationsFragment() : Fragment() {
 
 
                              }*/
-                            Log.e("Size", pushNotificationArrayList.size.toString())
                             mPushNotificationListAdapter =
                                 PushNotificationListAdapter(mContext, pushNotificationArrayList)
                             notificationRecycler.setAdapter(mPushNotificationListAdapter)
@@ -229,7 +227,6 @@ class NotificationsFragment() : Fragment() {
                         "Text"
                     )
                 ) {
-                    Log.e("view","text")
                     mIntent = Intent(context, TextAlertActivity::class.java)
                     mIntent!!.putExtra("position", position)
                     mIntent!!.putExtra("message", pushNotificationArrayList!![position].message)
@@ -242,7 +239,6 @@ class NotificationsFragment() : Fragment() {
                     context!!.startActivity(mIntent)
                 }
                 if (pushNotificationArrayList!![position].type.equals("Image"))  {
-                    Log.e("view","text")
                     mIntent = Intent(context, ImageAlertActivity::class.java)
                     mIntent!!.putExtra("position", position)
                     mIntent!!.putExtra("message", pushNotificationArrayList!![position].message)

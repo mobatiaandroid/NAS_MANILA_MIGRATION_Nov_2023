@@ -63,6 +63,13 @@ class SettingsFragment() : Fragment() {
     var confirmpassword: EditText? = null
     var isRegUser = false
     var dialog: Dialog? = null
+    private val PASSWORD_PATTERN = "^" +
+            "(?=.*[@#$%^&+=])" +  // at least 1 special character
+            "(?=\\S+$)" +  // no white spaces
+            ".{8,}" +  // at least 8 characters
+            "$"
+    var PASSWORD_PATTERN3="^" +
+            ".{8,}"
     var mSettingsListArray: ArrayList<String?> = object : ArrayList<String?>() {
         init {
             add("Change App Settings")
@@ -265,7 +272,7 @@ class SettingsFragment() : Fragment() {
             }
         }
     }
-
+    fun String.onlyLetters() = all { it.isLetter() }
     private fun showChangePasswordAlert() {
         dialog = Dialog(mContext!!, R.style.NewDialog)
         dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -344,7 +351,95 @@ class SettingsFragment() : Fragment() {
                     R.drawable.round
                 )
             } else {
-                if (AppUtils.checkInternet(mContext!!)) {
+                if (newpassword!!.text.toString().trim().equals("")) {
+                    AppUtils.showDialogAlertDismiss(
+                        mContext as Activity?,
+                        getString(R.string.alert_heading),
+                        "Please enter New Password",
+                        R.drawable.infoicon,
+                        R.drawable.round
+                    )
+                    //InternetCheckClass.showErrorAlert(context, "Please enter New Password", "Alert")
+                } else {
+                    if (confirmpassword!!.text.toString().trim().equals("")) {
+                        AppUtils.showDialogAlertDismiss(
+                            mContext as Activity?,
+                            getString(R.string.alert_heading),
+                            "Please enter Confirm Password",
+                            R.drawable.infoicon,
+                            R.drawable.round
+                        )
+                        /*InternetCheckClass.showErrorAlert(
+                            context,
+                            "Please enter Confirm Password",
+                            "Alert"
+                        )*/
+                    } else {
+                        if (newpassword!!.getText().toString().trim { it <= ' ' }
+                                .matches(PASSWORD_PATTERN.toRegex()) && confirmpassword!!.getText()
+                                .toString().trim { it <= ' ' }
+                                .matches(PASSWORD_PATTERN.toRegex())
+                        ) {
+
+                            if (AppUtils.checkInternet(mContext!!)) {
+                                callChangePasswordAPI()
+                            } else {
+                                AppUtils.showDialogAlertDismiss(
+                                    mContext as Activity?,
+                                    "Network Error",
+                                    getString(R.string.no_internet),
+                                    R.drawable.nonetworkicon,
+                                    R.drawable.roundred
+                                )
+                            }
+
+                        } else {
+                            if (!newpassword!!.getText().toString().onlyLetters() &&
+                                !confirmpassword!!.getText()
+                                    .toString().onlyLetters()
+                            ) {
+
+                                if (!newpassword!!.text.toString()
+                                        .contains(" ") &&
+                                    !confirmpassword!!.getText()
+                                        .toString()
+                                        .contains(" ")
+                                ) {
+
+                                    if (newpassword!!.text.toString().trim()
+                                            .matches(PASSWORD_PATTERN3.toRegex()) &&
+                                        confirmpassword!!.getText()
+                                            .toString().trim { it <= ' ' }
+                                            .matches(PASSWORD_PATTERN3.toRegex())
+                                    ) {
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Password must contain atleast 8 characters",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                    }
+
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Password must not contain white spaces",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    "Password must contain atleast 1 special character",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        }
+                        /*  if (AppUtils.checkInternet(mContext!!)) {
                     callChangePasswordAPI()
                 } else {
                     AppUtils.showDialogAlertDismiss(
@@ -354,19 +449,21 @@ class SettingsFragment() : Fragment() {
                         R.drawable.nonetworkicon,
                         R.drawable.roundred
                     )
+                }*/
+                    }
                 }
             }
         }
-
-        val dialogCancel = dialog!!.findViewById(R.id.btn_cancel) as Button
-        dialogCancel.setOnClickListener {
-            AppUtils.hideKeyboard(mContext)
+                val dialogCancel = dialog!!.findViewById(R.id.btn_cancel) as Button
+                dialogCancel.setOnClickListener {
+                    AppUtils.hideKeyboard(mContext)
 //            appUtils.hideKeyboard(mContext, text_currentpswd)
 //            appUtils.hideKeyboard(mContext, confirmpassword)
-            dialog!!.dismiss()
+                    dialog!!.dismiss()
+                }
+                dialog!!.show()
+
         }
-        dialog!!.show()
-    }
 
     private fun callChangePasswordAPI() {
         progressBarDialog!!.show()
@@ -588,11 +685,9 @@ fun showDialogAlertDeleteaccount(
         val fToken = arrayOf("")
         /*  FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
               if (!TextUtils.isEmpty(token)) {
-                  Log.d("Token", "retrieve token successful : $token")
                   fToken[0] = token
                   PreferenceManager.setFCMID(mContext!!, token)
               } else {
-                  Log.w("Token", "token should not be null...")
               }
           }*/
         var logoutmodel=LogoutApiModel(PreferenceManager.getUserID(activity), "","2")
@@ -647,11 +742,9 @@ fun showDialogAlertDeleteaccount(
         val fToken = arrayOf("")
       /*  FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
-                Log.d("Token", "retrieve token successful : $token")
                 fToken[0] = token
                 PreferenceManager.setFCMID(mContext!!, token)
             } else {
-                Log.w("Token", "token should not be null...")
             }
         }*/
         var logoutmodel=LogoutApiModel(PreferenceManager.getUserID(activity), "","2")

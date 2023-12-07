@@ -980,7 +980,6 @@ class HomeScreenRegisteredUserFragment2( s: String,
             mFragment = AboutUsFragment()
             fragmentIntent(mFragment)
         } else if (intentTabId.equals(NaisTabConstants.TAB_CONTACT_US_REG, ignoreCase = true)) {
-            Log.e("contact2","2")
             if (ActivityCompat.checkSelfPermission(
                     mContext!!,
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -992,12 +991,10 @@ class HomeScreenRegisteredUserFragment2( s: String,
                     Manifest.permission.CALL_PHONE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                Log.e("contact2","2if")
                 checkpermission()
 
 
             } else {
-                Log.e("contact2","2else")
                 mFragment = ContactUsFragment()
                 fragmentIntent(mFragment)
             }
@@ -1213,13 +1210,11 @@ class HomeScreenRegisteredUserFragment2( s: String,
                     if (status_code.equals("303")){
 
                         if (responseData!!.response.data.size > 0) {
-                            Log.e("banner","data not 0")
                            homeBannerUrlImageArray.addAll(responseData!!.response.data)
 
                             bannerImagePager!!.adapter =
                                 ImagePagerDrawableAdapter(mContext,homeBannerUrlImageArray)
                         } else {
-                            Log.e("banner","data 0")
                             bannerImagePager!!.setBackgroundResource(R.drawable.default_bannerr)
 //
                         }

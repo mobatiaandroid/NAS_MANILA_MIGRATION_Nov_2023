@@ -34,7 +34,6 @@ class CCAfinalReviewAfterSubmissionAdapter(var mContext: Context,var mCCADetailM
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-Log.e("adapter","CCAfinalReviewAfterSubmissionAdapter")
 
 //    holder.listTxtView.setText(mSocialMediaModels.get(position).toString());
         holder.textViewCCADay.setText(mCCADetailModelArrayList[position].day)
@@ -48,7 +47,6 @@ Log.e("adapter","CCAfinalReviewAfterSubmissionAdapter")
                 showAttendanceList(position)
             }
         }
-        Log.e("choice1",mCCADetailModelArrayList[position].choicee1.toString())
         if (mCCADetailModelArrayList[position].choicee1.equals("0")) {
             holder.linearChoice1.visibility = View.GONE
             holder.textViewCCAChoice1.text = "Choice 1 : None"
@@ -60,7 +58,6 @@ Log.e("adapter","CCAfinalReviewAfterSubmissionAdapter")
             holder.linearChoice1.visibility = View.VISIBLE
             //            holder.textViewCCAChoice1.setVisibility(View.VISIBLE);
 //            holder.textViewCCAChoice1.setText("Choice 1 : " + mCCADetailModelArrayList.get(position).choicee1);
-            Log.e("Choice 1", mCCADetailModelArrayList[position].choicee1.toString())
             holder.textViewCCAChoice1.setText(mCCADetailModelArrayList[position].choicee1)
             if (mCCADetailModelArrayList[position].venue
                     .equals("0") || mCCADetailModelArrayList[position].venue
@@ -163,8 +160,7 @@ Log.e("adapter","CCAfinalReviewAfterSubmissionAdapter")
             dialog!!.findViewById(R.id.recycler_view_social_mediaChoice2)
         alertHead.setText("Attendance report of " + mCCADetailModelArrayList[mPosition].day)
 
-        Log.e("text", mCCADetailModelArrayList[mPosition].choicee1.toString())
-        Log.e("text33", mCCADetailModelArrayList[mPosition].day.toString())
+
 //        scrollViewMain.pageScroll(View.FOCUS_DOWN);
         //        scrollViewMain.pageScroll(View.FOCUS_DOWN);
         scrollViewMain.smoothScrollTo(0, 0)
@@ -174,7 +170,6 @@ Log.e("adapter","CCAfinalReviewAfterSubmissionAdapter")
         ) {
 
             textViewCCAChoiceFirst.setText(mCCADetailModelArrayList[mPosition].choicee1)
-            Log.e("text", mCCADetailModelArrayList[mPosition].choicee1.toString())
             linearChoice3.visibility = View.VISIBLE
             socialMediaList.visibility = View.VISIBLE
             //socialMediaList.setHasFixedSize(true)

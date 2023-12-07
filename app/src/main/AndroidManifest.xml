@@ -20,6 +20,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="false"
+        tools:ignore="HardcodedDebugMode"
         android:theme="@style/Theme.NASManilaKotlin"
         tools:targetApi="n">
 

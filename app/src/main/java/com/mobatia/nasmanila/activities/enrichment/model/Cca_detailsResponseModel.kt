@@ -49,6 +49,7 @@ class CCADetailModel(
 class CCAchoiceModel(
     var cca_details_id: String? = null,
     var cca_item_name: String? = null,
+    @SerializedName("attending_status")
     var status: String? = null,
     var dayChoice: String? = null,
     var choice2Empty: String? = null,
@@ -57,5 +58,6 @@ class CCAchoiceModel(
     var cca_item_end_time: String? = null,
     var cca_item_description: String? = null,
     var venue: String? = null,
+    @SerializedName("isAttendee")
     var isattending: String? = null
 )

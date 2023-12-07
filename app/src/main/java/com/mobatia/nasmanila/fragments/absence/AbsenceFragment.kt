@@ -151,7 +151,6 @@ class AbsenceFragment : Fragment() {
             }
         }
         newRequest!!.setOnClickListener {
-            Log.e("stu", PreferenceManager.getLeaveStudentId(mContext).toString())
             val mIntent = Intent(mContext, LeaveRequestSubmissionActivity::class.java)
             mIntent.putExtra("studentName", studentName!!.text.toString())
             mIntent.putExtra("studentId", PreferenceManager.getLeaveStudentId(mContext))
@@ -245,7 +244,6 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
                         if (responseData!!.response.requests.size > 0) {
                             mAbsenceListViewArray!!.addAll(responseData!!.response.requests)
                             /*for (i in 0 until responseData!!.response.requests.size) {
-                                Log.e("Success", "Success")
                                 // JSONObject dataObject = dataArray.optJSONObject(i);
                                 val dataObject: LeavesModel =
                                     apiResponse.getResponse().getData().get(i)
@@ -365,7 +363,6 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
                                     studentsModelArrayList.add(addStudentDetails(jsonObject))
                                     studentList.add(studentsModelArrayList[i].getmName())
 
-                                    // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
@@ -380,8 +377,7 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
                                 studImg!!.setImageResource(R.drawable.student)
                             }
                             PreferenceManager.setLeaveStudentId(mContext,stud_id)
-                            Log.e("studid",stud_id)
-                            Log.e("prefstud",PreferenceManager.getLeaveStudentId(mContext).toString())
+
                             PreferenceManager.setLeaveStudentName(
                                 mContext,
                                 studentsModelArrayList[0].name
@@ -497,7 +493,6 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
                         if (responseData!!.response.requests.size > 0) {
                             mAbsenceListViewArray!!.addAll(responseData!!.response.requests)
                            /* for (i in 0 until responseData!!.response.requests.size) {
-                                Log.e("Success", "Success")
                                 // JSONObject dataObject = dataArray.optJSONObject(i);
                                 val dataObject: LeavesModel =
                                     responseData!!.response.requests

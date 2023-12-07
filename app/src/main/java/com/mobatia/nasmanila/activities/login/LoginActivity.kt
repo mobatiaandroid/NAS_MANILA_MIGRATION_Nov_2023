@@ -509,14 +509,22 @@ if (responseData!!.responsecode.equals("200")){
                             userNameEdtTxt.text.toString()
                         )
 
-                        Log.e("id",userid)
-                        Log.e("prefid",PreferenceManager.getUserID(context))
 
                         showDialogSignUpAlert(
                             context,
                             "Success",
                            "Successfully logged in.",
                             R.drawable.tick,
+                            R.drawable.round
+                        )
+
+
+                    }else if (status_code.equals("501")) {
+                        AppUtils.showDialogAlertDismiss(
+                            context,
+                            getString(R.string.error_heading),
+                            "Too many login attempts.Please try After 1 minute.",
+                            R.drawable.infoicon,
                             R.drawable.round
                         )
 

@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -46,7 +47,7 @@ class CCAsReviewActivity :AppCompatActivity(){
     var home: ImageView? = null
     var tab_type = "CCAs"
     var extras: Bundle? = null
-
+    var CCADetailModelArrayList: ArrayList<CCADetailModel>? = ArrayList()
     var mCCADetailModelArrayList: ArrayList<CCADetailModel>? = null
     var mCCAItemIdArray: ArrayList<String>? = null
     var textViewCCAaItem: TextView? = null
@@ -62,6 +63,8 @@ class CCAsReviewActivity :AppCompatActivity(){
         if (extras != null) {
             tab_type = extras!!.getString("tab_type")!!
         }
+        CCADetailModelArrayList= ArrayList()
+        CCADetailModelArrayList=AppController.CCADetailModelArrayList
         relativeHeader = findViewById(R.id.relativeHeader) as RelativeLayout
         recycler_review = findViewById(R.id.recycler_view_cca) as RecyclerView
         textViewCCAaItem = findViewById(R.id.textViewCCAaItem) as TextView
@@ -87,8 +90,8 @@ class CCAsReviewActivity :AppCompatActivity(){
         recycler_review!!.setHasFixedSize(true)
         recyclerViewLayoutManager = GridLayoutManager(mContext, 1)
         recycler_review!!.layoutManager = recyclerViewLayoutManager
-        mCCADetailModelArrayList = java.util.ArrayList()
-        mCCAItemIdArray = java.util.ArrayList()
+        mCCADetailModelArrayList = ArrayList()
+        mCCAItemIdArray = ArrayList()
 
         if (PreferenceManager.getStudClassForCCA(mContext).equals("")) {
             textViewCCAaItem!!.text = Html.fromHtml(
@@ -103,94 +106,104 @@ class CCAsReviewActivity :AppCompatActivity(){
                 )).toString() + "<br/>Year Group : " + PreferenceManager.getStudClassForCCA(mContext)
             )
         }
-        for (i in 0 until AppController().weekList!!.size) {
-            for (j in 0 until CCASelectionActivity().CCADetailModelArrayList!!.size) {
-                if (AppController().weekList!!.get(i).weekDay.equals(
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.day
+        for (i in 0 until AppController.weekList!!.size) {
+            for (j in 0 until CCADetailModelArrayList!!.size) {
+                if (AppController.weekList!!.get(i).weekDay.equals(
+                        CCADetailModelArrayList!!.get(j)!!.day
                     )
                 ) {
                     val mCCADetailModel = CCADetailModel()
                     mCCADetailModel.day=
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.day
+                        CCADetailModelArrayList!!.get(j)!!.day
 
                     mCCADetailModel.choicee1=
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choicee1
+                        CCADetailModelArrayList!!.get(j)!!.choicee1
 
-                    mCCADetailModel.choicee2
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choicee2!!
+                    mCCADetailModel.choicee2=
+                       CCADetailModelArrayList!!.get(j)!!.choicee2!!
+
                     mCCADetailModel.choice1Id=
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice1Id
+                        CCADetailModelArrayList!!.get(j)!!.choice1Id
                     mCCADetailModel.choice2Id=
-                        CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice2Id
+                        CCADetailModelArrayList!!.get(j)!!.choice2Id
                     mCCADetailModel.venue=""
-                    for (k in 0 until CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!
+                    for (k in 0 until CCADetailModelArrayList!!.get(j)!!
                         .choice1!!
-                        .size) if (CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!
+                        .size) if (CCADetailModelArrayList!!.get(j)!!
                             .choicee1.equals(
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice1!!
+                                CCADetailModelArrayList!!.get(j)!!.choice1!!
                                     .get(k)!!!!.cca_item_name
                             )
                     ) {
-                        if (CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice1!!
+                        if (CCADetailModelArrayList!!.get(j)!!.choice1!!
                                 .get(k)!!!!
-                                .cca_item_start_time != null && CCASelectionActivity().CCADetailModelArrayList!!.get(
+                                .cca_item_start_time != null && CCADetailModelArrayList!!.get(
                                 j
                             )!!.choice1!!.get(k)!!!!.cca_item_end_time != null
                         ) {
                             mCCADetailModel.cca_item_start_timechoice1=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice1!!.get(k)!!!!.cca_item_start_time
                             
                             mCCADetailModel.cca_item_end_timechoice1=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice1!!.get(k)!!!!.cca_item_end_time
                             mCCADetailModel.venue=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice1!!.get(k)!!!!.venue
                             break
                         }
                     }
-                    for (k in 0 until CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!
+
+                    for (k in 0 until CCADetailModelArrayList!!.get(j)!!
                         .choice2!!
-                        .size) if (CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!
+                        .size) if (CCADetailModelArrayList!!.get(j)!!
                             .choicee2.equals(
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice2!!
+                               CCADetailModelArrayList!!.get(j)!!.choice2!!
                                     .get(k)!!!!.cca_item_name
                             )
                     ) {
-                        if (CCASelectionActivity().CCADetailModelArrayList!!.get(j)!!.choice2!!
+
+                        if (CCADetailModelArrayList!!.get(j)!!.choice2!!
                                 .get(k)!!
-                                .cca_item_start_time != null && CCASelectionActivity().CCADetailModelArrayList!!.get(
+                                .cca_item_start_time != null &&CCADetailModelArrayList!!.get(
                                 j
                             )!!.choice2!!.get(k)!!.cca_item_end_time != null
                         ) {
                             mCCADetailModel.cca_item_start_timechoice2=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice2!!.get(k)!!.cca_item_start_time
                             
                             mCCADetailModel.cca_item_end_timechoice2=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice2!!.get(k)!!.cca_item_end_time
                             
                             mCCADetailModel.venue=
-                                CCASelectionActivity().CCADetailModelArrayList!!.get(
+                               CCADetailModelArrayList!!.get(
                                     j
                                 )!!.choice2!!.get(k)!!.venue
                             break
                         }
                     }
+
                     mCCADetailModelArrayList!!.add(mCCADetailModel)
+
+
                     break
+
                 }
+
             }
         }
+
         val mCCAsActivityAdapter = CCAfinalReviewAdapter(mContext, mCCADetailModelArrayList!!)
         recycler_review!!.adapter = mCCAsActivityAdapter
+
         for (j in mCCADetailModelArrayList!!.indices) {
             if (mCCADetailModelArrayList!![j].choicee1 != null && mCCADetailModelArrayList!![j].choicee2 != null) {
                 if (!mCCADetailModelArrayList!![j].choice1Id
@@ -370,12 +383,12 @@ class CCAsReviewActivity :AppCompatActivity(){
         val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
         icon.setBackgroundResource(bgIcon)
         icon.setImageResource(ico)
-        val text = dialog.findViewById<View>(R.id.text_dialog) as TextView
+        val text = dialog.findViewById<View>(R.id.textDialog) as TextView
         val textHead = dialog.findViewById<View>(R.id.alertHead) as TextView
         text.setText(msg)
         textHead.setText(msgHead)
 
-        val dialogButton = dialog.findViewById<View>(R.id.btn_Ok) as Button
+        val dialogButton = dialog.findViewById<View>(R.id.btnOK) as Button
         dialogButton.setOnClickListener {
             dialog.dismiss()
             val intent = Intent(mContext, CCA_Activity::class.java)

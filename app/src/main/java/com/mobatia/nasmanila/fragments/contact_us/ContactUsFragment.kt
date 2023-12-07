@@ -158,7 +158,6 @@ class ContactUsFragment() : Fragment(), LocationListener,
                     var status_code = responseData!!.response.statuscode
                     if (status_code.equals("303")) {
 
-                        //	Log.e("data1", String.valueOf(apiResponse.getResponse().getData().get(0)));
                         latitude = responseData!!.response.data.latitude
                         longitude = responseData!!.response.data.longitude
                         description = responseData!!.response.data.description
@@ -187,7 +186,6 @@ class ContactUsFragment() : Fragment(), LocationListener,
                                 }
                             }
                             mapFragment!!.getMapAsync { googleMap ->
-                                Log.e("Map Working", "good")
                                 mMap = googleMap
                                 mMap!!.uiSettings.isMapToolbarEnabled = false
                                 mMap!!.uiSettings.isZoomControlsEnabled = false
@@ -198,11 +196,9 @@ class ContactUsFragment() : Fragment(), LocationListener,
                                         .title("NAS Manila")
                                 )
 
-Log.e("maplatlng",latLng.toString())
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(13f))
-                                Log.e("mppap","camera")
                             /*    if (!isGPSEnabled!!) {
                                     val callGPSSettingIntent = Intent(
                                         Settings.ACTION_LOCATION_SOURCE_SETTINGS
@@ -262,15 +258,12 @@ Log.e("maplatlng",latLng.toString())
                                 }*/
 
                          /*       mMap.setOnInfoWindowClickListener {
-Log.e("window","click")
                                     if (!isGPSEnabled!!) {
-                                        Log.e("url","ifload")
                                         val callGPSSettingIntent = Intent(
                                             Settings.ACTION_LOCATION_SOURCE_SETTINGS
                                         )
                                         startActivity(callGPSSettingIntent)
                                     } else {
-                                        Log.e("url","load")
                                         //val url = "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=The British International School,Abudhabi"
                                         val url = "http://maps.google.com/maps?saddr=" + c_latitude + "," + c_longitude + "&daddr=Nord Anglia International School Manila - Manila"
 
@@ -378,7 +371,6 @@ Log.e("window","click")
 
                     location =
                         locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)!!
-                    Log.e("loc", location.toString())
                     if (location != null) {
                         lat = location.latitude
                         lng = location.longitude
@@ -398,7 +390,6 @@ Log.e("window","click")
                     lng = location.longitude
                     println("lat---$lat")
                     println("lat---$lng")
-                    Log.e("CONTACTLATITUDE:", (lat!! + lng!!).toString())
                 }
             }
         }

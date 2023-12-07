@@ -90,12 +90,10 @@ class AccreditationsActivity : AppCompatActivity(), AdapterView.OnItemClickListe
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
 
-       Log.e("ur;",mAboutUsListArray!![position]!!.url.toString())
         if (mAboutUsListArray!![position]!!.url!!
                 .endsWith(".pdf")
         ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                Log.e("pdf","sdk")
                 var intent:Intent =  Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(Uri.parse(mAboutUsListArray!![position]!!.url), "application/pdf");
 
@@ -107,7 +105,6 @@ class AccreditationsActivity : AppCompatActivity(), AdapterView.OnItemClickListe
                     )
                 )*/
             } else {
-                Log.e("pdf","act")
                 val intent = Intent(mContext, PDFViewActivity::class.java)
                 intent.putExtra("pdf_url", mAboutUsListArray!![position]!!.url)
                 startActivity(intent)

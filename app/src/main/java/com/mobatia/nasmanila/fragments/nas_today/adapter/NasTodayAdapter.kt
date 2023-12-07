@@ -140,8 +140,7 @@ class NasTodayAdapter(activity: Activity?, mListViewArray: ArrayList<NasTodayMod
             val mIntent = Intent(mContext, LoadUrlWebViewActivity::class.java)
             println("result is::" + mNasTodayList[position].image)
             mIntent.putExtra("webViewComingDetail", webViewComingUpDetail)
-            Log.v("detail:: ", webViewComingUpDetail)
-            Log.v("desc:: ", mNasTodayList[position].description!!)
+
             mIntent.putExtra("pdf", mNasTodayList[position].pdf)
             mContext!!.startActivity(mIntent)
         }

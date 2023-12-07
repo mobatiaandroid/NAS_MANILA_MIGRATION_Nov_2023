@@ -2,15 +2,18 @@ package com.mobatia.nasmanila.activities.enrichment.adapter
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.enrichment.CCASelectionActivity
+import com.mobatia.nasmanila.activities.enrichment.model.CCADetailModel
 import com.mobatia.nasmanila.activities.enrichment.model.CCAchoiceModel
 import com.mobatia.nasmanila.activities.enrichment.model.WeekListModel
 import com.mobatia.nasmanila.common.common_classes.AppUtils
@@ -18,7 +21,10 @@ import com.mobatia.nasmanila.common.constants.AppController
 
 class CCAsChoiceListActivityAdapter(
     var mContext: Context, var mCCAmodelArrayList: ArrayList<CCAchoiceModel?>, var dayPosition: Int,
-    var weekList: ArrayList<WeekListModel>?, var choicePosition: Int, var recyclerWeek: RecyclerView?) :
+    var weekList: ArrayList<WeekListModel>?, var choicePosition: Int, var recyclerWeek: RecyclerView?,
+    var submitBtn: Button, var nextBtn: Button, var mCCAmodeldetailArrayList: ArrayList<CCADetailModel?>? = null,
+    var filled: Boolean,var ccaDetailpos:Int
+) :
     RecyclerView.Adapter<CCAsChoiceListActivityAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -46,11 +52,12 @@ class CCAsChoiceListActivityAdapter(
                 //                AppController.weekList.get(dayPosition).setChoiceStatus("0");
             } else {
                 holder.confirmationImageview.setBackgroundResource(R.drawable.participatingsmallicon)
-                AppController().weekList!!.get(dayPosition).choiceStatus="1"
-                CCASelectionActivity().CCADetailModelArrayList!!.get(CCASelectionActivity().ccaDetailpos)!!.choicee1=mCCAmodelArrayList.get(position)!!.cca_item_name
-                CCASelectionActivity().CCADetailModelArrayList!!.get(CCASelectionActivity().ccaDetailpos)!!.choice1Id=mCCAmodelArrayList.get(position)!!.cca_details_id
+                AppController.weekList!!.get(dayPosition).choiceStatus="1"
+                mCCAmodeldetailArrayList!!.get(ccaDetailpos)!!.choicee1=mCCAmodelArrayList.get(position)!!.cca_item_name
+                mCCAmodeldetailArrayList!!.get(ccaDetailpos)!!.choice1Id=mCCAmodelArrayList.get(position)!!.cca_details_id
+
                 val mCCAsWeekListAdapter =
-                    CCAsWeekListAdapter(mContext, AppController().weekList!!, dayPosition)
+                    CCAsWeekListAdapter(mContext, AppController.weekList!!, dayPosition)
                 mCCAsWeekListAdapter.notifyDataSetChanged()
                 recyclerWeek!!.adapter = mCCAsWeekListAdapter
             }
@@ -60,41 +67,41 @@ class CCAsChoiceListActivityAdapter(
                 //                AppController.weekList.get(dayPosition).setChoiceStatus1("0");
             } else {
                 holder.confirmationImageview.setBackgroundResource(R.drawable.participatingsmallicon)
-                AppController().weekList!!.get(dayPosition).choiceStatus1="1"
-                CCASelectionActivity().CCADetailModelArrayList!!.get(CCASelectionActivity().ccaDetailpos)!!
+                AppController.weekList!!.get(dayPosition).choiceStatus1="1"
+                mCCAmodeldetailArrayList!!.get(ccaDetailpos)!!
                     .choicee2=mCCAmodelArrayList.get(position)!!.cca_item_name
-                CCASelectionActivity().CCADetailModelArrayList!!.get(CCASelectionActivity().ccaDetailpos)!!
+                mCCAmodeldetailArrayList!!.get(ccaDetailpos)!!
                     .choice2Id=mCCAmodelArrayList.get(position)!!.cca_details_id
                 val mCCAsWeekListAdapter =
-                    CCAsWeekListAdapter(mContext, AppController().weekList!!, dayPosition)
+                    CCAsWeekListAdapter(mContext, AppController.weekList!!, dayPosition)
                 mCCAsWeekListAdapter.notifyDataSetChanged()
                 recyclerWeek!!.adapter = mCCAsWeekListAdapter
             }
         }
-        for (j in 0 until AppController().weekList!!.size) {
-            if (AppController().weekList!!.get(j).choiceStatus
-                    .equals("0") || AppController().weekList!!.get(j).choiceStatus1
+        for (j in 0 until AppController.weekList!!.size) {
+            if (AppController.weekList!!.get(j).choiceStatus
+                    .equals("0") || AppController.weekList!!.get(j).choiceStatus1
                     .equals("0")
             ) {
-                CCASelectionActivity().filled = false
+               AppController.filled = false
                 break
             } else {
-                CCASelectionActivity().filled = true
+                AppController.filled = true
             }
-            if (!CCASelectionActivity().filled) {
+            if (AppController.filled==false) {
                 break
             }
         }
-        if (CCASelectionActivity().filled) {
-            CCASelectionActivity().submitBtn!!.getBackground().setAlpha(255)
-            CCASelectionActivity().submitBtn!!.setVisibility(View.VISIBLE)
-            CCASelectionActivity().nextBtn!!.getBackground().setAlpha(255)
-            CCASelectionActivity().nextBtn!!.setVisibility(View.GONE)
+        if (AppController.filled) {
+            submitBtn!!.getBackground().setAlpha(255)
+            submitBtn!!.setVisibility(View.VISIBLE)
+            nextBtn!!.getBackground().setAlpha(255)
+            nextBtn!!.setVisibility(View.GONE)
         } else {
-            CCASelectionActivity().submitBtn!!.getBackground().setAlpha(150)
-            CCASelectionActivity().submitBtn!!.setVisibility(View.INVISIBLE)
-            CCASelectionActivity().nextBtn!!.getBackground().setAlpha(255)
-            CCASelectionActivity().nextBtn!!.setVisibility(View.VISIBLE)
+           submitBtn!!.getBackground().setAlpha(150)
+            submitBtn!!.setVisibility(View.INVISIBLE)
+            nextBtn!!.getBackground().setAlpha(255)
+           nextBtn!!.setVisibility(View.VISIBLE)
         }
 //    holder.listTxtView.setText(mSocialMediaModels.get(position).toString());
         //    holder.listTxtView.setText(mSocialMediaModels.get(position).toString());

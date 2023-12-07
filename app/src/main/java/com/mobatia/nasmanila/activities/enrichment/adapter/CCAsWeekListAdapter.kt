@@ -2,6 +2,7 @@ package com.mobatia.nasmanila.activities.enrichment.adapter
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,15 +31,15 @@ class CCAsWeekListAdapter(var mContext: Context, var mWeekListModelArrayList: Ar
 
 //    holder.listTxtView.setText(mSocialMediaModels.get(position).toString());
         holder.listTxtView.setText(mWeekListModelArrayList[position].weekDayMMM)
-        if (AppController().weekList!!.get(position).choiceStatus
-                .equals("0") || AppController().weekList!!.get(position).choiceStatus1
+        if (AppController.weekList!!.get(position).choiceStatus
+                .equals("0") || AppController.weekList!!.get(position).choiceStatus1
                 .equals("0")
         ) {
             holder.selectionCompletedView.setBackgroundResource(R.drawable.curve_filled_cca_pending)
             holder.linearBg.setBackgroundResource(R.color.white)
             holder.linearChoice.setBackgroundResource(R.color.white)
-        } else if (AppController().weekList!!.get(position).choiceStatus
-                .equals("2") && AppController().weekList!!.get(position).choiceStatus1
+        } else if (AppController.weekList!!.get(position).choiceStatus
+                .equals("2") && AppController.weekList!!.get(position).choiceStatus1
                 .equals("2")
         ) {
             holder.selectionCompletedView.setBackgroundResource(R.drawable.curve_filled_cca_not_available)

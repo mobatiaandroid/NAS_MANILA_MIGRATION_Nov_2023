@@ -118,6 +118,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                android:filterTouchesWhenObscured="true"
                 android:layout_below="@+id/text_content"
                 android:text="SUBMIT"
                 android:background="@drawable/button_new"

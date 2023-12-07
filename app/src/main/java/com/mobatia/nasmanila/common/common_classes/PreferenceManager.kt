@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.mobatia.nasmanila.R
+import com.mobatia.nasmanila.activities.enrichment.model.CCADetailModel
 import com.mobatia.nasmanila.common.constants.NaisTabConstants
 import com.mobatia.nasmanila.fragments.about_us.model.AboutUsItemsModel
 import com.mobatia.nasmanila.fragments.parent_essentials.model.SubmenuParentEssentials
@@ -1237,6 +1238,28 @@ class PreferenceManager {
                 context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
             CCAItemId = sharedPreferences.getString("CCAItemId", "").toString()
             return CCAItemId
+        }
+        fun setccadetailarray(list: ArrayList<CCADetailModel?>?, context: Context) {
+            val prefs = context.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            val editor = prefs.edit()
+            val gson = Gson()
+            val json = gson.toJson(list)
+            editor.putString("ccadetailarray", json)
+            editor.apply() // This line is IMPORTANT !!!
+        }
+
+        fun getccadetailarray(context: Context): ArrayList<CCADetailModel?>? {
+            val prefs = context.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            val gson = Gson()
+            val json = prefs.getString("ccadetailarray", null)
+            val type = object : TypeToken<ArrayList<CCADetailModel?>?>() {}.type
+            return gson.fromJson<ArrayList<CCADetailModel?>>(json, type)
         }
     }
 }

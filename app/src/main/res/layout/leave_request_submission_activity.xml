@@ -140,6 +140,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/submitBtn"
                     android:text="@string/submit"
+                    android:filterTouchesWhenObscured="true"
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     android:gravity="center"

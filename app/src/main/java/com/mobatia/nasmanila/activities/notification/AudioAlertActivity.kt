@@ -104,7 +104,6 @@ class AudioAlertActivity : AppCompatActivity() {
         textcontent = findViewById<View>(R.id.txt) as TextView
         seekBarProgress = findViewById<View>(R.id.seekBarProgress) as SeekBar
         playerIamge = findViewById<View>(R.id.imageViewPauseIndicator) as ImageView
-//        Log.e("Error", alertlist!![position]!!.pushURL!!)
 //        url = alertlist!![position]!!.pushURL!!
 //        textcontent!!.text = alertlist!![position]!!.pushTitle
 //        println("check url$url")

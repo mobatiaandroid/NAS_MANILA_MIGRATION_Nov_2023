@@ -155,14 +155,11 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission(),
             ActivityResultCallback<Boolean> { result ->
-                Log.e("result", result.toString())
                 if (result) {
                     // PERMISSION GRANTED
-                    Log.e("result", result.toString())
                     // Toast.makeText(mContext, String.valueOf(result), Toast.LENGTH_SHORT).show();
                 } else {
                     // PERMISSION NOT GRANTED
-                    Log.e("denied", result.toString())
                     val snackbar = Snackbar.make(
                         mDrawerLayout!!,
                         "Notification Permission Denied",
@@ -195,10 +192,8 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         askForNotificationPermission()
        /* FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
-                Log.d("Token", "retrieve token successful : $token")
                 PreferenceManager.setFCMID(mContext, token)
             } else {
-                Log.w("Token", "token should not be null...")
             }
         }*/
         initialSettings()
@@ -208,7 +203,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             displayView(2)
 
         } else {
-            Log.e("dis","0")
             displayView(0)
         }
         if (AppUtils.checkInternet(mContext)) {
@@ -634,7 +628,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                 }
 
                 6 -> {
-                    Log.e("contact","1")
                     // contact us
                     imageButton2!!.setVisibility(View.VISIBLE)
                     if (ActivityCompat.checkSelfPermission(
@@ -648,14 +641,12 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                             Manifest.permission.CALL_PHONE
                         ) != PackageManager.PERMISSION_GRANTED
                     ) {
-                        Log.e("contact","1 if")
                         checkPermission()
 
 
                     }
                     else
                     {
-                        Log.e("contact","1 else")
                         mFragment = ContactUsFragment()
                         replaceFragmentsSelected(position)
                     }
@@ -857,7 +848,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                 }
 
                 9 -> {
-                    Log.e("contact3","3")
 
                     if (ActivityCompat.checkSelfPermission(
                             mContext,
@@ -870,7 +860,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                             Manifest.permission.CALL_PHONE
                         ) != PackageManager.PERMISSION_GRANTED
                     ) {
-                        Log.e("contact3","3if")
 
                         checkPermission()
 
@@ -878,7 +867,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                     }
                     else
                     {
-                        Log.e("contact3","3else")
                         mFragment = ContactUsFragment()
                         replaceFragmentsSelected(position)
                     }
@@ -1072,8 +1060,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 //        mHomeListView.setOnItemLongClickListener(this);
                mHomeListView!!.setOnItemLongClickListener(this);
         val firebaseID = PreferenceManager.getFCMID(mContext)
-//        Log.e("ID",firebaseID);
-        //        Log.e("ID",firebaseID);
         //mDetector = GestureDetector(this)
      /*   mDrawerToggle = object : ActionBarDrawerToggle(
             mContext as Activity,
@@ -1186,7 +1172,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         position: Int,
         id: Long
     ): Boolean {
-        Log.e("longclick","")
       /*   if (position != 0) {
             // drag list view item
             PreferenceManager.setIfHomeItemClickEnabled(mContext, true)

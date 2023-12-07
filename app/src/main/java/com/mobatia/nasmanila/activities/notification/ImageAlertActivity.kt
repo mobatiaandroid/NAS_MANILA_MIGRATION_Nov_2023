@@ -76,7 +76,6 @@ class ImageAlertActivity : AppCompatActivity() {
         mMessage = message
             .replace("\n".toRegex(), "<br>")
             .replace(" ".toRegex(), "&nbsp;");
-        Log.e("message",mMessage)
         initialiseUI()
         if (AppUtils.checkInternet(mContext as ImageAlertActivity)) {
             callPushNotification(pushID)
@@ -104,7 +103,6 @@ class ImageAlertActivity : AppCompatActivity() {
         }
         pushNotificationDetail=pushNotificationDetail+"</body>\n</html>"
         var htmlData=pushNotificationDetail
-        Log.e("HTML DATA",htmlData)
         //  webView.loadData(htmlData,"text/html; charset=utf-8","utf-8")
         mWebView!!.loadDataWithBaseURL("file:///android_asset/fonts/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
 

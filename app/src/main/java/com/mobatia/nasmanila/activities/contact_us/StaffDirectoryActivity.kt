@@ -94,7 +94,6 @@ lateinit var mContext:Context
                                 try {
                                     val jsonObject = JSONObject(eventJson)
                                     mStaffDirectoryListArray.add(addStaffDetails(jsonObject))
-                                    // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }

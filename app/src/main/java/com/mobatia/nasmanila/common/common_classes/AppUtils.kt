@@ -168,7 +168,6 @@ class AppUtils {
                 val formatterFullDate = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
                 mDate = formatterFullDate.format(time)
             } catch (e: java.lang.Exception) {
-                Log.d("Exception", "" + e)
             }
             return mDate
         }
@@ -185,7 +184,6 @@ class AppUtils {
                 val formatterFullDate = SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
                 mDate = formatterFullDate.format(time)
             } catch (e: Exception) {
-                Log.d("Exception", "" + e)
             }
             return mDate
         }

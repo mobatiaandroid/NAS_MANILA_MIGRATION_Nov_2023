@@ -103,7 +103,7 @@ class NasTodayFragment(nasToday: String, tabNasToday: String) : Fragment() {
 //        try {
 //            mNoticeDate = sdfcalender!!.parse(mDate)
 //        } catch (ex: ParseException) {
-//            Log.e("Date", "Parsing error")
+//
 //        }
 //        val mDateTime: String = dataObject.getString(JSONConstants.JTAG_DATE)
 //        var mTime: Date? = Date()
@@ -114,7 +114,7 @@ class NasTodayFragment(nasToday: String, tabNasToday: String) : Fragment() {
 //            val startTime = format2.format(mTime)
 //            model.time = (startTime)
 //        } catch (ex: ParseException) {
-//            Log.e("Date", "Parsing error")
+//
 //        }
 //
 //        val day = DateFormat.format("dd", mNoticeDate) as String

@@ -143,7 +143,6 @@ class ParentsMeetingFragment() : Fragment() {
                                 try {
                                     val jsonObject = JSONObject(eventJson)
                                     mListViewArray!!.add(getSearchValues(jsonObject))
-                                    // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
@@ -307,7 +306,10 @@ class ParentsMeetingFragment() : Fragment() {
                             R.drawable.round
                         )
                     } else {
-                        if (AppUtils.isNetworkConnected(mContext)) {
+                        emailvalidationcheck( text_dialog!!.text.toString(),text_content!!.text.toString(),
+                            dialog!!
+                        )
+                       /* if (AppUtils.isNetworkConnected(mContext)) {
                             println("student id" + mStudentId + "staff id" + mStaffId)
                             sendEmailToStaff()
                         } else {
@@ -318,7 +320,7 @@ class ParentsMeetingFragment() : Fragment() {
                                 R.drawable.nonetworkicon,
                                 R.drawable.roundred
                             )
-                        }
+                        }*/
                     }
                 }
                 dialog!!.show()
@@ -449,7 +451,6 @@ class ParentsMeetingFragment() : Fragment() {
                                 try {
                                     val jsonObject = JSONObject(eventJson)
                                     mListViewStaffArray!!.add(getStaffValues(jsonObject))
-                                    // Log.e("Parentessentialsq", String.valueOf(newsLetterModelArrayList));
                                 } catch (e: JSONException) {
                                     e.printStackTrace()
                                 }
@@ -519,7 +520,81 @@ class ParentsMeetingFragment() : Fragment() {
             }
         })
     }
+    fun emailvalidationcheck( title: String,
+                              message: String,
+                              dialog: Dialog){
+        val EMAIL_PATTERN :String=
+            "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+        val pattern :String= "^([a-zA-Z ]*)$"
 
+        if (title.equals("")) {
+            val toast: Toast = Toast.makeText(
+                mContext, mContext.getResources().getString(
+                    R.string.enter_subjects
+                ), Toast.LENGTH_SHORT
+            )
+            toast.show()
+        } else {
+            if (message.equals("")) {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext.getResources().getString(
+                        R.string.enter_contents
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            } else if (staffEmail.matches(EMAIL_PATTERN.toRegex())) {
+                if (title.toString().trim().matches(pattern.toRegex())) {
+                    if (title.toString().length>=500){
+                        Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
+
+                    }else{
+                        if (message.toString().trim().matches(pattern.toRegex())) {
+
+                            if (message.length <= 500) {
+                                if (AppUtils.checkInternet(mContext!!)) {
+                                    sendEmailToStaff()
+                                }else{
+                                    Toast.makeText(
+                                        mContext,
+                                        mContext!!.resources.getString(R.string.no_internet),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            } else {
+                                Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT)
+                                    .show()
+
+                            }
+                        }
+                        else {
+                            val toast: Toast = Toast.makeText(
+                                mContext, mContext.getResources().getString(
+                                    R.string.enter_valid_contents
+                                ), Toast.LENGTH_SHORT
+                            )
+                            toast.show()
+                        }
+                    }
+
+
+                } else {
+                    val toast: Toast = Toast.makeText(
+                        mContext, mContext.getResources().getString(
+                            R.string.enter_valid_subjects
+                        ), Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                }
+            } else {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext.getResources().getString(
+                        R.string.enter_valid_mail
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            }
+        }
+    }
     private fun sendEmailToStaff() {
         var homebannerbody= SendemailstaffptaApiModel(mStudentId,mStaffId,PreferenceManager.getUserID(mContext),
             text_dialog!!.text.toString(),text_content!!.text.toString())

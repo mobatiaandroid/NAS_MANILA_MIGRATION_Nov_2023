@@ -142,7 +142,8 @@ class CustomStaffDeptRecyclerAdapter(
                     if (AppUtils.isNetworkConnected(mContext)) {
                         println("clicked position count$position")
                         System.out.println("Email id Passing" + mStaffList[position].staffEmail)
-                        if (AppUtils.checkInternet(mContext)) {
+                        emailvalidationcheck( mStaffList[position].staffEmail,text_dialog.text.toString(),text_content.text.toString(),dialog)
+                        /*if (AppUtils.checkInternet(mContext)) {
                             sendEmailToStaff(
                                 mStaffList[position].staffEmail,text_dialog.text.toString(),text_content.text.toString(),dialog
                             )
@@ -152,7 +153,7 @@ class CustomStaffDeptRecyclerAdapter(
                                 mContext.resources.getString(R.string.no_internet),
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }
+                        }*/
 
                     } else {
                         AppUtils.showDialogAlertDismiss(
@@ -178,7 +179,79 @@ class CustomStaffDeptRecyclerAdapter(
         }
 
     }
+    fun emailvalidationcheck( staffEmail: String?,text_dialog:String,text_content:String,dialog:Dialog){
+        val EMAIL_PATTERN :String=
+            "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+        val pattern :String= "^([a-zA-Z ]*)$"
 
+        if (text_dialog.equals("")) {
+            val toast: Toast = Toast.makeText(
+                mContext, mContext.getResources().getString(
+                    R.string.enter_subjects
+                ), Toast.LENGTH_SHORT
+            )
+            toast.show()
+        } else {
+            if (text_content.equals("")) {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext.getResources().getString(
+                        R.string.enter_contents
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            } else if (staffEmail!!.matches(EMAIL_PATTERN.toRegex())) {
+                if (text_dialog.toString().trim().matches(pattern.toRegex())) {
+                    if (text_dialog.toString().length>=500){
+                        Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
+
+                    }else{
+                        if (text_content.toString().trim().matches(pattern.toRegex())) {
+                            if (text_content.length<=500) {
+                                if (AppUtils.checkInternet(mContext)) {
+                                    sendEmailToStaff(
+                                        staffEmail,text_dialog,text_content,dialog
+                                    )
+                                }else{
+                                    Toast.makeText(
+                                        mContext,
+                                        mContext.resources.getString(R.string.no_internet),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }else{
+                                Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT).show()
+
+                            }
+
+                        } else {
+                            val toast: Toast = Toast.makeText(
+                                mContext, mContext.getResources().getString(
+                                    R.string.enter_valid_contents
+                                ), Toast.LENGTH_SHORT
+                            )
+                            toast.show()
+                        }
+                    }
+                } else {
+                    val toast: Toast = Toast.makeText(
+                        mContext, mContext.getResources().getString(
+                            R.string.enter_valid_subjects
+                        ), Toast.LENGTH_SHORT
+                    )
+                    toast.show()
+                }
+            } else {
+                val toast: Toast = Toast.makeText(
+                    mContext, mContext.getResources().getString(
+                        R.string.enter_valid_mail
+                    ), Toast.LENGTH_SHORT
+                )
+                toast.show()
+            }
+        }
+
+
+    }
     private fun sendEmailToStaff(staffEmail: String?,text_dialog:String,text_content:String,dialog:Dialog) {
         var homebannerbody= SendemailApiModel(
             staffEmail.toString(),PreferenceManager.getUserID(mContext).toString(),
@@ -259,7 +332,13 @@ class CustomStaffDeptRecyclerAdapter(
             }
 
             override fun onFailure(call: Call<SendemailResponseModel>, t: Throwable) {
-                Log.e("failed", t.toString())
+                AppUtils.showDialogAlertDismiss(
+                    mContext,
+                    "Alert",
+                    mContext!!.getString(R.string.common_error),
+                    R.drawable.exclamationicon,
+                    R.drawable.round
+                )
                       }
         })
     }
