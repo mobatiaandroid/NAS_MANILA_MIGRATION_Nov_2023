@@ -37,14 +37,14 @@ class SplashActivity : AppCompatActivity() {
             } else {
                 Handler().postDelayed({
                     if (PreferenceManager.getIsFirstLaunch(context) &&
-                        PreferenceManager.getUserID(context).toString().equals("")
+                        PreferenceManager.getAccessToken(context).toString().equals("")
                     ) {
                         var tutorialIntent: Intent = Intent(context, TutorialActivity::class.java)
                         tutorialIntent.putExtra("type", 1)
                         startActivity(tutorialIntent)
                         finish()
                     } else
-                        if (PreferenceManager.getUserID(context).toString().equals("")) {
+                        if (PreferenceManager.getAccessToken(context).toString().equals("")) {
                             var loginIntent: Intent = Intent(context, LoginActivity::class.java)
                             startActivity(loginIntent)
                             finish()

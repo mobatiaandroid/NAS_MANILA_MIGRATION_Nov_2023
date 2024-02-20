@@ -228,8 +228,11 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
     private fun getList(id: String) {
         mAbsenceListViewArray = ArrayList()
         progressBarDialog!!.show()
-        var student= LeaveRequestsApiModel(id,PreferenceManager.getUserID(mContext))
-        val call: Call<LeaveRequestsResponseModel> = ApiClient.getClient.leaveRequests("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = LeaveRequestsApiModel(id)
+        val call: Call<LeaveRequestsResponseModel> = ApiClient.getClient.leaveRequests(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<LeaveRequestsResponseModel> {
             override fun onResponse(
                 call: Call<LeaveRequestsResponseModel>,
@@ -335,8 +338,11 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
 
     private fun getStudentsListFirstAPI() {
         progressBarDialog!!.show()
-        var student= StudentlistApiModel(PreferenceManager.getUserID(mContext))
-        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = StudentlistApiModel()
+        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<StudentlistResponseModel> {
             override fun onResponse(
                 call: Call<StudentlistResponseModel>,
@@ -477,8 +483,11 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
     private fun getListFirst(studId: String) {
         mAbsenceListViewArray = ArrayList()
         progressBarDialog!!.show()
-        var student= LeaveRequestsApiModel(studId,PreferenceManager.getUserID(mContext))
-        val call: Call<LeaveRequestsResponseModel> = ApiClient.getClient.leaveRequests("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = LeaveRequestsApiModel(studId)
+        val call: Call<LeaveRequestsResponseModel> = ApiClient.getClient.leaveRequests(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<LeaveRequestsResponseModel> {
             override fun onResponse(
                 call: Call<LeaveRequestsResponseModel>,

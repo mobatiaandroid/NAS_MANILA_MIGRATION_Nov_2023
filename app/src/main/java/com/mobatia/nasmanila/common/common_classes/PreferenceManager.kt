@@ -79,6 +79,7 @@ class PreferenceManager {
             editor.putBoolean("homeclick", homeclick)
             editor.apply()
         }
+
         fun getIfHomeItemClickEnabled(context: Context): Boolean {
             val prefs = context.getSharedPreferences(
                 sharedPrefNas,
@@ -87,20 +88,20 @@ class PreferenceManager {
             return prefs.getBoolean("homeclick", true)
         }
 
-        fun setUserID(context: Context, userid: String) {
-            val sharedPreferences: SharedPreferences =
-                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
-            val editor: SharedPreferences.Editor = sharedPreferences.edit()
-            editor.putString("userid", userid)
-            editor.apply()
-        }
-        fun getUserID(context: Context?): String {
-            val tokenValue: String
-            val sharedPreferences: SharedPreferences =
-                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
-            tokenValue = sharedPreferences.getString("userid", "").toString()
-            return tokenValue
-        }
+//        fun setUserID(context: Context, userid: String) {
+//            val sharedPreferences: SharedPreferences =
+//                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
+//            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+//            editor.putString("userid", userid)
+//            editor.apply()
+//        }
+//        fun getUserID(context: Context?): String {
+//            val tokenValue: String
+//            val sharedPreferences: SharedPreferences =
+//                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
+//            tokenValue = sharedPreferences.getString("userid", "").toString()
+//            return tokenValue
+//        }
 
 
         fun setUserEmail(context: Context, UserEmail: String) {
@@ -110,6 +111,7 @@ class PreferenceManager {
             editor.putString("UserEmail", UserEmail)
             editor.apply()
         }
+
         fun getUserEmail(context: Context): String {
             val UserEmail: String
             val sharedPreferences: SharedPreferences =

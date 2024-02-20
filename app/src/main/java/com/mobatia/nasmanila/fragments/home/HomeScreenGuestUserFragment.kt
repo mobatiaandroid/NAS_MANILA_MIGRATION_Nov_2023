@@ -704,10 +704,11 @@ class HomeScreenGuestUserFragment(
     }
 
     fun getBanner() {
-        var homebannerbody= HomeBannerApiModel(versionName,
-            PreferenceManager.getUserID(mContext!!),"2")
-        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = HomeBannerApiModel(versionName, "2")
+        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<HomeBannerModel> {
             override fun onResponse(call: Call<HomeBannerModel>, response: Response<HomeBannerModel>) {
@@ -808,10 +809,10 @@ class HomeScreenGuestUserFragment(
 
         val dialogButton = dialog.findViewById<View>(R.id.btn_Ok) as Button
         dialogButton.setOnClickListener {
-            if (PreferenceManager.getUserID(activity)
+            if (PreferenceManager.getAccessToken(activity)
                     .equals("", ignoreCase = true)
             ) {
-                PreferenceManager.setUserID(activity,"")
+                PreferenceManager.setAccessToken(activity, "")
                 dialog.dismiss()
                 val mIntent = Intent(activity, LoginActivity::class.java)
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -846,8 +847,11 @@ class HomeScreenGuestUserFragment(
             } else {
             }
         }
-        var logoutmodel= LogoutApiModel(PreferenceManager.getUserID(activity), fToken.get(0),"2")
-        val call: Call<LogoutResponseModel> = ApiClient.getClient.logout("Bearer "+ PreferenceManager.getAccessToken(mContext),logoutmodel)
+        var logoutmodel = LogoutApiModel(fToken.get(0), "2")
+        val call: Call<LogoutResponseModel> = ApiClient.getClient.logout(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            logoutmodel
+        )
         call.enqueue(object : Callback<LogoutResponseModel> {
             override fun onResponse(
                 call: Call<LogoutResponseModel>,

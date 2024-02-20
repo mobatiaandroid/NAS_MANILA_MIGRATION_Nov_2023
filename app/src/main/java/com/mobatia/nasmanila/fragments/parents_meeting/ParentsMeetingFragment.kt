@@ -122,8 +122,11 @@ class ParentsMeetingFragment() : Fragment() {
     private fun getStudentList() {
         mListViewArray= ArrayList()
         progressBarDialog!!.show()
-        var student= StudentlistApiModel(PreferenceManager.getUserID(mContext))
-        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = StudentlistApiModel()
+        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<StudentlistResponseModel> {
             override fun onResponse(
                 call: Call<StudentlistResponseModel>,
@@ -242,7 +245,7 @@ class ParentsMeetingFragment() : Fragment() {
             }
         }
         contactTeacher!!.setOnClickListener {
-            if (!PreferenceManager.getUserID(mContext).equals("")) {
+            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
                 dialog = Dialog(mContext)
                 dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog!!.setContentView(R.layout.alert_send_email_dialog)
@@ -252,6 +255,8 @@ class ParentsMeetingFragment() : Fragment() {
                 val submitButton = dialog!!.findViewById<View>(R.id.submitButton) as Button
                 text_dialog = dialog!!.findViewById<View>(R.id.text_dialog) as EditText
                 text_content = dialog!!.findViewById<View>(R.id.text_content) as EditText
+                text_dialog!!.isFocusable = true
+                text_content!!.isFocusable = true
                 // text_dialog.setSelection(0);
                 //text_content.setSelection(0);
                 text_dialog!!.onFocusChangeListener =
@@ -596,10 +601,14 @@ class ParentsMeetingFragment() : Fragment() {
         }
     }
     private fun sendEmailToStaff() {
-        var homebannerbody= SendemailstaffptaApiModel(mStudentId,mStaffId,PreferenceManager.getUserID(mContext),
-            text_dialog!!.text.toString(),text_content!!.text.toString())
-        val call: Call<SendemailstaffptaResponseModel> = ApiClient.getClient.sendemailstaffpta("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = SendemailstaffptaApiModel(
+            mStudentId, mStaffId,
+            text_dialog!!.text.toString(), text_content!!.text.toString()
+        )
+        val call: Call<SendemailstaffptaResponseModel> = ApiClient.getClient.sendemailstaffpta(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailstaffptaResponseModel> {
             override fun onResponse(call: Call<SendemailstaffptaResponseModel>, response: Response<SendemailstaffptaResponseModel>) {

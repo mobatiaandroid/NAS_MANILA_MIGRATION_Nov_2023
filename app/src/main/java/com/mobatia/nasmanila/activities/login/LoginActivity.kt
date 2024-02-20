@@ -10,11 +10,14 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings.Secure.*
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
 
@@ -50,6 +53,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         context = this
+        FirebaseApp.initializeApp(context)
         PreferenceManager.setIsFirstLaunch(context as LoginActivity, false)
         initialiseUI()
         setListeners()
@@ -161,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
         }
         guestUserButton.setOnClickListener {
             AppUtils.hideKeyboard(context)
-            PreferenceManager.setUserID(context, "")
+//            PreferenceManager.setUserID(context, "")
             val homeIntent = Intent(context, HomeListAppCompatActivity::class.java)
             startActivity(homeIntent)
         }
@@ -359,7 +363,7 @@ if (responseData!!.responsecode.equals("200")){
     }
 
     private fun showSignUpAlertDialog() {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_layout_signup)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
@@ -367,7 +371,7 @@ if (responseData!!.responsecode.equals("200")){
         val dialogSubmitButton = dialog.findViewById<View>(R.id.btn_signup) as Button
         dialogSubmitButton.setOnClickListener {
             AppUtils.hideKeyboard(context)
-            if (!mailEdtText!!.text.toString().trim { it <= ' ' }.equals("", ignoreCase = true)) {
+            if (!mailEdtText.text.toString().trim { it <= ' ' }.equals("", ignoreCase = true)) {
                 if (AppUtils.isValidEmail(mailEdtText!!.text.toString())) {
                     if (AppUtils.checkInternet(context!!))
                         sendSignUpRequest(dialog)
@@ -485,25 +489,38 @@ if (responseData!!.responsecode.equals("200")){
 
     @SuppressLint("HardwareIds")
     private fun loginApiCall() {
+
         progressBarDialog!!.show()
         val androidID = getString(
             this.contentResolver,
             ANDROID_ID
         )
-        var loginbody=LoginApiModel(userNameEdtTxt!!.text.toString(),
+        val fToken = arrayOf("")
+        FirebaseApp.initializeApp(context)
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                fToken[0] = token
+                Log.e("token", token)
+                PreferenceManager.setFCMID(context!!, token)
+            } else {
+            }
+        }
+        var loginbody = LoginApiModel(
+            userNameEdtTxt!!.text.toString(),
             passwordEdtTxt!!.text.toString(),
-            PreferenceManager.getFCMID(context),"2")
+            PreferenceManager.getFCMID(context), "2", "Android", "1.0"
+        )
         val call: Call<LoginModel> = ApiClient.getClient.loginCall(loginbody)
         call.enqueue(object : Callback<LoginModel> {
             override fun onResponse(call: Call<LoginModel>, response: Response<LoginModel>) {
-                if (response.body()!!.responsecode.equals("200")){
+                if (response.body()!!.responsecode.equals("200")) {
                     progressBarDialog!!.dismiss()
-                    var status_code=response.body()!!.response.statuscode
-                    if (status_code.equals("303")){
+                    var status_code = response.body()!!.response.statuscode
+                    if (status_code.equals("303")) {
                         val acccessToken: String = response.body()!!.response.responseArray.token
-                        var userid=response.body()!!.response.responseArray.userid.id.toString()
+//                        var userid=response.body()!!.response.responseArray.userid.id.toString()
                         PreferenceManager.setAccessToken(context,acccessToken)
-                        PreferenceManager.setUserID(context,userid)
+//                        PreferenceManager.setUserID(context,userid)
                         PreferenceManager.setUserEmail(
                             context,
                             userNameEdtTxt.text.toString()
@@ -572,14 +589,27 @@ if (responseData!!.responsecode.equals("200")){
                     }
 
                 } else {
-                    progressBarDialog!!.dismiss()
-                    AppUtils.showDialogAlertDismiss(
-                        context,
-                        "Alert",
-                        context.getString(R.string.common_error),
-                        R.drawable.exclamationicon,
-                        R.drawable.round
-                    )
+                    if (response.body()!!.response.statuscode.equals("501")) {
+                        AppUtils.showDialogAlertDismiss(
+                            context,
+                            getString(R.string.error_heading),
+                            "Too many login attempts.Please try After 1 minute.",
+                            R.drawable.infoicon,
+                            R.drawable.round
+                        )
+
+
+                    } else {
+                        progressBarDialog!!.dismiss()
+                        AppUtils.showDialogAlertDismiss(
+                            context,
+                            "Alert",
+                            context.getString(R.string.common_error),
+                            R.drawable.exclamationicon,
+                            R.drawable.round
+                        )
+                    }
+
                 }
             }
 

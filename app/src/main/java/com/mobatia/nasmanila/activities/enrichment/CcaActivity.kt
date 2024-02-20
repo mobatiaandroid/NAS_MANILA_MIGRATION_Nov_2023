@@ -109,7 +109,7 @@ class CcaActivity:AppCompatActivity(), AdapterView.OnItemClickListener {
         CCAFRegisterRel = findViewById<View>(R.id.CCAFRegisterRel) as RelativeLayout
         relMain = findViewById<View>(R.id.relMain) as RelativeLayout
         CCAFRegisterRel!!.setOnClickListener{
-            if (PreferenceManager.getUserID(mContext).equals("")) {
+            if (PreferenceManager.getAccessToken(mContext).equals("")) {
                 AppUtils.showDialogAlertDismiss(
                     mContext as Activity,
                     "Alert",
@@ -179,7 +179,7 @@ class CcaActivity:AppCompatActivity(), AdapterView.OnItemClickListener {
 
         })
         sendEmail!!.setOnClickListener {
-            if (!PreferenceManager.getUserID(mContext).equals("")) {
+            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
                 val dialog = Dialog(mContext)
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setContentView(R.layout.alert_send_email_dialog)
@@ -481,10 +481,14 @@ class CcaActivity:AppCompatActivity(), AdapterView.OnItemClickListener {
 
     }
     private fun sendEmailToStaff(dialog: Dialog) {
-        var homebannerbody= SendemailApiModel(contactEmail,PreferenceManager.getUserID(mContext).toString(),
-            text_dialog!!.getText().toString(),text_content!!.text.toString())
-        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = SendemailApiModel(
+            contactEmail,
+            text_dialog!!.getText().toString(), text_content!!.text.toString()
+        )
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailResponseModel> {
             override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {

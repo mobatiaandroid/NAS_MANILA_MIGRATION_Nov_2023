@@ -13,7 +13,8 @@ class StafflistResponse (
 )
 
 class StaffPtaModel (
-    @SerializedName("id")var id:String,
-    @SerializedName("name")var name:String,
-    @SerializedName("staff_photo")var staff_photo:String
+    @SerializedName("id") var id: String,
+    @SerializedName("name") var name: String,
+    @SerializedName("staff_photo") var staff_photo: String,
+    @SerializedName("staff_email") var staff_email: String
 )

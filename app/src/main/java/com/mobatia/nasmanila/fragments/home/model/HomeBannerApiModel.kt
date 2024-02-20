@@ -4,6 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 class HomeBannerApiModel (
     @SerializedName("app_version")var app_version:String,
-    @SerializedName("users_id")var users_id:String,
     @SerializedName("devicetype")var devicetype:String
 )

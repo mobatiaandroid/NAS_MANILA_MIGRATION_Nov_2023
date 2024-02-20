@@ -1195,10 +1195,11 @@ class HomeScreenRegisteredUserFragment2( s: String,
 
     private fun getBanner() {
 
-        var homebannerbody=HomeBannerApiModel(versionName,
-            PreferenceManager.getUserID(mContext!!),"2")
-        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = HomeBannerApiModel(versionName, "2")
+        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<HomeBannerModel> {
             override fun onResponse(call: Call<HomeBannerModel>, response: Response<HomeBannerModel>) {

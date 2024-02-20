@@ -79,10 +79,12 @@
                 android:hint="Enter your subject here..."
                 android:textColorHint="@color/black"
                 android:textSize="16sp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textColor="@color/black"
                 android:background="@drawable/edittext_greybg"
                 android:imeOptions="actionNext"
-                android:singleLine="true"/>
+                android:singleLine="true" />
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
@@ -95,6 +97,7 @@
                 android:textSize="18sp"
                 android:layout_marginTop="5dp"
                 />
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProEditTextNoColor
                 android:id="@+id/text_content"
                 android:layout_width="match_parent"
@@ -103,6 +106,8 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="10dp"
                 android:layout_centerHorizontal="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
@@ -110,7 +115,7 @@
                 android:layout_gravity="left"
                 android:textColor="@color/black"
                 android:background="@drawable/edittext_greybg"
-                android:imeOptions="actionDone"/>
+                android:imeOptions="actionDone" />
             <Button
                 android:id="@+id/submitButton"
                 android:layout_width="match_parent"

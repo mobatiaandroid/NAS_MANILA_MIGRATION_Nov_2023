@@ -444,11 +444,15 @@ mAboutUsListArray=ArrayList()
 
     }
     private fun sendEmailToStaff() {
-        var homebannerbody= SendemailApiModel(email_nas!!,PreferenceManager.getUserID(mContext),
+        var homebannerbody = SendemailApiModel(
+            email_nas!!,
             text_dialog!!.text.toString(),
-            text_content!!.text.toString())
-        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+            text_content!!.text.toString()
+        )
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailResponseModel> {
             override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {
@@ -560,7 +564,7 @@ mAboutUsListArray=ArrayList()
             mContext!!.startActivity(intent)
         }
         sendEmail!!.setOnClickListener {
-            if (PreferenceManager.getUserID(mContext!!) != "") {
+            if (PreferenceManager.getAccessToken(mContext!!) != "") {
                 dialog = Dialog(mContext!!)
                 dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog!!.setContentView(R.layout.alert_send_email_dialog)

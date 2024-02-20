@@ -515,14 +515,14 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             ) {
                 //                    onBackPressed();
                 displayView(0)
-                if (PreferenceManager.getUserID(mContext).equals("")) {
+                if (PreferenceManager.getAccessToken(mContext).equals("")) {
                     imageButton2!!.setVisibility(View.GONE)
                 } else {
                     imageButton2!!.setVisibility(View.VISIBLE)
                 }
             }
         }
-        if (PreferenceManager.getUserID(mContext).equals("")) {
+        if (PreferenceManager.getAccessToken(mContext).equals("")) {
             imageButton2!!.setVisibility(View.GONE)
         } else {
             imageButton2!!.setVisibility(View.VISIBLE)
@@ -557,7 +557,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                     supportActionBar!!.setTitle(R.string.null_value)
 
                 }
-                if (PreferenceManager.getUserID(mContext).equals("")) {
+                if (PreferenceManager.getAccessToken(mContext).equals("")) {
                     imageButton2!!.setVisibility(View.GONE)
                 } else {
                     imageButton2!!.setVisibility(View.VISIBLE)
@@ -572,12 +572,12 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
     private fun displayView(position: Int) {
         mFragment = null
         tabPositionProceed = position
-        if (!PreferenceManager.getUserID(mContext).equals("")) {
+        if (!PreferenceManager.getAccessToken(mContext).equals("")) {
             imageButton2!!.setVisibility(View.VISIBLE)
         } else {
         }
 
-        if (PreferenceManager.getUserID(mContext).equals("")) {
+        if (PreferenceManager.getAccessToken(mContext).equals("")) {
             when (position) {
                 0 -> {
                     // home
@@ -1021,7 +1021,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         downarrow = findViewById<View>(R.id.downarrow) as ImageView
         linearLayout = findViewById<View>(R.id.linearLayout) as LinearLayout
 
-        if (!PreferenceManager.getUserID(mContext).equals("")) {
+        if (!PreferenceManager.getAccessToken(mContext).equals("")) {
             // registered user
             mListItemArray = mContext.resources.getStringArray(
                 R.array.home_list_content_reg_items
@@ -1120,7 +1120,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (PreferenceManager.getIfHomeItemClickEnabled(mContext)) {
             println("Position homelist:$position")
-            if (PreferenceManager.getUserID(mContext).equals("")) {
+            if (PreferenceManager.getAccessToken(mContext).equals("")) {
                 imageButton2!!.setVisibility(View.GONE)
             } else {
                 imageButton2!!.setVisibility(View.VISIBLE)
@@ -1264,13 +1264,13 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                             ignoreCase = true
                         ))
                 ) {
-                    if (PreferenceManager.getUserID(mContext).equals("")) {
+                    if (PreferenceManager.getAccessToken(mContext).equals("")) {
                         imageButton2!!.setVisibility(View.GONE)
                     } else {
                         imageButton2!!.setVisibility(View.VISIBLE)
                     }
                 } else {
-                    if (PreferenceManager.getUserID(mContext).equals("")) {
+                    if (PreferenceManager.getAccessToken(mContext).equals("")) {
                         imageButton2!!.setVisibility(View.GONE)
                     } else {
                         imageButton2!!.setVisibility(View.VISIBLE)
@@ -1291,7 +1291,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                             ignoreCase = true
                         ))
                 ) {
-                    if (PreferenceManager.getUserID(mContext).equals("")) {
+                    if (PreferenceManager.getAccessToken(mContext).equals("")) {
                         imageButton2!!.setVisibility(View.GONE)
                     } else {
                         imageButton2!!.setVisibility(View.VISIBLE)
@@ -1467,7 +1467,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                 ) {
 //                    imageButton.setImageResource(R.drawable.hamburgerbtn);
                     displayView(0)
-                    if (PreferenceManager.getUserID(mContext).equals("")) {
+                    if (PreferenceManager.getAccessToken(mContext).equals("")) {
                         imageButton2!!.setVisibility(View.GONE)
                     } else {
                         imageButton2!!.setVisibility(View.VISIBLE)
@@ -1478,7 +1478,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                         .equalsIgnoreCase(
                                 "class com.mobatia.nasmanila.fragments.settings.SettingsFragment")*/
                 } else {
-                    if (PreferenceManager.getUserID(mContext).equals("")) {
+                    if (PreferenceManager.getAccessToken(mContext).equals("")) {
                         imageButton2!!.setVisibility(View.GONE)
                     } else {
                         imageButton2!!.setVisibility(View.VISIBLE)

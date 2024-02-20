@@ -195,8 +195,11 @@ class CCA_Activity:AppCompatActivity() {
 
     private fun getStudentsListAPI() {
         progressBarDialog!!.show()
-        var student= StudentlistApiModel(PreferenceManager.getUserID(mContext))
-        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = StudentlistApiModel()
+        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<StudentlistResponseModel> {
             override fun onResponse(
                 call: Call<StudentlistResponseModel>,

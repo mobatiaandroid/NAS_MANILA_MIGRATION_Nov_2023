@@ -49,7 +49,7 @@ class CustomSettingsAdapter(activity: Activity, arrayList: java.util.ArrayList<S
             mTitleTxt = view!!.findViewById<View>(R.id.listTxtTitle) as TextView
             mTxtUser = view!!.findViewById<View>(R.id.txtUser) as TextView
             mTitleTxt!!.text = mSettingsList[position].toString()
-            if (PreferenceManager.getUserID(mContext!!).equals("", ignoreCase = true)) {
+            if (PreferenceManager.getAccessToken(mContext!!).equals("", ignoreCase = true)) {
                 if (position == 4) {
                     mTxtUser!!.visibility = View.VISIBLE
                     mTitleTxt!!.text = mSettingsList[position].toString()

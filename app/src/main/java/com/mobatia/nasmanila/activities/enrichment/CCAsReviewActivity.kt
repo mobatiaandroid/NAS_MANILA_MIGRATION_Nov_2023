@@ -244,7 +244,7 @@ class CCAsReviewActivity :AppCompatActivity(){
         cca_details =
             "{\"cca_days_id\":\"" + PreferenceManager.getCCAItemId(mContext) + "\",\"student_id\":\"" + PreferenceManager.getStudIdForCCA(
                 mContext
-            ) + "\",\"users_id\":\"" + PreferenceManager.getUserID(mContext) + "\",\"cca_days_details_id\":" + cca_detailsId
+            ) + "\",\"users_id\":\"" + "userID" + "\",\"cca_days_details_id\":" + cca_detailsId
 
         submitBtn!!.setOnClickListener {
             showDialogReviewSubmit(
@@ -294,8 +294,11 @@ class CCAsReviewActivity :AppCompatActivity(){
     private fun ccaSubmitAPI() {
         progressBarDialog!!.show()
 
-        var student= Cca_submitApiModel(cca_details,PreferenceManager.getUserID(mContext))
-        val call: Call<Cca_submitResponseModel> = ApiClient.getClient.cca_submit("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = Cca_submitApiModel(cca_details)
+        val call: Call<Cca_submitResponseModel> = ApiClient.getClient.cca_submit(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<Cca_submitResponseModel> {
             override fun onResponse(
                 call: Call<Cca_submitResponseModel>,

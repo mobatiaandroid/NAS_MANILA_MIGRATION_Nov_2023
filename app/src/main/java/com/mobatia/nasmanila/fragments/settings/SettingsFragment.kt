@@ -118,12 +118,13 @@ class SettingsFragment() : Fragment() {
         relMain = mRootView!!.findViewById(R.id.relMain) as RelativeLayout
         relMain!!.setOnClickListener { }
         mTitleTextView!!.text = NaisClassNameConstants.SETTINGS
-        if (PreferenceManager.getUserID(mContext!!) == "") {
+        if (PreferenceManager.getAccessToken(mContext!!) == "") {
             isRegUser = false
             mSettingsList!!.adapter = CustomSettingsAdapter(requireActivity(), mSettingsListArray)
         } else {
             isRegUser = true
-            mSettingsList!!.adapter = CustomSettingsAdapter(requireActivity(), mSettingsListArrayRegistered)
+            mSettingsList!!.adapter =
+                CustomSettingsAdapter(requireActivity(), mSettingsListArrayRegistered)
         }
         mSettingsList!!.setOnItemClickListener { parent, view, position, id ->
             if (isRegUser) {
@@ -457,8 +458,7 @@ class SettingsFragment() : Fragment() {
                 val dialogCancel = dialog!!.findViewById(R.id.btn_cancel) as Button
                 dialogCancel.setOnClickListener {
                     AppUtils.hideKeyboard(mContext)
-//            appUtils.hideKeyboard(mContext, text_currentpswd)
-//            appUtils.hideKeyboard(mContext, confirmpassword)
+
                     dialog!!.dismiss()
                 }
                 dialog!!.show()
@@ -467,11 +467,17 @@ class SettingsFragment() : Fragment() {
 
     private fun callChangePasswordAPI() {
         progressBarDialog!!.show()
-        var student= ChangepasswordApiModel(PreferenceManager.getUserID(mContext),
-            text_currentpswd!!.getText().toString(), newpassword!!.getText().toString(),
-            PreferenceManager.getUserEmail(mContext!!).toString(),PreferenceManager.getFCMID(mContext),
-            "2")
-        val call: Call<ChangePasswordResponseModel> = ApiClient.getClient.changepassword("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = ChangepasswordApiModel(
+            text_currentpswd!!.getText().toString(),
+            newpassword!!.getText().toString(),
+            PreferenceManager.getUserEmail(mContext!!).toString(),
+            PreferenceManager.getFCMID(mContext),
+            "2"
+        )
+        val call: Call<ChangePasswordResponseModel> = ApiClient.getClient.changepassword(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<ChangePasswordResponseModel> {
             override fun onResponse(
                 call: Call<ChangePasswordResponseModel>,
@@ -573,13 +579,13 @@ class SettingsFragment() : Fragment() {
         text.text = msg
         textHead.text = msgHead
 
-        val dialogButton = dialog.findViewById(R.id.btn_Ok) as Button
+        val dialogButton = dialog.findViewById(R.id.btnOK) as Button
         dialogButton.setOnClickListener {
-            PreferenceManager.setUserID(mContext!!,"")
+            PreferenceManager.setAccessToken(mContext!!, "")
             dialog.dismiss()
-            val mIntent = Intent(activity, LoginActivity::class.java)
+            /*val mIntent = Intent(activity, LoginActivity::class.java)
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            mContext!!.startActivity(mIntent)
+            mContext!!.startActivity(mIntent)*/
         }
         dialog.show()
     }
@@ -605,10 +611,10 @@ class SettingsFragment() : Fragment() {
 
         val dialogButton = dialog.findViewById(R.id.btn_Ok) as Button
         dialogButton.setOnClickListener {
-            if (PreferenceManager.getUserID(activity)
+            if (PreferenceManager.getAccessToken(activity)
                     .equals("", ignoreCase = true)
             ) {
-                PreferenceManager.setUserID(activity,"")
+                PreferenceManager.setAccessToken(activity, "")
                 dialog.dismiss()
                 val mIntent = Intent(activity, LoginActivity::class.java)
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -652,10 +658,10 @@ fun showDialogAlertDeleteaccount(
 
     val dialogButton = dialog.findViewById(R.id.btn_Ok) as Button
     dialogButton.setOnClickListener {
-        if (PreferenceManager.getUserID(activity)
+        if (PreferenceManager.getAccessToken(activity)
                 .equals("")
         ) {
-            PreferenceManager.setUserID(activity,"")
+            PreferenceManager.setAccessToken(activity, "")
             dialog.dismiss()
             val mIntent = Intent(activity, LoginActivity::class.java)
             mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -690,8 +696,11 @@ fun showDialogAlertDeleteaccount(
               } else {
               }
           }*/
-        var logoutmodel=LogoutApiModel(PreferenceManager.getUserID(activity), "","2")
-        val call: Call<LogoutResponseModel> = ApiClient.getClient.delete_account("Bearer "+ PreferenceManager.getAccessToken(mContext),logoutmodel)
+        var logoutmodel = LogoutApiModel("", "2")
+        val call: Call<LogoutResponseModel> = ApiClient.getClient.delete_account(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            logoutmodel
+        )
         call.enqueue(object : Callback<LogoutResponseModel> {
             override fun onResponse(
                 call: Call<LogoutResponseModel>,
@@ -704,7 +713,7 @@ fun showDialogAlertDeleteaccount(
                     if (status_code.equals("303")) {
 
                         dialog.dismiss()
-                        PreferenceManager.setUserID(activity, "")
+                        PreferenceManager.setAccessToken(activity, "")
                         val mIntent = Intent(activity, LoginActivity::class.java)
                         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         activity.startActivity(mIntent)
@@ -747,8 +756,11 @@ fun showDialogAlertDeleteaccount(
             } else {
             }
         }*/
-        var logoutmodel=LogoutApiModel(PreferenceManager.getUserID(activity), "","2")
-        val call: Call<LogoutResponseModel> = ApiClient.getClient.logout("Bearer "+ PreferenceManager.getAccessToken(mContext),logoutmodel)
+        var logoutmodel = LogoutApiModel("", "2")
+        val call: Call<LogoutResponseModel> = ApiClient.getClient.logout(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            logoutmodel
+        )
         call.enqueue(object : Callback<LogoutResponseModel> {
             override fun onResponse(
                 call: Call<LogoutResponseModel>,
@@ -761,7 +773,7 @@ fun showDialogAlertDeleteaccount(
                     if (status_code.equals("303")) {
 
                         dialog.dismiss()
-                        PreferenceManager.setUserID(activity, "")
+                        PreferenceManager.setAccessToken(activity, "")
                         val mIntent = Intent(activity, LoginActivity::class.java)
                         mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         activity.startActivity(mIntent)

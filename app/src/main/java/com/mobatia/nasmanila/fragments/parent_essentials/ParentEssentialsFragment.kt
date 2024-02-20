@@ -168,7 +168,9 @@ class ParentEssentialsFragment() : Fragment() {
 
         })
         sendEmail!!.setOnClickListener {
-            if (!PreferenceManager.getUserID(mContext as Activity).equals("", ignoreCase = true)) {
+            if (!PreferenceManager.getAccessToken(mContext as Activity)
+                    .equals("", ignoreCase = true)
+            ) {
                 val dialog = Dialog(mContext as Activity)
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setContentView(R.layout.alert_send_email_dialog)
@@ -488,11 +490,15 @@ class ParentEssentialsFragment() : Fragment() {
 
     }
     private fun sendEmailToStaff(dialog:Dialog) {
-        var homebannerbody= SendemailApiModel(contactEmail!!,PreferenceManager.getUserID(mContext),
+        var homebannerbody = SendemailApiModel(
+            contactEmail!!,
             text_dialog!!.text.toString(),
-            text_content!!.text.toString())
-        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+            text_content!!.text.toString()
+        )
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailResponseModel> {
             override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {

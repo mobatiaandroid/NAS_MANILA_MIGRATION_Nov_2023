@@ -295,10 +295,15 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
 
     private fun submitLeave() {
         progressBarDialog!!.show()
-        var student= LeavesubmitApiModel(studentIdStr,PreferenceManager.getUserID(mContext),fromDate,
+        var student = LeavesubmitApiModel(
+            studentIdStr,
+            fromDate,
             toDate.toString(),
             enterMessage!!.text.toString().trim { it <= ' ' })
-        val call: Call<LeavesubmitResponseModel> = ApiClient.getClient.requestLeave("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        val call: Call<LeavesubmitResponseModel> = ApiClient.getClient.requestLeave(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<LeavesubmitResponseModel> {
             override fun onResponse(
                 call: Call<LeavesubmitResponseModel>,
@@ -431,8 +436,11 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
 
     private fun studentlistcall() {
         progressBarDialog!!.show()
-        var student= StudentlistApiModel(PreferenceManager.getUserID(mContext))
-        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = StudentlistApiModel()
+        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<StudentlistResponseModel> {
             override fun onResponse(
                 call: Call<StudentlistResponseModel>,

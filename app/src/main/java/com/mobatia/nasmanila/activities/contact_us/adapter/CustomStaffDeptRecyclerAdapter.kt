@@ -75,9 +75,9 @@ class CustomStaffDeptRecyclerAdapter(
         holder.staffName.setText(mStaffList.get(position).name)
         holder.staffRole.setText(mStaffList.get(position).role)
         holder.mail.setOnClickListener {
-            if (!PreferenceManager.getUserID(mContext).equals("")) {
-               var dialog = Dialog(mContext)
-   
+            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
+                var dialog = Dialog(mContext)
+
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog.setContentView(R.layout.alert_send_email_dialog)
                 dialog.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -254,8 +254,9 @@ class CustomStaffDeptRecyclerAdapter(
     }
     private fun sendEmailToStaff(staffEmail: String?,text_dialog:String,text_content:String,dialog:Dialog) {
         var homebannerbody= SendemailApiModel(
-            staffEmail.toString(),PreferenceManager.getUserID(mContext).toString(),
-            text_dialog,text_content)
+            staffEmail.toString(),
+            text_dialog, text_content
+        )
         val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
             homebannerbody)
        // progressBarDialog!!.show()

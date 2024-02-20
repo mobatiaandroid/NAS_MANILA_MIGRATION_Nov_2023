@@ -63,7 +63,7 @@ class ParentsEveningFragment:Fragment() {
     private var mStudentName = ""
     private var mStaffName = ""
     private var mClass = ""
-    private val staffEmail = ""
+    private var staffEmail = ""
     private var staffRelative: RelativeLayout? =
         null
     private  var studentRelative: RelativeLayout? = null
@@ -121,8 +121,11 @@ class ParentsEveningFragment:Fragment() {
     private fun getStudentList() {
         mListViewArray= ArrayList()
         progressBarDialog!!.show()
-        var student= StudentlistApiModel(PreferenceManager.getUserID(mContext))
-        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist("Bearer "+ PreferenceManager.getAccessToken(mContext),student)
+        var student = StudentlistApiModel()
+        val call: Call<StudentlistResponseModel> = ApiClient.getClient.studentlist(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            student
+        )
         call.enqueue(object : Callback<StudentlistResponseModel> {
             override fun onResponse(
                 call: Call<StudentlistResponseModel>,
@@ -241,7 +244,7 @@ class ParentsEveningFragment:Fragment() {
             }
         }
         contactTeacher!!.setOnClickListener {
-            if (!PreferenceManager.getUserID(mContext).equals("")) {
+            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
                 dialog = Dialog(mContext)
                 dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialog!!.setContentView(R.layout.alert_send_email_dialog)
@@ -288,7 +291,7 @@ class ParentsEveningFragment:Fragment() {
                     //                                AppUtils.showDialogAlertDismiss((Activity) mContext, "Network Error", mContext.getString(R.string.no_internet), R.drawable.nonetworkicon, R.drawable.roundred);
                     //
                     //                            }
-                    if (text_dialog!!.text.equals("")) {
+                    if (text_dialog!!.text.toString() == "") {
                         AppUtils.showDialogAlertDismiss(
                             mContext as Activity,
                             mContext.getString(R.string.alert_heading),
@@ -392,6 +395,7 @@ class ParentsEveningFragment:Fragment() {
                 mStaffId = mListViewStaffArray!![position].id
                 mStaffName = mListViewStaffArray!![position].name
                 mStaffName = mListViewStaffArray!![position].name
+                staffEmail = mListViewStaffArray!![position].staff_email
                 if (!mListViewStaffArray!![position].staff_photo.equals("")) {
                     Glide.with(mContext).load(
                         AppUtils.replace(
@@ -659,10 +663,14 @@ class ParentsEveningFragment:Fragment() {
         }
     }
     private fun sendEmailToStaff() {
-        var homebannerbody= SendemailstaffptaApiModel(mStudentId,mStaffId,PreferenceManager.getUserID(mContext),
-            text_dialog!!.text.toString(),text_content!!.text.toString())
-        val call: Call<SendemailstaffptaResponseModel> = ApiClient.getClient.sendemailstaffpta("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = SendemailstaffptaApiModel(
+            mStudentId, mStaffId,
+            text_dialog!!.text.toString(), text_content!!.text.toString()
+        )
+        val call: Call<SendemailstaffptaResponseModel> = ApiClient.getClient.sendemailstaffpta(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailstaffptaResponseModel> {
             override fun onResponse(call: Call<SendemailstaffptaResponseModel>, response: Response<SendemailstaffptaResponseModel>) {

@@ -124,10 +124,14 @@ class NotificationsFragment() : Fragment() {
     ) {
         var jtagDevicetype = "2"
         notificationSize = 0
-        var notifbody=NotificationsApiModel(PreferenceManager.getFCMID(mContext),jtagDevicetype,
-            PreferenceManager.getUserID(mContext),page_from,scroll_to)
+        var notifbody = NotificationsApiModel(
+            PreferenceManager.getFCMID(mContext),
+            jtagDevicetype,
+            page_from,
+            scroll_to
+        )
         val call: Call<NotificationsResponseModel> = ApiClient.getClient.notifications(
-            "Bearer "+PreferenceManager.getAccessToken(mContext),notifbody
+            "Bearer " + PreferenceManager.getAccessToken(mContext), notifbody
         )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<NotificationsResponseModel> {

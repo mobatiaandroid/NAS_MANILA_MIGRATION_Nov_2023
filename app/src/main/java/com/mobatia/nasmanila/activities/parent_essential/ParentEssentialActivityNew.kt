@@ -140,7 +140,9 @@ class ParentEssentialActivityNew : AppCompatActivity() {
             descriptionTV!!.visibility = View.GONE
             descriptionTitle!!.visibility = View.GONE
         }
-        if (!contactEmail.equals("", ignoreCase = true) && !PreferenceManager.getUserID(mContext)
+        if (!contactEmail.equals("", ignoreCase = true) && !PreferenceManager.getAccessToken(
+                mContext
+            )
                 .equals("")
         ) {
             mailImageView!!.visibility = View.VISIBLE
@@ -360,10 +362,14 @@ class ParentEssentialActivityNew : AppCompatActivity() {
 
     }
     private fun sendEmailToStaff(dialog: Dialog) {
-        var homebannerbody= SendemailApiModel(contactEmail,PreferenceManager.getUserID(mContext).toString(),
-            text_dialog!!.getText().toString(),text_content!!.text.toString())
-        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff("Bearer "+PreferenceManager.getAccessToken(mContext),
-            homebannerbody)
+        var homebannerbody = SendemailApiModel(
+            contactEmail,
+            text_dialog!!.getText().toString(), text_content!!.text.toString()
+        )
+        val call: Call<SendemailResponseModel> = ApiClient.getClient.sendemailstaff(
+            "Bearer " + PreferenceManager.getAccessToken(mContext),
+            homebannerbody
+        )
         progressBarDialog!!.show()
         call.enqueue(object : Callback<SendemailResponseModel> {
             override fun onResponse(call: Call<SendemailResponseModel>, response: Response<SendemailResponseModel>) {

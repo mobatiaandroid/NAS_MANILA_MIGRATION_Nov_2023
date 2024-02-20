@@ -125,12 +125,12 @@ class HomeListActivity : AppCompatActivity() {
 
     private fun displayView(position: Int) {
         tabPositionProceed = position
-        if (PreferenceManager.getUserID(context) != "") {
+        if (PreferenceManager.getAccessToken(context) != "") {
             settingsButton.visibility = View.VISIBLE
         } else {
             settingsButton.visibility = View.INVISIBLE
         }
-        if(PreferenceManager.getUserID(context) == "") {
+        if (PreferenceManager.getAccessToken(context) == "") {
             when (position) {
                 0 -> {
                     settingsButton.visibility = View.GONE
@@ -140,6 +140,7 @@ class HomeListActivity : AppCompatActivity() {
                     )
                     replaceFragmentsSelected(position)
                 }
+
                 1 -> {
                     settingsButton.visibility = View.GONE
                     fragment = NotificationsFragment( )
@@ -593,7 +594,7 @@ class HomeListActivity : AppCompatActivity() {
                     )
                 ) {
                     displayView(0)
-                    if (PreferenceManager.getUserID(context) == "") {
+                    if (PreferenceManager.getAccessToken(context) == "") {
                         settingsButton.visibility = View.GONE
                     } else {
                         settingsButton.visibility = View.VISIBLE
@@ -601,7 +602,7 @@ class HomeListActivity : AppCompatActivity() {
                 }
             }
         }
-        if (PreferenceManager.getUserID(context) == "") {
+        if (PreferenceManager.getAccessToken(context) == "") {
             settingsButton.visibility = View.GONE
         } else {
             settingsButton.visibility = View.VISIBLE
@@ -624,7 +625,7 @@ class HomeListActivity : AppCompatActivity() {
                     .addToBackStack(NaisClassNameConstants.SETTINGS).commit()
                 drawerLayout.closeDrawer(linearLayout)
                 supportActionBar!!.setTitle(R.string.null_value)
-                if (PreferenceManager.getUserID(context) == "") {
+                if (PreferenceManager.getAccessToken(context) == "") {
                     settingsButton.visibility = View.GONE
                 } else {
                     settingsButton.visibility = View.VISIBLE
@@ -640,7 +641,7 @@ class HomeListActivity : AppCompatActivity() {
         downArrow = findViewById(R.id.downarrow)
         linearLayout = findViewById(R.id.linearLayout)
 
-        if (PreferenceManager.getUserID(context) != "") {
+        if (PreferenceManager.getAccessToken(context) != "") {
             listItemArray = context.resources.getStringArray(
                 R.array.home_list_content_reg_items
             )
@@ -667,7 +668,7 @@ class HomeListActivity : AppCompatActivity() {
         )
         homeListView.setOnItemClickListener { parent, view, position, id ->
             if (PreferenceManager.getIfHomeItemClickEnabled(context)) {
-                if (PreferenceManager.getUserID(context) == "") {
+                if (PreferenceManager.getAccessToken(context) == "") {
                     settingsButton.visibility = View.GONE
                 } else {
                     settingsButton.visibility = View.VISIBLE

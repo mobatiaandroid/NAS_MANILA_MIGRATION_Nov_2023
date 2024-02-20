@@ -30,6 +30,7 @@
     <string name="password">PASSWORD</string>
     <!-- login strings -->
     <string name="null_value"></string>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 
     <!--RESPONSES-->
     <string name="response_Statusfailure">STATUS FAILURE</string>

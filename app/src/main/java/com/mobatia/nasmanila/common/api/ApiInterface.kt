@@ -280,7 +280,7 @@ interface ApiInterface {
     @POST("api/v1/social_media")
     fun socialMediaListCall(): Call<ResponseBody>
 
-    @POST("")
+    @POST("api/v1/newsletter_categories")
     fun nasTodayListCall(): Call<ResponseBody>
 
     fun newsLetterCategoryCall(): Call<ResponseBody>
