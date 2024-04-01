@@ -44,8 +44,9 @@ class CCAfinalReviewAdapter(var mContext: Context,var mCCADetailModelArrayList: 
             ) {
                 holder.textViewCCAVenue.visibility = View.GONE
             } else {
-                holder.textViewCCAVenue.setText(mCCADetailModelArrayList[position].venue)
                 holder.textViewCCAVenue.visibility = View.VISIBLE
+                holder.textViewCCAVenue.setText(mCCADetailModelArrayList[position].venue)
+
             }
             if (mCCADetailModelArrayList[position].cca_item_start_timechoice1 != null && mCCADetailModelArrayList[position].cca_item_end_timechoice1 != null) {
                 holder.textViewCCAaDateItemChoice1.visibility = View.VISIBLE

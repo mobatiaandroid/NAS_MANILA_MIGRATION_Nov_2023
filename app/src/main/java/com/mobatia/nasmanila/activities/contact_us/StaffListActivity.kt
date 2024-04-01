@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -147,6 +148,11 @@ class StaffListActivity:AppCompatActivity() {
                             val customStaffDeptAdapter =
                                 CustomStaffDeptRecyclerAdapter(mContext, mStaffDeptList!!, "")
                             mStaffListView!!.adapter = customStaffDeptAdapter
+                            Toast.makeText(
+                                mContext,
+                                "No data found",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                     } else if (status_code.equals("301")) {

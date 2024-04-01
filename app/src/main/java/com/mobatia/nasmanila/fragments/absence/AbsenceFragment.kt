@@ -154,7 +154,6 @@ class AbsenceFragment : Fragment() {
             val mIntent = Intent(mContext, LeaveRequestSubmissionActivity::class.java)
             mIntent.putExtra("studentName", studentName!!.text.toString())
             mIntent.putExtra("studentId", PreferenceManager.getLeaveStudentId(mContext))
-
             mIntent.putExtra("studentImage", stud_img)
             mContext.startActivity(mIntent)
         }

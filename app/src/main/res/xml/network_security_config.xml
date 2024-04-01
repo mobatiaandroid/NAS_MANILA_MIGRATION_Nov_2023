@@ -7,6 +7,8 @@
         <!--<domain includeSubdomains="true">alpha.mobatia.in</domain>-->
         <domain includeSubdomains="true">manila.mobatia.in</domain>
         <domain includeSubdomains="true">gama.mobatia.in</domain>
+        <domain includeSubdomains="true">54.172.16.33</domain>
+
 
     </domain-config>
 </network-security-config>

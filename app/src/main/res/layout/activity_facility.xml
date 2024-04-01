@@ -73,7 +73,7 @@
                     </RelativeLayout>
 
 
-                    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontBoldWithoutColor
+                    <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                         android:id="@+id/descriptionTV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 //    var BASE_URL ="http://gama.mobatia.in:8080/NAIS-Manila2023/public/"
 var BASE_URL = "http://gama.mobatia.in:8080/nais-manilav10/public/"
+   // var BASE_URL = "https://cms.naismanila.edu.ph/"
 
 
 

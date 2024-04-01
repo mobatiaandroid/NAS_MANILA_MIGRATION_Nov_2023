@@ -18,6 +18,8 @@
     <string name="common_error_loading_page">Failed to load. Please try again later.</string>
     <string name="internet_error">Network error. Please check your internet connection and try again later.</string>
     <string name="mandatory_field">Mandatory field</string>
+    <string name="date_already_registered"> Date already Registered</string>
+
     <string name="no_internet">Network error. Please check your internet connection and try again later.</string>
     <string name="ok">Ok</string>
     <string name="invalid_email">Invalid email. Please try again.</string>

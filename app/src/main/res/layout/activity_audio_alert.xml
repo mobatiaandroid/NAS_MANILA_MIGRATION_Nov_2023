@@ -40,7 +40,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:visibility="gone"
-                            android:src="@drawable/mic" >
+                            android:background="@drawable/michover" >
                         </ImageView>
 
                         <ProgressBar
@@ -108,7 +108,7 @@
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
                     android:padding="5dp"
-                    android:text="PLAY"
+                    android:text="PAUSE"
                     android:background="@color/split_bg"
                     android:layout_marginTop="10dp"
                     android:visibility="visible" />
@@ -119,15 +119,18 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/btn_play"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="10dp"
-                    android:padding="10dp" >
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
 
                     <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
                         android:id="@+id/txt"
                         android:layout_width="wrap_content"
-                        android:textSize="13sp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="13sp" />
                 </ScrollView>
             </RelativeLayout>
         </ScrollView>

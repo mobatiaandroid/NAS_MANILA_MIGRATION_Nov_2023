@@ -24,14 +24,18 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_below="@+id/titleTextView" />
+
     <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextGrey
         android:id="@+id/versionText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="V 2.1"
-        android:layout_margin="5dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:textColor="@color/grey"/>
+        android:text="V 3.0"
+        android:textColor="@color/grey" />
 
 </RelativeLayout>

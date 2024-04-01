@@ -159,6 +159,7 @@ var reviewbody=Cca_reviewsApiModel(PreferenceManager.getStudIdForCCA(mContext),P
                                     val eventJson = gson.toJson(item)
                                     try {
                                         val jsonObject = JSONObject(eventJson)
+                                        Log.e("jsonObject", jsonObject.toString())
                                         if (jsonObject.optString("day")
                                                 .equals(weekList!![j])
                                         ) {

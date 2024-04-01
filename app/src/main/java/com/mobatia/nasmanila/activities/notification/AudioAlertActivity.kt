@@ -4,29 +4,35 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
+import android.media.MediaPlayer.OnCompletionListener
+import android.media.MediaPlayer.OnPreparedListener
+import android.media.MediaPlayer.OnSeekCompleteListener
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import android.widget.SeekBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-
-import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
-
 import com.mobatia.nasmanila.fragments.notifications.model.PushNotificationModel
+import java.io.IOException
+import java.util.Timer
+import java.util.TimerTask
 
-import okhttp3.ResponseBody
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
-
-class AudioAlertActivity : AppCompatActivity() {
+class AudioAlertActivity : AppCompatActivity(), OnSeekCompleteListener ,
+    OnCompletionListener{
     private var seekBarProgress: SeekBar? = null
     private var linearLayoutMediaController: LinearLayout? = null
+    private var handler2 = Handler()
 
     var btnplay: TextView? = null
     var position = 0
@@ -59,6 +65,8 @@ class AudioAlertActivity : AppCompatActivity() {
     var relativeHeader: RelativeLayout? = null
     var headerManager: HeaderManager? = null
     var mActivity: Activity? = null
+    var flag:Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_alert)
@@ -69,12 +77,18 @@ class AudioAlertActivity : AppCompatActivity() {
             position = extras!!.getInt("position")
             message = extras!!.getString("message")!!
             url = extras!!.getString("url")!!
+            Log.e("url",url)
             date = extras!!.getString("date")!!
             pushfrom = extras!!.getString("pushfrom")!!
             type = extras!!.getString("type")!!
         }
         initialiseUI()
-
+        /*if (AppUtils.isNetworkConnected(context)) {
+            Play3()
+        } else {
+            Toast.makeText(context, resources.getString(R.string.no_internet), Toast.LENGTH_SHORT)
+                .show()
+        }*/
     }
 
     private fun initialiseUI() {
@@ -109,7 +123,7 @@ class AudioAlertActivity : AppCompatActivity() {
 //        println("check url$url")
         seekBarProgress!!.progress = 0
 
-        seekBarProgress!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+      /*  seekBarProgress!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 if (!fromUser) {
                     textViewPlayed!!.text = (AppUtils.durationInSecondsToString(progress))
@@ -127,26 +141,58 @@ class AudioAlertActivity : AppCompatActivity() {
                 }
             }
 
-        })
+
+        })*/
         player = MediaPlayer()
         player!!.setOnPreparedListener {
 
         }
-        player!!.setOnCompletionListener {
-            player!!.stop()
-            btnplay!!.text = resources.getString(R.string.play)
-            updateTimer?.cancel()
-            player!!.reset()
-            isReset = true
-        }
-        player!!.setOnSeekCompleteListener {
-            progressBarWait!!.visibility = View.GONE
-            btnplay!!.visibility = View.VISIBLE
-        }
+
         progressBarWait = findViewById<View>(R.id.progressBarWait) as ProgressBar
+        if (player!!.isPlaying()) {
+            handler2.removeCallbacks(updater)
+            player!!.pause()
+            playerIamge!!
+                .setBackgroundResource(R.drawable.mic)
+            player!!.start()
+            //playbutton_audio.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24)
+        } else {
+
+            player!!.start()
+            playerIamge!!
+                .setBackgroundResource(R.drawable.michover)
+            player!!.start()
+           // playbutton_audio.setImageResource(R.drawable.ic_baseline_pause_circle_outline_24)
+            try {
+                updateseekbar()
+            }catch (e:Exception)
+            {
+
+            }
+        }
+        setUpMediaPlayer(url)
+        progressBarWait!!.visibility = View.GONE
+        playerIamge!!.visibility = View.VISIBLE
 
         btnplay!!.setOnClickListener {
+            /*if(flag)
+            {
+                progressBarWait!!.visibility = View.GONE
+                playerIamge!!
+                    .setBackgroundResource(R.drawable.michover)
+                player!!.start()
+                btnplay!!.text = resources.getString(R.string.pause)
+            }
+            else
+            {
+                progressBarWait!!.visibility = View.GONE
+                playerIamge!!
+                    .setBackgroundResource(R.drawable.michover)
+                player!!.pause()
+                btnplay!!.text = resources.getString(R.string.pause)
 
+            }
+            flag = !flag*/
             if (!isplayclicked) {
                 if (player!!.isPlaying) {
                     println("is come click second")
@@ -155,13 +201,16 @@ class AudioAlertActivity : AppCompatActivity() {
                         .getDrawable(R.drawable.mic)
                     btnplay!!.text = resources.getString(R.string.play)
                 }
+
                 isplayclicked = true
             } else {
                 if (player == null || isReset) {
                     if (AppUtils.checkInternet(context)) {
-                        player!!.start()
-                        playerIamge
-                            ?.setBackgroundResource(R.drawable.michover)
+                        //Play3()
+                        setUpMediaPlayer(url)
+                        playerIamge!!
+                            .setBackgroundResource(R.drawable.michover)
+
                         isReset = false
                     } else {
                         Toast.makeText(
@@ -190,7 +239,70 @@ class AudioAlertActivity : AppCompatActivity() {
 
         }
     }
+    val updater = Runnable {
+        try {
+            updateseekbar()
+            val currentduration: Long = player!!.getCurrentPosition().toLong()
+            textViewPlayed!!.text=(milliseconds(currentduration).toString())
+        }catch (e:Exception)
+        {
 
+        }
+
+
+    }
+    fun milliseconds(milliscnd: Long): String? {
+        var timer = ""
+        val secondString: String
+        val hour = (milliscnd / (1000 * 60 * 60)).toInt()
+        val min = (milliscnd % (1000 * 60 * 60)).toInt() / (1000 * 60)
+        val sec = (milliscnd % (1000 * 60 * 60)).toInt() % (1000 * 60) / 1000
+        if (hour > 0) {
+            timer = "$hour;"
+        }
+        secondString = if (sec < 10) {
+            "0$sec"
+        } else {
+            "" + sec
+        }
+        timer = "$timer$min:$secondString"
+        return timer
+    }
+    fun updateseekbar() {
+
+        try {
+            seekBarProgress!!.setProgress((player!!.getCurrentPosition().toFloat() / player!!.getDuration() * 100).toInt())
+            System.out.print("seekbar"+seekBarProgress)
+            handler2.postDelayed(updater, 1000)
+        }catch (e:InterruptedException)
+        {
+            e.printStackTrace();
+        }
+
+
+
+    }
+private fun Play3()
+{
+    if (url == "") {
+        // showToast("Please, set the video URI in HelloAndroidActivity.java in onClick(View v) method");
+    } else {
+        try {
+            player!!.setDataSource(url)
+            player!!.setOnPreparedListener(MediaPlayer.OnPreparedListener { mp -> mp.start() })
+            player!!.prepare()
+        } catch (e: IllegalArgumentException) {
+            // showToast("Error while playing video");
+            e.printStackTrace()
+        } catch (e: IllegalStateException) {
+            // showToast("Error while playing video");
+            e.printStackTrace()
+        } catch (e: IOException) {
+           // showToast(resources.getString(R.string.no_internet))
+            e.printStackTrace()
+        }
+    }
+}
     private fun updateMediaProgress() {
         updateTimer = Timer("progress Updater")
         updateTimer!!.scheduleAtFixedRate(object : TimerTask() {
@@ -205,101 +317,61 @@ class AudioAlertActivity : AppCompatActivity() {
         }, 0, 1000)
 
     }
+
+
+
+    override fun onSeekComplete(mp: MediaPlayer?) {
+        progressBarWait!!.visibility = View.GONE
+        btnplay!!.visibility = View.VISIBLE
+    }
+
+    override fun onCompletion(mp: MediaPlayer?) {
+        mp!!.stop()
+       btnplay!!.text = resources.getString(R.string.play)
+        updateTimer?.cancel()
+        player!!.reset()
+       isReset = true
+    }
+    fun setUpMediaPlayer( filename: String) {
+
+        val mydir = mContext!!.getDir("audioCheck", Context.MODE_PRIVATE) //Creating an internal dir;
+
+
+        try {
+
+            player!!.setDataSource(filename)
+            player!!.setOnPreparedListener(MediaPlayer.OnPreparedListener { mp -> mp.start() })
+            player!!.prepare()
+
+        } catch (exception: Exception) {
+            println("failed for load" + exception.message)
+        }
+
+
+    }
+    override fun onPause() {
+        super.onPause()
+        player!!.pause()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        player!!.stop()
+        player!!.release()
+    }
+
+
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        finish()
+
+    }
 }
 
 
 
 
-//    override fun onCompletion(mp: MediaPlayer?) {
-//        mp!!.stop()
-//        btnplay!!.text = resources.getString(R.string.play)
-//        updateTimer?.cancel()
-//        player!!.reset()
-//        isReset = true
-//    }
-//
-//    override fun onSeekComplete(mp: MediaPlayer?) {
-//        progressBarWait!!.visibility = View.GONE
-//        btnplay!!.visibility = View.VISIBLE
-//    }
-//
-//    override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-//
-//        if (!fromUser) {
-//            textViewPlayed!!.text = (AppUtils.durationInSecondsToString(progress))
-//        }
-//    }
-//
-//    override fun onStartTrackingTouch(seekBar: SeekBar?) {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override fun onStopTrackingTouch(seekBar: SeekBar?) {
-//
-//        // TODO Auto-generated method stub
-//        if (player!!.isPlaying) {
-//            progressBarWait!!.visibility = View.GONE
-//            player!!.seekTo(seekBar!!.progress * 1000)
-//        }
-//    }
-//
-//    override fun onPrepared(mp: MediaPlayer?) {
-//
-//
-//        val duration = mp!!.duration / 1000
-//
-//
-//        seekBarProgress!!.max = duration
-//        textViewLength!!.text = (AppUtils.durationInSecondsToString(duration))
-//        progressBarWait!!.visibility = View.GONE
-//
-//        if (!mp.isPlaying) {
-//            playerIamge!!.setBackgroundResource(R.drawable.mic)
-//            btnplay!!.visibility = View.VISIBLE
-//            btnplay!!.text = resources.getString(R.string.pause)
-//            mp.start()
-//            updateMediaProgress()
-//            linearLayoutMediaController!!.visibility = View.VISIBLE
-//        }
-//    }
-//
-//    override fun onClick(v: View?) {
-//
-//        // TODO Auto-generated method stub
-//        if (v === btnplay) {
-//            if (!isplayclicked) {
-//                if (player!!.isPlaying) {
-//                    println("is come click second")
-//                    player!!.pause()
-//                    playerIamge!!.background = resources
-//                        .getDrawable(R.drawable.mic)
-//                    btnplay!!.text = resources.getString(R.string.play)
-//                }
-//                isplayclicked = true
-//            } else {
-//                if (player == null || isReset) {
-//                    if (AppUtils.checkInternet(context)) {
-//                        player!!.start()
-//                        playerIamge
-//                            ?.setBackgroundResource(R.drawable.michover)
-//                        isReset = false
-//                    } else {
-//                        Toast.makeText(context, resources.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    if (AppUtils.checkInternet(context)) {
-//                        player!!.start()
-//                        playerIamge
-//                            ?.setBackgroundResource(R.drawable.michover)
-//                        btnplay!!.text = resources
-//                            .getString(R.string.pause)
-//                    } else {
-//                        Toast.makeText(context, resources.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                isplayclicked = false
-//            }
-//        } else if (v === backImg) {
-//            finish()
-//        }
-//    }
+

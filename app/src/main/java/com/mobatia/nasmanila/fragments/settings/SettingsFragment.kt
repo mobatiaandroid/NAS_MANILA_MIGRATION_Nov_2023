@@ -64,7 +64,7 @@ class SettingsFragment() : Fragment() {
     var isRegUser = false
     var dialog: Dialog? = null
     private val PASSWORD_PATTERN = "^" +
-            "(?=.*[@#$%^&+=])" +  // at least 1 special character
+            "(?=.*[@#$%!^&+=])" +  // at least 1 special character
             "(?=\\S+$)" +  // no white spaces
             ".{8,}" +  // at least 8 characters
             "$"
@@ -172,9 +172,8 @@ class SettingsFragment() : Fragment() {
                         if (AppUtils.isNetworkConnected(mContext!!)) {
                            showDialogAlertDeleteaccount(
                                mContext!!,
-
-                                "Do you want to delete your account?",
                                 "Confirm?",
+                                "Do you want to delete your account?",
                                 R.drawable.questionmark_icon,
                                 R.drawable.round
                             )
@@ -219,9 +218,11 @@ class SettingsFragment() : Fragment() {
                         mContext!!.startActivity(intent)
                     }
                     1 -> {
-                        val mIntent = Intent(mContext, TermsOfServiceActivity::class.java)
-                        mIntent.putExtra("tab_type", mSettingsListArray[position].toString())
-                        mContext!!.startActivity(mIntent)
+                        Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                        /* val mIntent = Intent(mContext, TermsOfServiceActivity::class.java)
+                         mIntent.putExtra("tab_type", mSettingsListArray[position].toString())
+                         mContext!!.startActivity(mIntent)*/
                     }
                     2 -> {
                         val emailIntent = Intent(
@@ -360,7 +361,7 @@ class SettingsFragment() : Fragment() {
                         R.drawable.infoicon,
                         R.drawable.round
                     )
-                    //InternetCheckClass.showErrorAlert(context, "Please enter New Password", "Alert")
+
                 } else {
                     if (confirmpassword!!.text.toString().trim().equals("")) {
                         AppUtils.showDialogAlertDismiss(
@@ -370,11 +371,7 @@ class SettingsFragment() : Fragment() {
                             R.drawable.infoicon,
                             R.drawable.round
                         )
-                        /*InternetCheckClass.showErrorAlert(
-                            context,
-                            "Please enter Confirm Password",
-                            "Alert"
-                        )*/
+
                     } else {
                         if (newpassword!!.getText().toString().trim { it <= ' ' }
                                 .matches(PASSWORD_PATTERN.toRegex()) && confirmpassword!!.getText()

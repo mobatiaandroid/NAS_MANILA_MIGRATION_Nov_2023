@@ -48,7 +48,7 @@ class PushNotificationListAdapter(
             holder.image!!.setImageResource(R.drawable.alerticon_text)
         } else if (pushNotificationList[position].type.equals("image", ignoreCase = true)) {
             holder.image!!.setImageResource(R.drawable.alerticon_image)
-        } else if (pushNotificationList[position].type.equals("Voice", ignoreCase = true)) {
+        } else if (pushNotificationList[position].type.equals("Audio", ignoreCase = true)) {
             holder.image!!.setImageResource(R.drawable.alerticon_audio)
         }
         holder.title!!.text = pushNotificationList[position].message

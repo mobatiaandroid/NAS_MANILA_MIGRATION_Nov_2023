@@ -78,6 +78,7 @@
                 android:inputType="textEmailAddress|textNoSuggestions"
                 android:singleLine="true"
                 android:textColorHint="@color/white"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 app:boxBackgroundMode="none" />
@@ -108,6 +109,7 @@
                 android:singleLine="true"
                 android:background="@null"
                 android:textSize="16dp"
+                android:textCursorDrawable="@drawable/edittext_cursor"
                 android:textColor="@color/white"
                 android:layout_marginLeft="2dp"
                 app:boxBackgroundMode="none"/>
@@ -126,22 +128,23 @@
         app:layout_constraintBottom_toTopOf="@+id/guestButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/signUpButton">
-
-        <Button
-            android:id="@+id/forgotPasswordButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:filterTouchesWhenObscured="true"
-            android:background="@drawable/help" />
-
         <Button
             android:id="@+id/helpButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:filterTouchesWhenObscured="true"
             android:background="@drawable/forgotpassword"
-            app:layout_constraintBottom_toTopOf="@+id/forgotPasswordButton" />
+            />
+        <Button
+            android:id="@+id/forgotPasswordButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:filterTouchesWhenObscured="true"
+            android:background="@drawable/help" />
+
+
     </LinearLayout>
 
 

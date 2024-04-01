@@ -104,6 +104,7 @@ class CcaFragment:Fragment() {
         bannerImagePager = mRootView!!.findViewById<View>(R.id.bannerImagePager) as ImageView
         relMain = mRootView!!.findViewById<View>(R.id.relMain) as RelativeLayout
         val llm = LinearLayoutManager(mContext)
+
         llm.orientation = LinearLayoutManager.VERTICAL
         mListView!!.addItemDecoration(DividerItemDecoration(resources.getDrawable(R.drawable.list_divider)))
 

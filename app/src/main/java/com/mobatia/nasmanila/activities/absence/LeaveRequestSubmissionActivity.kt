@@ -356,7 +356,16 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
                             R.drawable.exclamationicon,
                             R.drawable.round
                         )
-                    } else {
+                    } else if (status_code.equals("313")) {
+                        AppUtils.showDialogAlertDismiss(
+                            mContext as Activity?,
+                            getString(R.string.error_heading),
+                            getString(R.string.date_already_registered),
+                            R.drawable.exclamationicon,
+                            R.drawable.round
+                        )
+                    }
+                    else {
                         AppUtils.showDialogAlertDismiss(
                             mContext as Activity?,
                             getString(R.string.error_heading),

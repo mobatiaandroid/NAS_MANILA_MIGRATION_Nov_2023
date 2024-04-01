@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -71,16 +72,16 @@ class FacilityActivity : AppCompatActivity() {
     }
 
     private fun initialiseUI() {
-        if (extras != null) {
+
            /* mAboutUsListArray = extras!!
                 .getSerializable("array") as ArrayList<AboutUsModel>?*/
-            desc = extras!!.getString("desc")
-            title = extras!!.getString("title")
-            bannerimg = extras!!.getString("banner_image")
+            desc = intent.getStringExtra("desc")
+            title =  intent.getStringExtra("title")
+            bannerimg =  intent.getStringExtra("banner_image")
             println("Image url--$bannerimg")
             if (bannerimg != "") {
                 bannerUrlImageArray.add(bannerimg!!)
-            }
+
         }
         mAboutUsListArray=PreferenceManager.getaboutusarray(mContext!!)
         relativeHeader = findViewById(R.id.relativeHeader)

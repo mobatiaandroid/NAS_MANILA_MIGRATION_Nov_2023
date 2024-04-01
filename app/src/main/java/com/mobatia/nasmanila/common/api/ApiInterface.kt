@@ -32,7 +32,11 @@ import com.mobatia.nasmanila.fragments.contact_us.model.ContactUsResponseModel
 import com.mobatia.nasmanila.fragments.enrichment.model.Enrichment_lessonsModel
 import com.mobatia.nasmanila.fragments.home.model.HomeBannerApiModel
 import com.mobatia.nasmanila.fragments.home.model.HomeBannerModel
+import com.mobatia.nasmanila.fragments.nas_today.model.NasTodayResponseModel
+import com.mobatia.nasmanila.fragments.nas_today.model.NastodayResponse
 import com.mobatia.nasmanila.fragments.notifications.model.NotificationsApiModel
+import com.mobatia.nasmanila.fragments.notifications.model.NotificationsClearResponse
+import com.mobatia.nasmanila.fragments.notifications.model.NotificationsClearResponseModel
 import com.mobatia.nasmanila.fragments.notifications.model.NotificationsResponseModel
 import com.mobatia.nasmanila.fragments.parent_essentials.model.ParentessentialsResponseModel
 import com.mobatia.nasmanila.fragments.parents_meeting.model.SendemailstaffptaApiModel
@@ -78,6 +82,13 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     fun homebanner(
         @Header("Authorization") token:String,
+        @Body homebannerBody: HomeBannerApiModel
+    ): Call<HomeBannerModel>
+
+
+    @POST("Api-V1/home_banner_public")
+    @Headers("Content-Type: application/json")
+    fun homebanner_public(
         @Body homebannerBody: HomeBannerApiModel
     ): Call<HomeBannerModel>
 
@@ -231,9 +242,17 @@ interface ApiInterface {
     ): Call<Cca_submitResponseModel>
 
 
+    @POST("Api-V1/nastoday")
+    @Headers("Content-Type: application/json")
+    fun nasTodayListCall(
+        @Header("Authorization") token:String
+    ): Call<NasTodayResponseModel>
 
-
-
+    @POST("Api-V1/clear_badge")
+    @Headers("Content-Type: application/json")
+    fun clear_badge(
+        @Header("Authorization") token:String
+    ): Call<NotificationsClearResponseModel>
 
 
 
@@ -280,8 +299,7 @@ interface ApiInterface {
     @POST("api/v1/social_media")
     fun socialMediaListCall(): Call<ResponseBody>
 
-    @POST("api/v1/newsletter_categories")
-    fun nasTodayListCall(): Call<ResponseBody>
+
 
     fun newsLetterCategoryCall(): Call<ResponseBody>
 
@@ -369,11 +387,11 @@ interface ApiInterface {
         @Field("access_token") accessToken: String
     ): Call<ResponseBody>
 
-    @FormUrlEncoded
+   /* @FormUrlEncoded
     @POST("api/nastoday")
     fun nasTodayListCall(
         @Field("access_token") accessToken: String
-    ): Call<ResponseBody>
+    ): Call<ResponseBody>*/
 
     @FormUrlEncoded
     @POST("api/contact_us")
@@ -393,4 +411,5 @@ interface ApiInterface {
         @Field("access_token") accessToken: String,
         @Field("users_id") userId: String
     ): Call<ResponseBody>
+
 }

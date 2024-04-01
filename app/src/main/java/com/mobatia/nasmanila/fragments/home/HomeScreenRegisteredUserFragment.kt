@@ -2,24 +2,24 @@ package com.mobatia.nasmanila.fragments.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.TypedArray
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
-import android.util.Log
 import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnDragListener
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
+import com.mobatia.nasmanila.activities.login.LoginActivity
 import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
@@ -36,7 +37,6 @@ import com.mobatia.nasmanila.common.constants.NaisTabConstants
 import com.mobatia.nasmanila.fragments.about_us.AboutUsFragment
 import com.mobatia.nasmanila.fragments.absence.AbsenceFragment
 import com.mobatia.nasmanila.fragments.calendar.CalendarWebViewFragment
-import com.mobatia.nasmanila.fragments.category_main.CategoryMainFragment
 import com.mobatia.nasmanila.fragments.contact_us.ContactUsFragment
 import com.mobatia.nasmanila.fragments.enrichment.CcaFragment
 import com.mobatia.nasmanila.fragments.home.adapter.ImagePagerDrawableAdapter
@@ -46,7 +46,6 @@ import com.mobatia.nasmanila.fragments.nas_today.NasTodayFragment
 import com.mobatia.nasmanila.fragments.notifications.NotificationsFragment
 import com.mobatia.nasmanila.fragments.parent_essentials.ParentEssentialsFragment
 import com.mobatia.nasmanila.fragments.parents_meeting.ParentsEveningFragment
-import com.mobatia.nasmanila.fragments.parents_meeting.ParentsMeetingFragment
 import com.mobatia.nasmanila.fragments.social_media.SocialMediaFragment
 import retrofit2.Call
 import retrofit2.Callback
@@ -1203,75 +1202,81 @@ class HomeScreenRegisteredUserFragment2( s: String,
         progressBarDialog!!.show()
         call.enqueue(object : Callback<HomeBannerModel> {
             override fun onResponse(call: Call<HomeBannerModel>, response: Response<HomeBannerModel>) {
-                progressBarDialog!!.dismiss()
-                val responseData = response.body()
-                if (response.body()!!.responsecode.equals("200")){
+                if (response.isSuccessful) {
                     progressBarDialog!!.dismiss()
-                    var status_code=response.body()!!.response.statuscode
-                    if (status_code.equals("303")){
+                    val responseData = response.body()
+                    if (response.body()!!.responsecode.equals("200")) {
+                        progressBarDialog!!.dismiss()
+                        var status_code = response.body()!!.response.statuscode
+                        if (status_code.equals("303")) {
 
-                        if (responseData!!.response.data.size > 0) {
-                           homeBannerUrlImageArray.addAll(responseData!!.response.data)
+                            if (responseData!!.response.data.size > 0) {
+                                homeBannerUrlImageArray.addAll(responseData!!.response.data)
 
-                            bannerImagePager!!.adapter =
-                                ImagePagerDrawableAdapter(mContext,homeBannerUrlImageArray)
-                        } else {
-                            bannerImagePager!!.setBackgroundResource(R.drawable.default_bannerr)
+                                bannerImagePager!!.adapter =
+                                    ImagePagerDrawableAdapter(mContext, homeBannerUrlImageArray)
+                            } else {
+                                bannerImagePager!!.setBackgroundResource(R.drawable.default_bannerr)
 //
+                            }
+
+
+                        } else if (status_code.equals("301")) {
+                            AppUtils.showDialogAlertDismiss(
+                                context,
+                                getString(R.string.error_heading),
+                                getString(R.string.missing_parameter),
+                                R.drawable.infoicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("304")) {
+                            AppUtils.showDialogAlertDismiss(
+                                context as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.email_exists),
+                                R.drawable.infoicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("305")) {
+                            AppUtils.showDialogAlertDismiss(
+                                context as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.incrct_usernamepswd),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("306")) {
+                            AppUtils.showDialogAlertDismiss(
+                                context as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.invalid_email),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
+                        } else {
+                            AppUtils.showDialogAlertDismiss(
+                                context as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.common_error),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
                         }
 
-
-                    } else if (status_code.equals("301")) {
+                    }  else {
+                        progressBarDialog!!.dismiss()
                         AppUtils.showDialogAlertDismiss(
                             context,
-                            getString(R.string.error_heading),
-                            getString(R.string.missing_parameter),
-                            R.drawable.infoicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("304")) {
-                        AppUtils.showDialogAlertDismiss(
-                            context as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.email_exists),
-                            R.drawable.infoicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("305")) {
-                        AppUtils.showDialogAlertDismiss(
-                            context as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.incrct_usernamepswd),
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("306")) {
-                        AppUtils.showDialogAlertDismiss(
-                            context as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.invalid_email),
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else {
-                        AppUtils.showDialogAlertDismiss(
-                            context as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.common_error),
+                            "Alert",
+                            mContext!!.getString(R.string.common_error),
                             R.drawable.exclamationicon,
                             R.drawable.round
                         )
                     }
-
-                } else {
-                    progressBarDialog!!.dismiss()
-                    AppUtils.showDialogAlertDismiss(
-                        context,
-                        "Alert",
-                        mContext!!.getString(R.string.common_error),
-                        R.drawable.exclamationicon,
-                        R.drawable.round
-                    )
+                }
+              else
+                {
+                    showSessionExpiredPopUp()
                 }
             }
 
@@ -1301,5 +1306,39 @@ class HomeScreenRegisteredUserFragment2( s: String,
                 123
             )
         }
+    }
+
+    private fun showSessionExpiredPopUp() {
+        val dialog = Dialog(mContext!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        val icon = dialog.findViewById<ImageView>(R.id.iconImageView)
+        icon.setBackgroundResource(R.drawable.round)
+        icon.setImageResource(R.drawable.exclamationicon)
+        val text = dialog.findViewById<TextView>(R.id.text_dialog)
+        val textHead = dialog.findViewById<TextView>(R.id.alertHead)
+        text.text = "You will now be logged out."
+        textHead.text = "Session Expired"
+        val dialogButton = dialog.findViewById<Button>(R.id.btn_Ok)
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+            val intent = Intent(mContext, LoginActivity::class.java)
+           // PreferenceManager.setbackpresskey(mContext, "0")
+            PreferenceManager.setAccessToken(mContext!!, "")
+            PreferenceManager.setUserEmail(mContext!!,"")
+            mContext!!.startActivity(intent)
+            (context as Activity).finish()
+        }
+        //		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.btn_Cancel);
+//		dialogButtonCancel.setVisibility(View.GONE);
+//		dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				dialog.dismiss();
+//			}
+//		});
+        dialog.show()
     }
 }

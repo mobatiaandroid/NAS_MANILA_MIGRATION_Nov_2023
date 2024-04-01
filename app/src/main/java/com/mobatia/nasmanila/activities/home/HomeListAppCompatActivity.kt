@@ -2,6 +2,7 @@ package com.mobatia.nasmanila.activities.home
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.ClipData
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.TypedArray
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,10 +21,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.DragShadowBuilder
 import android.view.View.OnTouchListener
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemLongClickListener
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
@@ -47,6 +51,7 @@ import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.adapter.HomeListAdapter
+import com.mobatia.nasmanila.activities.login.LoginActivity
 import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
@@ -137,7 +142,14 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
         extras = intent.extras
         if (AppUtils.checkInternet(mContext)) {
-            callCalendarAPI()
+            if (PreferenceManager.getAccessToken(mContext).equals(""))
+            {
+
+            }else
+            {
+                callCalendarAPI()
+            }
+
         }else{
             Toast.makeText(
                 mContext,
@@ -218,47 +230,55 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         progressBarDialog!!.show()
         call.enqueue(object : Callback<CalendarResponseModel> {
             override fun onResponse(call: Call<CalendarResponseModel>, response: Response<CalendarResponseModel>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.responsecode.equals("200")) {
+                        progressBarDialog!!.dismiss()
+                        var status_code = response.body()!!.response.statuscode
+                        if (status_code.equals("303")) {
 
-
-                if (response.body()!!.responsecode.equals("200")){
-                    progressBarDialog!!.dismiss()
-                    var status_code=response.body()!!.response.statuscode
-                    if (status_code.equals("303")){
-
-                    }
-                    else if (status_code.equals("301")) {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext,
-                            getString(R.string.error_heading),
-                            getString(R.string.missing_parameter),
-                            R.drawable.infoicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("304")) {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.email_exists),
-                            R.drawable.infoicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("305")) {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.incrct_usernamepswd),
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else if (status_code.equals("306")) {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext as Activity?,
-                            getString(R.string.error_heading),
-                            getString(R.string.invalid_email),
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else {
+                        } else if (status_code.equals("301")) {
+                            AppUtils.showDialogAlertDismiss(
+                                mContext,
+                                getString(R.string.error_heading),
+                                getString(R.string.missing_parameter),
+                                R.drawable.infoicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("304")) {
+                            AppUtils.showDialogAlertDismiss(
+                                mContext as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.email_exists),
+                                R.drawable.infoicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("305")) {
+                            AppUtils.showDialogAlertDismiss(
+                                mContext as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.incrct_usernamepswd),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
+                        } else if (status_code.equals("306")) {
+                            AppUtils.showDialogAlertDismiss(
+                                mContext as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.invalid_email),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
+                        } else {
+                            AppUtils.showDialogAlertDismiss(
+                                mContext as Activity?,
+                                getString(R.string.error_heading),
+                                getString(R.string.common_error),
+                                R.drawable.exclamationicon,
+                                R.drawable.round
+                            )
+                        }
+                    }else {
+                        progressBarDialog!!.dismiss()
                         AppUtils.showDialogAlertDismiss(
                             mContext as Activity?,
                             getString(R.string.error_heading),
@@ -267,18 +287,11 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                             R.drawable.round
                         )
                     }
-                }else {
-                    progressBarDialog!!.dismiss()
-                    AppUtils.showDialogAlertDismiss(
-                        mContext as Activity?,
-                        getString(R.string.error_heading),
-                        getString(R.string.common_error),
-                        R.drawable.exclamationicon,
-                        R.drawable.round
-                    )
+
                 }
-
-
+                else{
+                    showSessionExpiredPopUp()
+                }
             }
 
             override fun onFailure(call: Call<CalendarResponseModel>, t: Throwable) {
@@ -287,7 +300,39 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
         })
     }
-
+    private fun showSessionExpiredPopUp() {
+        val dialog = Dialog(mContext)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        val icon = dialog.findViewById<ImageView>(R.id.iconImageView)
+        icon.setBackgroundResource(R.drawable.round)
+        icon.setImageResource(R.drawable.exclamationicon)
+        val text = dialog.findViewById<TextView>(R.id.textDialog)
+        val textHead = dialog.findViewById<TextView>(R.id.alertHead)
+        text.text = "You will now be logged out."
+        textHead.text = "Session Expired"
+        val dialogButton = dialog.findViewById<Button>(R.id.btnOK)
+        dialogButton.setOnClickListener {
+            dialog.dismiss()
+            val intent = Intent(mContext, LoginActivity::class.java)
+            // PreferenceManager.setbackpresskey(mContext, "0")
+            PreferenceManager.setAccessToken(mContext, "")
+            PreferenceManager.setUserEmail(mContext,"")
+            mContext.startActivity(intent)
+            (mContext as Activity).finish()
+        }
+        //		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.btn_Cancel);
+//		dialogButtonCancel.setVisibility(View.GONE);
+//		dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				dialog.dismiss();
+//			}
+//		});
+        dialog.show()
+    }
     private fun initialSettings() {
 
         supportActionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -326,22 +371,18 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             }
         }
         logoClickImgView.setOnClickListener {
-            if (mDrawerLayout!!.isDrawerOpen(linearLayout!!)) {
+           /* if (mDrawerLayout!!.isDrawerOpen(linearLayout!!)) {
                 mDrawerLayout!!.closeDrawer(linearLayout!!)
             }
             closeKeyBoard(mContext)
             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
             //mFragment = HomescreenFragment()
-            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)*/
             val fm = supportFragmentManager
             val currentFragment = fm.findFragmentById(R.id.frame_container)
-            println(
-                "nas current fragment "
-                        + currentFragment!!.javaClass.toString()
-            )
-            if (currentFragment
-                    .javaClass
+
+            if (currentFragment!!.javaClass
                     .toString()
                     .equals(
                         "class com.mobatia.nasmanila.fragments.about_us.AboutUsFragment",
@@ -511,6 +552,19 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                     .equals(
                         "class com.mobatia.nasmanila.fragments.settings.SettingsFragment",
                         ignoreCase = true
+                    )||currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.mobatia.nasmanila.fragments.enrichment.CcaFragment",
+                        ignoreCase = true
+                    )
+                ||currentFragment
+                    .javaClass
+                    .toString()
+                    .equals(
+                        "class com.mobatia.nasmanila.fragments.parents_meeting.ParentsEveningFragment",
+                        ignoreCase = true
                     )
             ) {
                 //                    onBackPressed();
@@ -594,42 +648,53 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
                 1 -> {
                     // Notifications
-                    imageButton2!!.setVisibility(View.VISIBLE)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+                   /* imageButton2!!.setVisibility(View.VISIBLE)
                     mFragment = NotificationsFragment()
-                    replaceFragmentsSelected(position)
+                    replaceFragmentsSelected(position)*/
                 }
 
                 2 -> {
                     //parent essentials
-                    imageButton2!!.setVisibility(View.VISIBLE)
-                    mFragment = ParentEssentialsFragment()
-                    replaceFragmentsSelected(position)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                    /* imageButton2!!.setVisibility(View.VISIBLE)
+                     mFragment = ParentEssentialsFragment()
+                     replaceFragmentsSelected(position)*/
                 }
 
                 3 -> {
                     //category 1
-                    imageButton2!!.setVisibility(View.VISIBLE)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                    /*imageButton2!!.setVisibility(View.VISIBLE)
                     mFragment = CcaFragment()
-                    replaceFragmentsSelected(position)
+                    replaceFragmentsSelected(position)*/
                 }
 
                 4 -> {
                     // social media
-                    imageButton2!!.setVisibility(View.VISIBLE)
-                    mFragment = SocialMediaFragment()
-                    replaceFragmentsSelected(position)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                    /* imageButton2!!.setVisibility(View.VISIBLE)
+                     mFragment = SocialMediaFragment()
+                     replaceFragmentsSelected(position)*/
                 }
 
                 5 -> {
                     // about us
-                   imageButton2!!.setVisibility(View.VISIBLE)
-                    mFragment = AboutUsFragment( )
-                    replaceFragmentsSelected(position)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                    /* imageButton2!!.setVisibility(View.VISIBLE)
+                      mFragment = AboutUsFragment( )
+                      replaceFragmentsSelected(position)*/
                 }
 
                 6 -> {
                     // contact us
-                    imageButton2!!.setVisibility(View.VISIBLE)
+                    Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+                   /* imageButton2!!.setVisibility(View.VISIBLE)
                     if (ActivityCompat.checkSelfPermission(
                             mContext,
                             Manifest.permission.ACCESS_FINE_LOCATION
@@ -649,7 +714,10 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                     {
                         mFragment = ContactUsFragment()
                         replaceFragmentsSelected(position)
-                    }
+                    }*/
+
+
+
             /*        mFragment = ContactUsFragment()
                     if (Build.VERSION.SDK_INT < 23) {
                         //Do not need to check the permission

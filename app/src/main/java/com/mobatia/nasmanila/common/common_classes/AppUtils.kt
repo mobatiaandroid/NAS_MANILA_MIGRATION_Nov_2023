@@ -248,11 +248,11 @@ class AppUtils {
             val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
             icon.setBackgroundResource(bgIcon)
             icon.setImageResource(ico)
-            val text = dialog.findViewById<View>(R.id.text_dialog) as TextView
+            val text = dialog.findViewById<View>(R.id.textDialog) as TextView
             val textHead = dialog.findViewById<View>(R.id.alertHead) as TextView
             text.text = msg
             textHead.text = msgHead
-            val dialogButton = dialog.findViewById<View>(R.id.btn_Ok) as Button
+            val dialogButton = dialog.findViewById<View>(R.id.btnOK) as Button
             dialogButton.setOnClickListener {
                 dialog.dismiss()
                 activity.finish()

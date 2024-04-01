@@ -2,10 +2,12 @@ package com.mobatia.nasmanila.fragments.social_media
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -274,11 +276,26 @@ class SocialMediaFragment() : Fragment() {
                 )
             } else if (mSocialMediaArraylistFacebook.size == 1) {
 
+
+                val facebookAppIntent: Intent
+                try {
+                    facebookAppIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("fb://page/${mSocialMediaArraylistFacebook[0].id}")
+                    )
+                    startActivity(facebookAppIntent)
+                } catch (e: ActivityNotFoundException) {
+
+                    val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
+                    intent.putExtra("url", mSocialMediaArraylistFacebook[0].url)
+                    intent.putExtra("tab_type", "Facebook")
+                    startActivity(intent)
+
+                }
+
+
 //                val intent = Intent(mContext, FullscreenWebViewActivityNoHeader::class.java)
-                val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
-                intent.putExtra("url", mSocialMediaArraylistFacebook[0].url)
-                intent.putExtra("tab_type", mSocialMediaArraylistFacebook[0].tab_type)
-                startActivity(intent)
+
             } else {
                 showSocialMediaList(mSocialMediaArraylistFacebook, type)
             }
@@ -289,7 +306,7 @@ class SocialMediaFragment() : Fragment() {
 //                val intent = Intent(mContext, FullscreenWebViewActivityNoHeader::class.java)
                 val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
                 intent.putExtra("url", mSocialMediaArraylistTwitter[0].url)
-                intent.putExtra("tab_type", mSocialMediaArraylistFacebook[0].tab_type)
+                intent.putExtra("tab_type", "Twitter")
                 startActivity(intent)
             } else {
                 showSocialMediaList(mSocialMediaArraylistTwitter, type)
@@ -310,7 +327,7 @@ class SocialMediaFragment() : Fragment() {
 //                val intent = Intent(mContext, FullscreenWebViewActivityNoHeader::class.java)
                 val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
                 intent.putExtra("url", mSocialMediaArraylistInstagram[0].url)
-                intent.putExtra("tab_type", mSocialMediaArraylistFacebook[0].tab_type)
+                intent.putExtra("tab_type", "Instagram")
                 startActivity(intent)
             } else {
                 showSocialMediaList(mSocialMediaArraylistInstagram, type)

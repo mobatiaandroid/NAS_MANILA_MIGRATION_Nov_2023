@@ -263,7 +263,7 @@ class LoginActivity : AppCompatActivity() {
                     ), R.drawable.exclamationicon, R.drawable.round
                 )
         }
-        val cancelButton = dialog.findViewById<View>(R.id.button2) as Button
+        val cancelButton = dialog.findViewById<View>(R.id.btn_maybelater) as Button
         cancelButton.setOnClickListener {
             AppUtils.hideKeyboard(context)
             dialog.dismiss()
@@ -590,6 +590,7 @@ if (responseData!!.responsecode.equals("200")){
 
                 } else {
                     if (response.body()!!.response.statuscode.equals("501")) {
+                        progressBarDialog!!.dismiss()
                         AppUtils.showDialogAlertDismiss(
                             context,
                             getString(R.string.error_heading),

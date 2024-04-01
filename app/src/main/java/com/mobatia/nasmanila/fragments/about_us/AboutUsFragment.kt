@@ -166,16 +166,20 @@ mAboutUsListArray=ArrayList()
                            // mAboutUsListArray!!.addAll(responseData!!.response.data)
                             for (i in responseData!!.response.data.indices) {
                                 if (i >= 0) {
-
-                                    val item: AboutUsModel = responseData!!.response.data.get(i)
+                                    Log.e("data",
+                                        responseData!!.response.data.get(i).description!!
+                                    )
+                                    mAboutUsListArray!!.add( responseData!!.response.data.get(i))
+                                    /*val item: AboutUsModel = responseData!!.response.data.get(i)
                                     val gson = Gson()
                                     val eventJson = gson.toJson(item)
                                     try {
                                         val jsonObject = JSONObject(eventJson)
+                                        Log.e("jsonObject", jsonObject.toString());
                                         mAboutUsListArray!!.add(getSearchValues(jsonObject))
                                     } catch (e: JSONException) {
                                         e.printStackTrace()
-                                    }
+                                    }*/
                                 }
                                 //												else
 //												{
@@ -653,7 +657,9 @@ mAboutUsListArray=ArrayList()
                     )*/
                     mIntent.putExtra("desc", mAboutUsListArray!![position].description)
                     mIntent.putExtra("title", mAboutUsListArray!![position].tab_type)
-                    mIntent.putExtra("banner_image", mAboutUsListArray!![position].image)
+                    mIntent.putExtra("banner_image", mAboutUsListArray!![position].banner_image)
+
+
                     mContext!!.startActivity(mIntent)
                     System.out.println(
                         "faci array--" + mAboutUsListArray!![position].items!!.size

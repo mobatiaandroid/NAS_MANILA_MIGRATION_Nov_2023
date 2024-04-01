@@ -34,6 +34,7 @@ import com.mobatia.nasmanila.common.constants.NaisClassNameConstants
 import com.mobatia.nasmanila.fragments.home.progressBarDialog
 import com.mobatia.nasmanila.fragments.notifications.adapter.PushNotificationListAdapter
 import com.mobatia.nasmanila.fragments.notifications.model.NotificationsApiModel
+import com.mobatia.nasmanila.fragments.notifications.model.NotificationsClearResponseModel
 import com.mobatia.nasmanila.fragments.notifications.model.NotificationsListModel
 import com.mobatia.nasmanila.fragments.notifications.model.NotificationsResponseModel
 import com.mobatia.nasmanila.fragments.notifications.model.PushNotificationModel
@@ -100,7 +101,7 @@ class NotificationsFragment() : Fragment() {
 
         initialiseUI()
         if (AppUtils.checkInternet(mContext!!)) {
-//            clearBadge()
+           clearBadge()
             val isFromBottom = false
             callPushNotification(
                 pageFrom,
@@ -116,6 +117,50 @@ class NotificationsFragment() : Fragment() {
             )
         }
         return mRootView
+    }
+
+    private fun clearBadge()
+    {
+        val call: Call<NotificationsClearResponseModel> = ApiClient.getClient.clear_badge(
+            "Bearer " + PreferenceManager.getAccessToken(mContext))
+        progressBarDialog!!.show()
+        call.enqueue(object : Callback<NotificationsClearResponseModel> {
+            override fun onResponse(call: Call<NotificationsClearResponseModel>, response: Response<NotificationsClearResponseModel>) {
+
+
+                if (response.body()!!.responsecode.equals("200")){
+                    progressBarDialog!!.dismiss()
+                    var status_code=response.body()!!.response.statuscode
+                    if (status_code.equals("303")){
+
+
+                        } else {
+                        AppUtils.showDialogAlertDismiss(
+                            mContext as Activity?,
+                            getString(R.string.error_heading),
+                            getString(R.string.common_error),
+                            R.drawable.exclamationicon,
+                            R.drawable.round
+                        )
+                    }
+                }else {
+                    progressBarDialog!!.dismiss()
+                    AppUtils.showDialogAlertDismiss(
+                        mContext as Activity?,
+                        getString(R.string.error_heading),
+                        getString(R.string.common_error),
+                        R.drawable.exclamationicon,
+                        R.drawable.round
+                    )
+                }
+
+            }
+
+            override fun onFailure(call: Call<NotificationsClearResponseModel>, t: Throwable) {
+                progressBarDialog!!.dismiss()
+            }
+
+        })
     }
 
     private fun callPushNotification(
@@ -253,7 +298,7 @@ class NotificationsFragment() : Fragment() {
                     context!!.startActivity(mIntent)
                 }
                 if (pushNotificationArrayList!![position].type.equals(
-                        "Voice"
+                        "Audio"
                     )
                 ) {
                     mIntent = Intent(context, AudioAlertActivity::class.java)

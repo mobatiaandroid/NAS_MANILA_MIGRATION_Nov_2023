@@ -12,15 +12,15 @@ android {
         applicationId = "com.mobatia.nasmanila"
         minSdk = 27
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 21
+        versionName = "3.0"
         multiDexEnabled= true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

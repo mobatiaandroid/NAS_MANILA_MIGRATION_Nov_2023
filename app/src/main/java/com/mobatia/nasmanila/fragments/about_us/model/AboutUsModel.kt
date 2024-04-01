@@ -15,6 +15,7 @@ class AboutUsModel(
     var description: String? = null,
     var url: String? = null,
     var image: String? = null
+)
 
 
 
@@ -31,7 +32,7 @@ class AboutUsModel(
     var itemImageUrl: String? = null
     var itemPdfUrl: String? = null
     var itemTitle: String? = null*/
-)
+
 class AboutUsItemsModel(
     var id: String? = null,
     var url: String? = null,

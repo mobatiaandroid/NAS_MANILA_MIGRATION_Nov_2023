@@ -75,33 +75,12 @@ class ContactUsAdapter(
             mContext!!.startActivity(dialIntent)
         }
         holder.cotactEmail.setOnClickListener {
-            val emailIntent = Intent(
-                Intent.ACTION_SEND_MULTIPLE
-            )
-            val deliveryAddress =
-                arrayOf(holder.cotactEmail.text.toString())
-            emailIntent.putExtra(Intent.EXTRA_EMAIL, deliveryAddress)
-            emailIntent.type = "text/plain"
-            emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
-            val pm: PackageManager = it.context.packageManager
-            val activityList = pm.queryIntentActivities(
-                emailIntent, 0
-            )
-            for (app in activityList) {
-                if (app.activityInfo.name.contains("com.google.android.gm")) {
-                    val activity = app.activityInfo
-                    val name = ComponentName(
-                        activity.applicationInfo.packageName, activity.name
-                    )
-                    emailIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-                    emailIntent.flags = (Intent.FLAG_ACTIVITY_NEW_TASK
-                            or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-                    emailIntent.component = name
-                    it.context.startActivity(emailIntent)
-                    break
-                }
-            }
+            val intent = Intent(Intent.ACTION_SEND)
+            val recipients = arrayOf(holder.cotactEmail.text.toString())
+            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+            intent.type = "text/html"
+            intent.setPackage("com.google.android.gm")
+            mContext!!.startActivity(Intent.createChooser(intent, "Send mail"))
         }
     }
 

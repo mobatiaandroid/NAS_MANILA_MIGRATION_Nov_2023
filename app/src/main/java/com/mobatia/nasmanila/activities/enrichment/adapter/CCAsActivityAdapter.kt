@@ -2,6 +2,7 @@ package com.mobatia.nasmanila.activities.enrichment.adapter
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +35,7 @@ class CCAsActivityAdapter(
     var weekList: ArrayList<WeekListModel>? = null
     var recyclerWeek: RecyclerView? = null
     var dayPosition = 0
-    var count = 2
+    var count = 0
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(viewGroup.context)
             .inflate(R.layout.adapter_cca_activity, viewGroup, false)
@@ -59,6 +60,7 @@ class CCAsActivityAdapter(
 //        mCcaArrayListAdapter.add("CCA"+(position+1));
 //        mCcaArrayListAdapter.add("CCA"+(position+2));
             if (position == 0) {
+                Log.e("size", mCCAchoiceModel1!!.size.toString())
                 if (mCCAchoiceModel1!!.size > 0) {
                     if (mCCAchoiceModel2!!.size <= 0) {
                         AppController.weekList!!.get(dayPosition).choiceStatus1="1"

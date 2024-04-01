@@ -370,6 +370,9 @@ var ccadetailbody=Cca_detailsApiModel(studId)
                                 recycler_review!!.adapter = mCCAsActivityAdapter
                             }
                         } else {
+                            val mCCAsActivityAdapter =
+                                CCAsListActivityAdapter(mContext, mCCAmodelArrayList!!)
+                            recycler_review!!.adapter = mCCAsActivityAdapter
                             Toast.makeText(
                                 this@CCA_Activity,
                                 "No EL available.",

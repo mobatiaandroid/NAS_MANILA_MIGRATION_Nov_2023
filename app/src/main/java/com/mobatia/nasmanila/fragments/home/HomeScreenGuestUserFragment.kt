@@ -443,11 +443,15 @@ class HomeScreenGuestUserFragment(
                 ignoreCase = true
             )
         ) {
-            mFragment = ParentEssentialsFragment()
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /*mFragment = ParentEssentialsFragment()
+            fragmentIntent(mFragment)*/
         } else if (intentTabId.equals(NaisTabConstants.TAB_PROGRAMMES_GUEST, ignoreCase = true)) {
-            mFragment = CcaFragment()
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /* mFragment = CcaFragment()
+             fragmentIntent(mFragment)*/
         } else if (intentTabId.equals(NaisTabConstants.TAB_SETTINGS, ignoreCase = true)) {
 //            HomeListActivity.imageButton2.setVisibility(View.GONE)
             mFragment =
@@ -473,147 +477,157 @@ class HomeScreenGuestUserFragment(
                 )
             }
         } else if (intentTabId.equals(NaisTabConstants.TAB_SOCIAL_MEDIA_GUEST, ignoreCase = true)) {
-            mFragment = SocialMediaFragment()
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /* mFragment = SocialMediaFragment()
+             fragmentIntent(mFragment)*/
         } else if (intentTabId.equals("15", ignoreCase = true)) {
-            mFragment = AboutUsFragment()
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /* mFragment = AboutUsFragment()
+             fragmentIntent(mFragment)*/
         } else if (intentTabId.equals(NaisTabConstants.TAB_CONTACT_US_GUEST, ignoreCase = true)) {
-            mFragment = ContactUsFragment()
-            if (Build.VERSION.SDK_INT < 23) {
-                fragmentIntent(mFragment)
-            } else {
-                if (ActivityCompat.checkSelfPermission(
-                        mContext!!,
-                        permissionsRequiredLocation[0]
-                    ) != PackageManager.PERMISSION_GRANTED
-                    || ActivityCompat.checkSelfPermission(
-                        mContext!!,
-                        permissionsRequiredLocation[1]
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            permissionsRequiredLocation[0]
-                        )
-                        || ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            permissionsRequiredLocation[1]
-                        )
-                    ) {
-                        val builder = AlertDialog.Builder(
-                            mContext!!
-                        )
-                        builder.setTitle("Need Location Permission")
-                        builder.setMessage("This module needs location permissions.")
-                        builder.setPositiveButton(
-                            "Grant"
-                        ) { dialog, which ->
-                            dialog.cancel()
-                            ActivityCompat.requestPermissions(
-                                requireActivity(),
-                                permissionsRequiredLocation,
-                                PERMISSION_CALLBACK_CONSTANT_LOCATION
-                            )
-                        }
-                        builder.setNegativeButton(
-                            "Cancel"
-                        ) { dialog, which -> dialog.cancel() }
-                        builder.show()
-                    } else if (locationPermissionStatus!!.getBoolean(
-                            permissionsRequiredLocation[0],
-                            false
-                        )
-                    ) {
-                        val builder = AlertDialog.Builder(
-                            mContext!!
-                        )
-                        builder.setTitle("Need Location Permission")
-                        builder.setMessage("This module needs location permissions.")
-                        builder.setPositiveButton(
-                            "Grant"
-                        ) { dialog, which ->
-                            dialog.cancel()
-                            locationToSettings = true
-                            val intent =
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            val uri = Uri.fromParts("package", mContext!!.packageName, null)
-                            intent.data = uri
-                            startActivityForResult(
-                                intent,
-                                REQUEST_PERMISSION_LOCATION
-                            )
-                            Toast.makeText(
-                                mContext,
-                                "Go to settings and grant access to location",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        builder.setNegativeButton(
-                            "Cancel"
-                        ) { dialog, which ->
-                            dialog.cancel()
-                            locationToSettings = false
-                        }
-                        builder.show()
-                    } else if (locationPermissionStatus!!.getBoolean(
-                            permissionsRequiredLocation[1],
-                            false
-                        )
-                    ) {
-                        //Previously Permission Request was cancelled with 'Dont Ask Again',
-                        // Redirect to Settings after showing Information about why you need the permission
-                        val builder = AlertDialog.Builder(
-                            mContext!!
-                        )
-                        builder.setTitle("Need Location Permission")
-                        builder.setMessage("This module needs location permissions.")
-                        builder.setPositiveButton(
-                            "Grant"
-                        ) { dialog, which ->
-                            dialog.cancel()
-                            locationToSettings = true
-                            val intent =
-                                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            val uri = Uri.fromParts("package", mContext!!.packageName, null)
-                            intent.data = uri
-                            startActivityForResult(
-                                intent,
-                                REQUEST_PERMISSION_LOCATION
-                            )
-                            Toast.makeText(
-                                mContext,
-                                "Go to settings and grant access to location",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                        builder.setNegativeButton(
-                            "Cancel"
-                        ) { dialog, which ->
-                            dialog.cancel()
-                            locationToSettings = false
-                        }
-                        builder.show()
-                    } else {
-                        requestPermissions(
-                            permissionsRequiredLocation,
-                            PERMISSION_CALLBACK_CONSTANT_LOCATION
-                        )
-                    }
-                    val editor = locationPermissionStatus!!.edit()
-                    editor.putBoolean(permissionsRequiredLocation[0], true)
-                    editor.commit()
-                } else {
-                    fragmentIntent(mFragment)
-                }
-            }
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /* mFragment = ContactUsFragment()
+             if (Build.VERSION.SDK_INT < 23) {
+                 fragmentIntent(mFragment)
+             } else {
+                 if (ActivityCompat.checkSelfPermission(
+                         mContext!!,
+                         permissionsRequiredLocation[0]
+                     ) != PackageManager.PERMISSION_GRANTED
+                     || ActivityCompat.checkSelfPermission(
+                         mContext!!,
+                         permissionsRequiredLocation[1]
+                     ) != PackageManager.PERMISSION_GRANTED
+                 ) {
+                     if (ActivityCompat.shouldShowRequestPermissionRationale(
+                             requireActivity(),
+                             permissionsRequiredLocation[0]
+                         )
+                         || ActivityCompat.shouldShowRequestPermissionRationale(
+                             requireActivity(),
+                             permissionsRequiredLocation[1]
+                         )
+                     ) {
+                         val builder = AlertDialog.Builder(
+                             mContext!!
+                         )
+                         builder.setTitle("Need Location Permission")
+                         builder.setMessage("This module needs location permissions.")
+                         builder.setPositiveButton(
+                             "Grant"
+                         ) { dialog, which ->
+                             dialog.cancel()
+                             ActivityCompat.requestPermissions(
+                                 requireActivity(),
+                                 permissionsRequiredLocation,
+                                 PERMISSION_CALLBACK_CONSTANT_LOCATION
+                             )
+                         }
+                         builder.setNegativeButton(
+                             "Cancel"
+                         ) { dialog, which -> dialog.cancel() }
+                         builder.show()
+                     } else if (locationPermissionStatus!!.getBoolean(
+                             permissionsRequiredLocation[0],
+                             false
+                         )
+                     ) {
+                         val builder = AlertDialog.Builder(
+                             mContext!!
+                         )
+                         builder.setTitle("Need Location Permission")
+                         builder.setMessage("This module needs location permissions.")
+                         builder.setPositiveButton(
+                             "Grant"
+                         ) { dialog, which ->
+                             dialog.cancel()
+                             locationToSettings = true
+                             val intent =
+                                 Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                             val uri = Uri.fromParts("package", mContext!!.packageName, null)
+                             intent.data = uri
+                             startActivityForResult(
+                                 intent,
+                                 REQUEST_PERMISSION_LOCATION
+                             )
+                             Toast.makeText(
+                                 mContext,
+                                 "Go to settings and grant access to location",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                         builder.setNegativeButton(
+                             "Cancel"
+                         ) { dialog, which ->
+                             dialog.cancel()
+                             locationToSettings = false
+                         }
+                         builder.show()
+                     } else if (locationPermissionStatus!!.getBoolean(
+                             permissionsRequiredLocation[1],
+                             false
+                         )
+                     ) {
+                         //Previously Permission Request was cancelled with 'Dont Ask Again',
+                         // Redirect to Settings after showing Information about why you need the permission
+                         val builder = AlertDialog.Builder(
+                             mContext!!
+                         )
+                         builder.setTitle("Need Location Permission")
+                         builder.setMessage("This module needs location permissions.")
+                         builder.setPositiveButton(
+                             "Grant"
+                         ) { dialog, which ->
+                             dialog.cancel()
+                             locationToSettings = true
+                             val intent =
+                                 Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                             val uri = Uri.fromParts("package", mContext!!.packageName, null)
+                             intent.data = uri
+                             startActivityForResult(
+                                 intent,
+                                 REQUEST_PERMISSION_LOCATION
+                             )
+                             Toast.makeText(
+                                 mContext,
+                                 "Go to settings and grant access to location",
+                                 Toast.LENGTH_LONG
+                             ).show()
+                         }
+                         builder.setNegativeButton(
+                             "Cancel"
+                         ) { dialog, which ->
+                             dialog.cancel()
+                             locationToSettings = false
+                         }
+                         builder.show()
+                     } else {
+                         requestPermissions(
+                             permissionsRequiredLocation,
+                             PERMISSION_CALLBACK_CONSTANT_LOCATION
+                         )
+                     }
+                     val editor = locationPermissionStatus!!.edit()
+                     editor.putBoolean(permissionsRequiredLocation[0], true)
+                     editor.commit()
+                 } else {
+                     fragmentIntent(mFragment)
+                 }
+             }*/
         } else if (intentTabId.equals(NaisTabConstants.TAB_NAS_TODAY, ignoreCase = true)) {
-            mFragment =
-                NasTodayFragment(NaisClassNameConstants.NAS_TODAY, NaisTabConstants.TAB_NAS_TODAY)
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /* mFragment =
+                 NasTodayFragment(NaisClassNameConstants.NAS_TODAY, NaisTabConstants.TAB_NAS_TODAY)
+             fragmentIntent(mFragment)*/
         } else if (intentTabId.equals(NaisTabConstants.TAB_ABOUT_US_GUEST, ignoreCase = true)) {
-            mFragment = AboutUsFragment()
-            fragmentIntent(mFragment)
+            Toast.makeText(mContext, "This feature is not available for Guest", Toast.LENGTH_SHORT).show()
+
+            /*mFragment = AboutUsFragment()
+            fragmentIntent(mFragment)*/
         }
     }
 
@@ -705,10 +719,7 @@ class HomeScreenGuestUserFragment(
 
     fun getBanner() {
         var homebannerbody = HomeBannerApiModel(versionName, "2")
-        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner(
-            "Bearer " + PreferenceManager.getAccessToken(mContext),
-            homebannerbody
-        )
+        val call: Call<HomeBannerModel> = ApiClient.getClient.homebanner_public(homebannerbody)
         progressBarDialog!!.show()
         call.enqueue(object : Callback<HomeBannerModel> {
             override fun onResponse(call: Call<HomeBannerModel>, response: Response<HomeBannerModel>) {
