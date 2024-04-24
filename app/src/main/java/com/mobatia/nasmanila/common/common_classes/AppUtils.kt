@@ -3,6 +3,7 @@ package com.mobatia.nasmanila.common.common_classes
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -18,6 +19,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.mobatia.nasmanila.R
+import com.mobatia.nasmanila.activities.login.LoginActivity
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -300,6 +302,36 @@ class AppUtils {
             textHead.text = msgHead
             val dialogButton = dialog.findViewById<View>(R.id.btnOK) as Button
             dialogButton.setOnClickListener { dialog.dismiss() }
+            dialog.show()
+        }
+        fun showSessionExpired(
+            context: Context?,
+            msgHead: String?,
+            msg: String?,
+            ico: Int,
+            bgIcon: Int
+        ) {
+            val dialog = Dialog(context!!)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+            val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
+            icon.setBackgroundResource(bgIcon)
+            icon.setImageResource(ico)
+            val text = dialog.findViewById<View>(R.id.textDialog) as TextView
+            val textHead = dialog.findViewById<View>(R.id.alertHead) as TextView
+            text.text = msg
+            textHead.text = msgHead
+            val dialogButton = dialog.findViewById<View>(R.id.btnOK) as Button
+            dialogButton.setOnClickListener {
+                val intent = Intent(context, LoginActivity::class.java)
+                // PreferenceManager.setbackpresskey(mContext, "0")
+                PreferenceManager.setAccessToken(context!!, "")
+                PreferenceManager.setUserEmail(context!!,"")
+                context!!.startActivity(intent)
+                (context as Activity).finish()
+            }
             dialog.show()
         }
 

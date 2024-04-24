@@ -117,6 +117,7 @@ private val externalStorageToSettings = false
 private var locationToSettings = false
 lateinit var listItemArray: Array<String>
 lateinit var listImageArray: TypedArray
+
 var permissionsRequiredCalendar = arrayOf(
     Manifest.permission.READ_CALENDAR,
     Manifest.permission.WRITE_CALENDAR
@@ -132,6 +133,10 @@ var permissionsRequiredLocation = arrayOf(
 private var calendarPermissionStatus: SharedPreferences? = null
 private var externalStoragePermissionStatus: SharedPreferences? = null
 private var locationPermissionStatus: SharedPreferences? = null
+
+
+lateinit var textMessage:TextView
+lateinit var textHead:TextView
 class HomeScreenRegisteredUserFragment2( s: String,
                                          mDrawerLayout: DrawerLayout,
                                          mHomeListView: ListView,
@@ -1276,7 +1281,14 @@ class HomeScreenRegisteredUserFragment2( s: String,
                 }
               else
                 {
-                    showSessionExpiredPopUp()
+                    AppUtils.showSessionExpired(
+                        context,
+                        "Session Expired",
+                        "You will now be logged out.",
+                        R.drawable.exclamationicon,
+                        R.drawable.round
+                    )
+                   //  showSessionExpiredPopUp()
                 }
             }
 
@@ -1314,14 +1326,14 @@ class HomeScreenRegisteredUserFragment2( s: String,
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.alert_dialogue_ok_layout)
-        val icon = dialog.findViewById<ImageView>(R.id.iconImageView)
+        var icon = dialog.findViewById<ImageView>(R.id.iconImageView)
         icon.setBackgroundResource(R.drawable.round)
         icon.setImageResource(R.drawable.exclamationicon)
-        val text = dialog.findViewById<TextView>(R.id.text_dialog)
-        val textHead = dialog.findViewById<TextView>(R.id.alertHead)
-        text.text = "You will now be logged out."
+        textMessage = dialog.findViewById(R.id.text_dialog)!!
+        textHead  = dialog.findViewById(R.id.alertHead)!!
+        textMessage.text = "You will now be logged out."
         textHead.text = "Session Expired"
-        val dialogButton = dialog.findViewById<Button>(R.id.btn_Ok)
+        var dialogButton = dialog.findViewById<Button>(R.id.btn_Ok)
         dialogButton.setOnClickListener {
             dialog.dismiss()
             val intent = Intent(mContext, LoginActivity::class.java)

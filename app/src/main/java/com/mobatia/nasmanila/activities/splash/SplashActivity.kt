@@ -49,11 +49,12 @@ class SplashActivity : AppCompatActivity() {
                             startActivity(loginIntent)
                             finish()
                         } else {
-                            ////AppUtils.getAccessToken(context)
                             var homeIntent: Intent =
                                 Intent(context, HomeListAppCompatActivity::class.java)
                             startActivity(homeIntent)
                             finish()
+                            ////AppUtils.getAccessToken(context)
+
                         }
                 }, 5000)
             }

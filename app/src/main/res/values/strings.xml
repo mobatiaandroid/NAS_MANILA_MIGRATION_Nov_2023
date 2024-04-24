@@ -13,6 +13,7 @@
     <string name="module_under_construction">This module is under construction.</string>
     <string name="avail_for_registered">This feature is available only for registered users. Login/register to see contents.</string>
     <string name="common_error">Cannot continue. Please try again later</string>
+    <string name="session_expired">Cannot continue. Please try again later</string>
     <string name="common_error_loading_pdf">Failed to load the pdf. Please try again later.</string>
     <string name="common_error_loading_link">Failed to load the link. Please try again later.</string>
     <string name="common_error_loading_page">Failed to load. Please try again later.</string>
