@@ -619,6 +619,7 @@ class ParentsEveningFragment:Fragment() {
 
                             if (message.length <= 500) {
                                 if (AppUtils.checkInternet(mContext!!)) {
+                                    Log.e("success","Success")
                                     sendEmailToStaff()
                                 }else{
                                     Toast.makeText(
@@ -708,7 +709,9 @@ class ParentsEveningFragment:Fragment() {
             }
 
             override fun onFailure(call: Call<SendemailstaffptaResponseModel>, t: Throwable) {
-                progressBarDialog!!.dismiss()            }
+                progressBarDialog!!.dismiss()
+                //Log.e("failed",t.toString())
+            }
         })
     }
 }

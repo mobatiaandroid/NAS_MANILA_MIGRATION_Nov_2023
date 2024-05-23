@@ -12,8 +12,8 @@ android {
         applicationId = "com.mobatia.nasmanila"
         minSdk = 27
         targetSdk = 33
-        versionCode = 21
-        versionName = "3.0"
+        versionCode = 23
+        versionName = "3.2"
         multiDexEnabled= true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

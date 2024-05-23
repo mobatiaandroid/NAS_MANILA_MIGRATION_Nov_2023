@@ -14,6 +14,7 @@ class StaffModelDept (
     var staffDepartment:String?=null,
     var name:String?=null,
     var staffPhoneNo:String?=null,
+    @SerializedName("email")
     var staffEmail:String?=null,
     var staffContactNo:String?=null,
     var staffAbout:String?=null,
