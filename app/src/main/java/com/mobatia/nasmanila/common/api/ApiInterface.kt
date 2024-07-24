@@ -417,6 +417,7 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     fun deviceregistration
                 (
+        @Header("Authorization") token:String,
         @Body loginBody: DeviceRegistrtionmodel
 
     ): Call<ResponseBody>

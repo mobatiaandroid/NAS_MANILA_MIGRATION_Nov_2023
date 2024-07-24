@@ -156,7 +156,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             }else
             {
                 callCalendarAPI()
-                callDeviceReg()
+              //  callDeviceReg()
             }
 
         }else{
@@ -250,7 +250,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         var loginbody = DeviceRegistrtionmodel(
             "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
 
-            val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration(loginbody)
+            val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration("Bearer "+PreferenceManager.getAccessToken(mContext),loginbody)
 
             call.enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -1361,7 +1361,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
     override fun onBackPressed() {
         super.onBackPressed()
-        callDeviceReg()
+     //   callDeviceReg()
         if (mDrawerLayout!!.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout!!.closeDrawer(linearLayout!!)
         } else {

@@ -1224,7 +1224,8 @@ class HomeScreenRegisteredUserFragment2( s: String,
         var loginbody = DeviceRegistrtionmodel(
             "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
 
-        val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration(loginbody)
+        val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration("Bearer "+PreferenceManager.getAccessToken(
+            mContext),loginbody)
 
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
