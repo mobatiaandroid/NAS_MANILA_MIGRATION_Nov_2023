@@ -13,6 +13,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.provider.Settings
+import android.text.TextUtils
+import android.util.Log
 import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -25,11 +28,14 @@ import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
 import com.mobatia.nasmanila.activities.login.LoginActivity
 import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
+import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 import com.mobatia.nasmanila.common.constants.NaisClassNameConstants
@@ -47,6 +53,7 @@ import com.mobatia.nasmanila.fragments.notifications.NotificationsFragment
 import com.mobatia.nasmanila.fragments.parent_essentials.ParentEssentialsFragment
 import com.mobatia.nasmanila.fragments.parents_meeting.ParentsEveningFragment
 import com.mobatia.nasmanila.fragments.social_media.SocialMediaFragment
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -1163,6 +1170,8 @@ class HomeScreenRegisteredUserFragment2( s: String,
 //        getVersionInfo()
         if (AppUtils.checkInternet(mContext!!)) {
             getBanner()
+            callDeviceReg()
+
         } else {
 
             homeBannerUrlImageArray.add("")
@@ -1196,7 +1205,42 @@ class HomeScreenRegisteredUserFragment2( s: String,
         }
         mSectionText = arrayOfNulls(9)
     }
+    private fun callDeviceReg() {
 
+        progressBarDialog!!.show()
+        val fToken = arrayOf("")
+        FirebaseApp.initializeApp(mContext!!)
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                fToken[0] = token
+                Log.e("token", token)
+                PreferenceManager.setFCMID(mContext!!, token)
+            } else {
+            }
+        }
+        var androidID = Settings.Secure.getString(
+            mContext!!.contentResolver,
+            Settings.Secure.ANDROID_ID)
+        var loginbody = DeviceRegistrtionmodel(
+            "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
+
+        val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration(loginbody)
+
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val responseData = response.body()
+
+            }
+
+
+
+
+            override fun onFailure(call: Call<ResponseBody
+                    >, t: Throwable) {
+                progressBarDialog!!.dismiss()
+            }
+        })
+    }
     private fun getBanner() {
 
         var homebannerbody = HomeBannerApiModel(versionName, "2")

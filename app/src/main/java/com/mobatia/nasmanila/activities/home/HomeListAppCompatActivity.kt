@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -49,11 +50,17 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.adapter.HomeListAdapter
 import com.mobatia.nasmanila.activities.login.LoginActivity
+import com.mobatia.nasmanila.activities.login.model.ForgotPasswordApiModel
+import com.mobatia.nasmanila.activities.login.model.ForgotPasswordModel
+import com.mobatia.nasmanila.activities.login.model.LoginApiModel
 import com.mobatia.nasmanila.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
+import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 import com.mobatia.nasmanila.common.constants.NaisClassNameConstants.Companion.SETTINGS
@@ -73,6 +80,7 @@ import com.mobatia.nasmanila.fragments.parents_meeting.ParentsEveningFragment
 import com.mobatia.nasmanila.fragments.parents_meeting.ParentsMeetingFragment
 import com.mobatia.nasmanila.fragments.settings.SettingsFragment
 import com.mobatia.nasmanila.fragments.social_media.SocialMediaFragment
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -148,6 +156,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             }else
             {
                 callCalendarAPI()
+                callDeviceReg()
             }
 
         }else{
@@ -222,6 +231,45 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         }
 
     }
+
+    private fun callDeviceReg() {
+
+            progressBarDialog!!.show()
+        val fToken = arrayOf("")
+        FirebaseApp.initializeApp(mContext)
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
+            if (!TextUtils.isEmpty(token)) {
+                fToken[0] = token
+                Log.e("token", token)
+                PreferenceManager.setFCMID(mContext!!, token)
+            } else {
+            }
+        }
+        var androidID = Settings.Secure.getString(this.contentResolver,
+            Settings.Secure.ANDROID_ID)
+        var loginbody = DeviceRegistrtionmodel(
+            "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
+
+            val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration(loginbody)
+
+            call.enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    val responseData = response.body()
+
+                }
+
+
+
+
+                override fun onFailure(call: Call<ResponseBody
+                        >, t: Throwable) {
+                    progressBarDialog!!.dismiss()
+                }
+            })
+                }
+
+
+
 
     private fun callCalendarAPI() {
         val call: Call<CalendarResponseModel> = ApiClient.getClient.calender(
@@ -1313,6 +1361,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
     override fun onBackPressed() {
         super.onBackPressed()
+        callDeviceReg()
         if (mDrawerLayout!!.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout!!.closeDrawer(linearLayout!!)
         } else {

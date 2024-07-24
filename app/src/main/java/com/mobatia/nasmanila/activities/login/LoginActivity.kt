@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.provider.Settings.Secure.*
 import android.text.TextUtils
 import android.util.Log
@@ -491,10 +492,8 @@ if (responseData!!.responsecode.equals("200")){
     private fun loginApiCall() {
 
         progressBarDialog!!.show()
-        val androidID = getString(
-            this.contentResolver,
-            ANDROID_ID
-        )
+        var androidID = Settings.Secure.getString(this.contentResolver,
+            Settings.Secure.ANDROID_ID)
         val fToken = arrayOf("")
         FirebaseApp.initializeApp(context)
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
@@ -508,7 +507,7 @@ if (responseData!!.responsecode.equals("200")){
         var loginbody = LoginApiModel(
             userNameEdtTxt!!.text.toString(),
             passwordEdtTxt!!.text.toString(),
-            PreferenceManager.getFCMID(context), "2", "Android", "1.0"
+            PreferenceManager.getFCMID(context), "2", "Android", "1.0",androidID
         )
         val call: Call<LoginModel> = ApiClient.getClient.loginCall(loginbody)
         call.enqueue(object : Callback<LoginModel> {

@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId = "com.mobatia.nasmanila"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 23
         versionName = "3.2"
         multiDexEnabled= true

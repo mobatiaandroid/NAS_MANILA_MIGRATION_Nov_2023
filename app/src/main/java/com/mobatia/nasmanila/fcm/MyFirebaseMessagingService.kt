@@ -63,9 +63,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
         try {
-            val data = json.getJSONObject("body")
-            val badge = data.getString("badge")
-            val message = data.getString("message")
+           // val data = json.getJSONObject("body")
+           // val badge = data.getString("badge")
+           // val message = data.getString("message")
+            val data = json.getJSONObject("message")
+            val notify=data.getJSONObject("notification")
+            val badge = notify.getString("badge")
+            val body = notify.getString("body")
+            val message = notify.getString("title")
             badgecount = badge.toInt()
             sendNotification(message)
         } catch (e: JSONException) {

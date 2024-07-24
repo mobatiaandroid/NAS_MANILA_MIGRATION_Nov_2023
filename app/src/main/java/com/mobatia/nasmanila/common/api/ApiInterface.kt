@@ -21,6 +21,7 @@ import com.mobatia.nasmanila.activities.login.model.ParentSignupApiModel
 import com.mobatia.nasmanila.activities.login.model.ParentSignupModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
+import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.fragments.about_us.AboutUsResponseModel
 import com.mobatia.nasmanila.fragments.about_us.model.AboutUsModel
 import com.mobatia.nasmanila.fragments.absence.model.LeaveRequestsResponseModel
@@ -410,6 +411,14 @@ interface ApiInterface {
     fun getStudentListFirstCall(
         @Field("access_token") accessToken: String,
         @Field("users_id") userId: String
+    ): Call<ResponseBody>
+
+    @POST("Api-V1/deviceregistration")
+    @Headers("Content-Type: application/json")
+    fun deviceregistration
+                (
+        @Body loginBody: DeviceRegistrtionmodel
+
     ): Call<ResponseBody>
 
 }
