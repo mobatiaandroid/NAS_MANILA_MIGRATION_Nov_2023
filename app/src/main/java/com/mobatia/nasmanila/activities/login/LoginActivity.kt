@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.provider.Settings.Secure.*
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
@@ -28,7 +27,7 @@ import com.mobatia.nasmanila.activities.login.model.LoginApiModel
 import com.mobatia.nasmanila.activities.login.model.LoginModel
 import com.mobatia.nasmanila.activities.login.model.ParentSignupApiModel
 import com.mobatia.nasmanila.activities.login.model.ParentSignupModel
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
@@ -407,9 +406,11 @@ if (responseData!!.responsecode.equals("200")){
     }
 
     private fun sendSignUpRequest(dialogSignUp:Dialog) {
+        var androidID = Settings.Secure.getString(this.contentResolver, Settings.Secure.ANDROID_ID)
         progressBarDialog!!.show()
         var signupbody=ParentSignupApiModel(mailEdtText.getText().toString(),
-            PreferenceManager.getFCMID(context),"2")
+            PreferenceManager.getFCMID(context), "2", androidID
+        )
         val call: Call<ParentSignupModel> = ApiClient.getClient.parent_signup(signupbody)
         call.enqueue(object : Callback<ParentSignupModel> {
             override fun onResponse(call: Call<ParentSignupModel>, response: Response<ParentSignupModel>) {

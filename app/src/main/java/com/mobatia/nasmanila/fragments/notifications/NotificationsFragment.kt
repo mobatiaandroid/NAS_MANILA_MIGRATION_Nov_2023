@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.gson.Gson
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.notification.AudioAlertActivity
 import com.mobatia.nasmanila.activities.notification.ImageAlertActivity
 import com.mobatia.nasmanila.activities.notification.TextAlertActivity
 import com.mobatia.nasmanila.activities.notification.VideoAlertActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener
@@ -40,7 +38,6 @@ import com.mobatia.nasmanila.fragments.notifications.model.NotificationsResponse
 import com.mobatia.nasmanila.fragments.notifications.model.PushNotificationModel
 import com.mobatia.nasmanila.manager.recyclermanager.ItemOffsetDecoration
 import me.leolin.shortcutbadger.ShortcutBadger
-import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback

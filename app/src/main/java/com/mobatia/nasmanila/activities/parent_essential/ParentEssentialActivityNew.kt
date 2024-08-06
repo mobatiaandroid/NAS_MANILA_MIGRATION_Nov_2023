@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -29,7 +28,7 @@ import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.pdf.PDFViewActivity
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener

@@ -30,10 +30,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import com.mobatia.nasmanila.BuildConfig
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
 import com.mobatia.nasmanila.activities.login.LoginActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
@@ -1209,6 +1210,9 @@ class HomeScreenRegisteredUserFragment2( s: String,
 
         progressBarDialog!!.show()
         val fToken = arrayOf("")
+        val manufacturer = Build.MANUFACTURER
+        val model = Build.MODEL
+        var device = manufacturer + model
         FirebaseApp.initializeApp(mContext!!)
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
@@ -1218,11 +1222,14 @@ class HomeScreenRegisteredUserFragment2( s: String,
             } else {
             }
         }
+        val versionName: String = BuildConfig.VERSION_NAME
+
         var androidID = Settings.Secure.getString(
             mContext!!.contentResolver,
             Settings.Secure.ANDROID_ID)
         var loginbody = DeviceRegistrtionmodel(
-            "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
+            "2", PreferenceManager.getFCMID(mContext), device, versionName, androidID
+        )
 
         val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration("Bearer "+PreferenceManager.getAccessToken(
             mContext),loginbody)

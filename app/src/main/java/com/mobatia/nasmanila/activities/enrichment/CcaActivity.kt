@@ -9,7 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.View.OnFocusChangeListener
@@ -25,7 +24,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.enrichment.adapter.CCARecyclerAdapter
 
@@ -34,7 +32,7 @@ import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.pdf.PDFViewActivity
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener
@@ -42,8 +40,6 @@ import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 import com.mobatia.nasmanila.common.common_classes.addOnItemClickListener
 import com.mobatia.nasmanila.manager.recyclermanager.ItemOffsetDecoration
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +24,7 @@ import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.contact_us.model.StaffModelDept
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import retrofit2.Call

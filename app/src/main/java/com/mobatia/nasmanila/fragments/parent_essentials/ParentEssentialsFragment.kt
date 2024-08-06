@@ -7,7 +7,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
@@ -21,14 +20,13 @@ import com.mobatia.nasmanila.activities.parent_essential.ParentEssentialActivity
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.*
 import com.mobatia.nasmanila.common.constants.NaisClassNameConstants
 import com.mobatia.nasmanila.fragments.parent_essentials.adapter.ParentEssentialsListAdapter
 import com.mobatia.nasmanila.fragments.parent_essentials.model.ParentEssentialsModel
 import com.mobatia.nasmanila.fragments.parent_essentials.model.ParentessentialsResponseModel
 import com.mobatia.nasmanila.fragments.parent_essentials.model.SubmenuParentEssentials
-import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -32,7 +31,7 @@ import com.mobatia.nasmanila.activities.enrichment.model.CCAchoiceModel
 import com.mobatia.nasmanila.activities.enrichment.model.Cca_detailsApiModel
 import com.mobatia.nasmanila.activities.enrichment.model.Cca_detailsResponseModel
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.HeaderManager

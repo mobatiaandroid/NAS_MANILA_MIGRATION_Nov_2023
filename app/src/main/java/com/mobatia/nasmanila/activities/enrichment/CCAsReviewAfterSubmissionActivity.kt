@@ -22,7 +22,7 @@ import com.mobatia.nasmanila.activities.enrichment.model.CCAReviewAfterSubmissio
 import com.mobatia.nasmanila.activities.enrichment.model.Cca_reviewsApiModel
 import com.mobatia.nasmanila.activities.enrichment.model.Cca_reviewsResponseModel
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager

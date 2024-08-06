@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,8 +33,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.contact_us.StaffDirectoryActivity
-import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener

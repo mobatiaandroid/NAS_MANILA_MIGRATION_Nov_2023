@@ -11,8 +11,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -26,12 +24,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.firebase.messaging.FirebaseMessaging
+import com.mobatia.nasmanila.BuildConfig
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.login.LoginActivity
 import com.mobatia.nasmanila.activities.terms_of_service.TermsOfServiceActivity
 import com.mobatia.nasmanila.activities.tutorial.TutorialActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
@@ -118,6 +116,13 @@ class SettingsFragment() : Fragment() {
         relMain = mRootView!!.findViewById(R.id.relMain) as RelativeLayout
         relMain!!.setOnClickListener { }
         mTitleTextView!!.text = NaisClassNameConstants.SETTINGS
+        val versionName: String = BuildConfig.VERSION_NAME
+        if (ApiClient.BASE_URL.contains("mobatia")) {
+            versionText!!.text = "DEV v$versionName"
+        } else {
+            versionText!!.text = "v" + versionName
+        }
+
         if (PreferenceManager.getAccessToken(mContext!!) == "") {
             isRegUser = false
             mSettingsList!!.adapter = CustomSettingsAdapter(requireActivity(), mSettingsListArray)

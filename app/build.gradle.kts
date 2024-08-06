@@ -8,13 +8,17 @@ android {
     namespace = "com.mobatia.nasmanila"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         applicationId = "com.mobatia.nasmanila"
         minSdk = 27
         targetSdk = 34
-        versionCode = 24
-        versionName = "3.3"
-        multiDexEnabled= true
+        versionCode = 25
+        versionName = "3.4"
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

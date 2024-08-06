@@ -1,7 +1,6 @@
-package com.mobatia.nasmanila.api
+package com.mobatia.nasmanila.common.api
 
 import com.google.gson.GsonBuilder
-import com.mobatia.nasmanila.common.api.ApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,11 +8,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-//    var BASE_URL ="http://gama.mobatia.in:8080/NAIS-Manila2023/public/"
-//var BASE_URL = "http://gama.mobatia.in:8080/nais-manilav10/public/"
+
+    //    Live
+//    var BASE_URL = "http://gama.mobatia.in:8080/nais-manilav10/public/"
+    //    DEV
     var BASE_URL = "https://cms.naismanila.edu.ph/"
 
-
+    /**
+     * Credentials Live - athul.m@mobatia.com - Password1! DEV -
+     * sanju.sabu@mobatia.com - Password1!
+     * **
+     */
 
     val getClient: ApiInterface
         get() {

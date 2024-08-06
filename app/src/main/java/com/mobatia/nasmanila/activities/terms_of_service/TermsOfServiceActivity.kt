@@ -16,7 +16,7 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager

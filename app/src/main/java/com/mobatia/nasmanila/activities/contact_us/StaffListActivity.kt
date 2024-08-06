@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -21,7 +20,7 @@ import com.mobatia.nasmanila.activities.contact_us.model.StaffCDeptResponseModel
 import com.mobatia.nasmanila.activities.contact_us.model.StaffModel
 import com.mobatia.nasmanila.activities.contact_us.model.StaffModelDept
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager

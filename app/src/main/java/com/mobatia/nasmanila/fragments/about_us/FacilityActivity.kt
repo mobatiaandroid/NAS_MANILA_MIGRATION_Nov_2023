@@ -8,7 +8,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.Window
@@ -22,15 +21,13 @@ import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.pdf.PDFViewActivity
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.*
 import com.mobatia.nasmanila.common.constants.NaisClassNameConstants
 import com.mobatia.nasmanila.fragments.about_us.adapter.FacilityRecyclerAdapter
 import com.mobatia.nasmanila.fragments.about_us.model.AboutUsItemsModel
 import com.mobatia.nasmanila.fragments.about_us.model.AboutUsModel
 import com.mobatia.nasmanila.manager.recyclermanager.ItemOffsetDecoration
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

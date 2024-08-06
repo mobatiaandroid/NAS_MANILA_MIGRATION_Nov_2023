@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 class ParentSignupApiModel (
     @SerializedName("email")var email:String,
     @SerializedName("deviceid")var deviceid:String,
-    @SerializedName("devicetype")var devicetype:String
+    @SerializedName("devicetype") var devicetype: String,
+    @SerializedName("device_identifier") var deviceIdentifier: String
 
 
 )

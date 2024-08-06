@@ -1,16 +1,5 @@
 package com.mobatia.nasmanila.common.constants
 
-import android.app.Activity
-import com.mobatia.nasmanila.R
-import com.mobatia.nasmanila.api.ApiClient
-import com.mobatia.nasmanila.common.common_classes.AppUtils
-import com.mobatia.nasmanila.common.common_classes.PreferenceManager
-import com.mobatia.nasmanila.fragments.absence.model.StudentlistApiModel
-import com.mobatia.nasmanila.fragments.absence.model.StudentlistResponseModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 class NaisClassNameConstants {
     companion object {
         var HOME = "Home"

@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ import com.bumptech.glide.Glide
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.absence.LeaveRequestSubmissionActivity
 import com.mobatia.nasmanila.activities.absence.LeavesDetailActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener

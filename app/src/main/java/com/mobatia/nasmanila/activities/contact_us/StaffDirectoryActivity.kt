@@ -12,13 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.contact_us.adapter.CustomStaffDirectoryAdapter
 import com.mobatia.nasmanila.activities.contact_us.model.StaffCategoryResponseModel
 import com.mobatia.nasmanila.activities.contact_us.model.StaffModel
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
@@ -26,8 +25,6 @@ import com.mobatia.nasmanila.common.common_classes.OnItemClickListener
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
 import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 import com.mobatia.nasmanila.common.common_classes.addOnItemClickListener
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

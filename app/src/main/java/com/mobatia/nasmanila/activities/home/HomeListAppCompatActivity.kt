@@ -3,7 +3,6 @@ package com.mobatia.nasmanila.activities.home
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
-import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,17 +10,13 @@ import android.content.pm.PackageManager
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.DragShadowBuilder
-import android.view.View.OnTouchListener
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
@@ -38,7 +33,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -46,19 +40,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+import com.mobatia.nasmanila.BuildConfig
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.home.adapter.HomeListAdapter
 import com.mobatia.nasmanila.activities.login.LoginActivity
-import com.mobatia.nasmanila.activities.login.model.ForgotPasswordApiModel
-import com.mobatia.nasmanila.activities.login.model.ForgotPasswordModel
-import com.mobatia.nasmanila.activities.login.model.LoginApiModel
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
@@ -68,16 +59,13 @@ import com.mobatia.nasmanila.fragments.about_us.AboutUsFragment
 import com.mobatia.nasmanila.fragments.absence.AbsenceFragment
 import com.mobatia.nasmanila.fragments.calendar.CalendarWebViewFragment
 import com.mobatia.nasmanila.fragments.calendar.model.CalendarResponseModel
-import com.mobatia.nasmanila.fragments.category_main.CategoryMainFragment
 import com.mobatia.nasmanila.fragments.contact_us.ContactUsFragment
 import com.mobatia.nasmanila.fragments.enrichment.CcaFragment
 import com.mobatia.nasmanila.fragments.home.HomeScreenGuestUserFragment
 import com.mobatia.nasmanila.fragments.home.HomeScreenRegisteredUserFragment2
-
 import com.mobatia.nasmanila.fragments.notifications.NotificationsFragment
 import com.mobatia.nasmanila.fragments.parent_essentials.ParentEssentialsFragment
 import com.mobatia.nasmanila.fragments.parents_meeting.ParentsEveningFragment
-import com.mobatia.nasmanila.fragments.parents_meeting.ParentsMeetingFragment
 import com.mobatia.nasmanila.fragments.settings.SettingsFragment
 import com.mobatia.nasmanila.fragments.social_media.SocialMediaFragment
 import okhttp3.ResponseBody
@@ -236,6 +224,9 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
             progressBarDialog!!.show()
         val fToken = arrayOf("")
+        val manufacturer = Build.MANUFACTURER
+        val model = Build.MODEL
+        var device = manufacturer + model
         FirebaseApp.initializeApp(mContext)
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
@@ -245,10 +236,13 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             } else {
             }
         }
+        val versionName: String = BuildConfig.VERSION_NAME
+
         var androidID = Settings.Secure.getString(this.contentResolver,
             Settings.Secure.ANDROID_ID)
         var loginbody = DeviceRegistrtionmodel(
-            "2", PreferenceManager.getFCMID(mContext),"Android","3.3",androidID)
+            "2", PreferenceManager.getFCMID(mContext), device, versionName, androidID
+        )
 
             val call: Call<ResponseBody> = ApiClient.getClient.deviceregistration("Bearer "+PreferenceManager.getAccessToken(mContext),loginbody)
 

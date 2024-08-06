@@ -35,7 +35,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"
-        android:text="V 3.3"
+        tools:text="V 3.3"
         android:textColor="@color/grey" />
 
 </RelativeLayout>

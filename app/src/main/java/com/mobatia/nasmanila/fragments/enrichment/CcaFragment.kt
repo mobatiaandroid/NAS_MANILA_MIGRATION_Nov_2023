@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -25,13 +24,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.enrichment.CcaActivity
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
 import com.mobatia.nasmanila.activities.web_view.LoadUrlWebViewActivity
-import com.mobatia.nasmanila.api.ApiClient
+import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
 import com.mobatia.nasmanila.common.common_classes.OnItemClickListener
@@ -41,8 +39,6 @@ import com.mobatia.nasmanila.common.common_classes.addOnItemClickListener
 import com.mobatia.nasmanila.fragments.enrichment.adapter.EnrichmentLessonAdapter
 import com.mobatia.nasmanila.fragments.enrichment.model.EnrichmentLessonsDataModel
 import com.mobatia.nasmanila.fragments.enrichment.model.Enrichment_lessonsModel
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
