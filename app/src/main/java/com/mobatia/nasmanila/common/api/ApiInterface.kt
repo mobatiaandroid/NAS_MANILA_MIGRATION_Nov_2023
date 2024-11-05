@@ -1,5 +1,6 @@
 package com.mobatia.nasmanila.common.api
 
+import com.google.gson.JsonObject
 import com.mobatia.nasmanila.activities.absence.model.LeavesubmitApiModel
 import com.mobatia.nasmanila.activities.absence.model.LeavesubmitResponseModel
 import com.mobatia.nasmanila.activities.contact_us.model.StaffCDeptApiModel
@@ -21,6 +22,10 @@ import com.mobatia.nasmanila.activities.login.model.ParentSignupApiModel
 import com.mobatia.nasmanila.activities.login.model.ParentSignupModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailApiModel
 import com.mobatia.nasmanila.activities.parent_essential.model.SendemailResponseModel
+import com.mobatia.nasmanila.activities.parentevening.model.GeneralSubmitResponseModel
+import com.mobatia.nasmanila.activities.parentevening.model.PTADatesResponseModel
+import com.mobatia.nasmanila.activities.parentevening.model.PTAReviewResponseModel
+import com.mobatia.nasmanila.activities.parentevening.model.PTATimeSlotsResponseModel
 import com.mobatia.nasmanila.common.common_classes.DeviceRegistrtionmodel
 import com.mobatia.nasmanila.fragments.about_us.AboutUsResponseModel
 import com.mobatia.nasmanila.fragments.about_us.model.AboutUsModel
@@ -55,6 +60,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -421,5 +427,32 @@ interface ApiInterface {
         @Body loginBody: DeviceRegistrtionmodel
 
     ): Call<ResponseBody>
+
+    @POST("Api-V1/pta-allotted-dates")
+    @Headers("Content-Type: application/json")
+    fun pta_allotted_dates(
+        @Body ptaDatesApiModel: JsonObject,
+        @Header("Authorization") token: String
+    ): Call<PTADatesResponseModel>
+
+    @POST("Api-V1/pta-list")
+    @Headers("Content-Type: application/json")
+    fun pta_list(
+        @Body ptaListApiModel: JsonObject,
+        @Header("Authorization") token: String
+    ): Call<PTATimeSlotsResponseModel>
+
+    @POST("Api-V1/pta-insert")
+    @Headers("Content-Type: application/json")
+    fun pta_insert(
+        @Body ptaInsertApiModel: JsonObject,
+        @Header("Authorization") token: String
+    ): Call<GeneralSubmitResponseModel>
+
+    @GET("Api-V1/pta-review-list")
+    @Headers("Content-Type: application/json")
+    fun ptaReviewList(
+        @Header("Authorization") token: String
+    ): Call<PTAReviewResponseModel>
 
 }

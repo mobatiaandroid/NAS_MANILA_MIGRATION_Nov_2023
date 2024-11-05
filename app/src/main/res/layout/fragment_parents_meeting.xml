@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/review_confirm"
                 android:layout_alignParentRight="true"
-                android:visibility="gone"/>
+                android:visibility="visible" />
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
                 android:id="@+id/reviewTitle"
                 android:paddingTop="2dp"

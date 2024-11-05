@@ -1263,5 +1263,21 @@ class PreferenceManager {
             val type = object : TypeToken<ArrayList<CCADetailModel?>?>() {}.type
             return gson.fromJson<ArrayList<CCADetailModel?>>(json, type)
         }
+
+        fun setStaffID(context: Context, CCAItemId: String) {
+            val sharedPreferences: SharedPreferences =
+                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putString("staff_id", CCAItemId)
+            editor.apply()
+        }
+
+        fun getStaffID(context: Context): String {
+            val CCAItemId: String
+            val sharedPreferences: SharedPreferences =
+                context!!.getSharedPreferences(sharedPrefNas, Context.MODE_PRIVATE)
+            CCAItemId = sharedPreferences.getString("staff_id", "").toString()
+            return CCAItemId
+        }
     }
 }

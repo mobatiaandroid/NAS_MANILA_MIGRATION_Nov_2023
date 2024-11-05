@@ -517,4 +517,31 @@
     <string name="enter_valid_contents"> Please enter your valid content</string>
     <string name="enter_valid_subjects"> Please enter your valid subject</string>
     <string name="enter_valid_mail">Please enter a valid email</string>
+    <string name="parents_meeting">Parents\' Meeting</string>
+    <string name="cannot_continue">Cannot continue. Please try again later.</string>
+
+    <string-array name="Months">
+        <item> January </item>
+        <item> February </item>
+        <item> March </item>
+        <item> April </item>
+        <item> May </item>
+        <item> June </item>
+        <item> July </item>
+        <item> August </item>
+        <item> September </item>
+        <item> October </item>
+        <item> November </item>
+        <item> December </item>
+    </string-array>
+    <string-array name="Weeks">
+
+        <item> Mon</item>
+        <item> Tue</item>
+        <item> Wed</item>
+        <item> Thur</item>
+        <item> Fri</item>
+        <item> Sat</item>
+        <item> Sun</item>
+    </string-array>
 </resources>

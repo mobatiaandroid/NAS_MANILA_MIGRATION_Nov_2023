@@ -78,7 +78,7 @@ class ParentsEveningFragment:Fragment() {
         null
     var studentNameTV: TextView? = null
     var staffNameTV: TextView? = null
-    var contactTeacher: TextView? = null
+//    var contactTeacher: TextView? = null
 
     //	private CustomAboutUsAdapter mAdapter;
     //	private ArrayList<AboutUsModel> mAboutUsListArray;
@@ -215,12 +215,15 @@ class ParentsEveningFragment:Fragment() {
     }
 
     private fun initialiseUI() {
+        Log.e("Parents Evening Fragment", "Here")
+
         mTitleTextView = mRootView!!.findViewById(R.id.titleTextView)
         studentNameTV = mRootView!!.findViewById(R.id.studentNameTV)
         staffNameTV = mRootView!!.findViewById(R.id.staffNameTV)
         selectStaffImgView = mRootView!!.findViewById(R.id.selectStaffImgView)
         next = mRootView!!.findViewById(R.id.next)
-        contactTeacher = mRootView!!.findViewById(R.id.contactTeacher)
+        next!!.visibility = View.VISIBLE
+//        contactTeacher = mRootView!!.findViewById(R.id.contactTeacher)
         selectStudentImgView = mRootView!!.findViewById(R.id.selectStudentImgView)
         studentRelative = mRootView!!.findViewById(R.id.studentRelative)
         staffRelative = mRootView!!.findViewById(R.id.staffRelative)
@@ -243,99 +246,7 @@ class ParentsEveningFragment:Fragment() {
                 Toast.makeText(mContext, "No Student Found.", Toast.LENGTH_SHORT).show()
             }
         }
-        contactTeacher!!.setOnClickListener {
-            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
-                dialog = Dialog(mContext)
-                dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialog!!.setContentView(R.layout.alert_send_email_dialog)
-                dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-                val dialogCancelButton = dialog!!.findViewById<View>(R.id.cancelButton) as Button
-                val submitButton = dialog!!.findViewById<View>(R.id.submitButton) as Button
-                text_dialog = dialog!!.findViewById<View>(R.id.text_dialog) as EditText
-                text_content = dialog!!.findViewById<View>(R.id.text_content) as EditText
-                // text_dialog.setSelection(0);
-                //text_content.setSelection(0);
-                text_dialog!!.onFocusChangeListener =
-                    View.OnFocusChangeListener { v, hasFocus ->
-                        if (hasFocus) {
-                            text_dialog!!.hint = ""
-                            text_dialog!!.gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
-                            text_dialog!!.setPadding(5, 5, 0, 0)
-                        } else {
-                            text_dialog!!.hint = "Enter your subject here..."
-                            text_dialog!!.gravity = Gravity.CENTER
-                        }
-                    }
-                text_content!!.onFocusChangeListener =
-                    View.OnFocusChangeListener { v, hasFocus ->
-                        if (hasFocus) {
-                            text_content!!.gravity = Gravity.LEFT
-                        } else {
-                            text_content!!.gravity = Gravity.CENTER
-                        }
-                    }
-                dialogCancelButton.setOnClickListener { dialog!!.dismiss() }
-                submitButton.setOnClickListener {
-                    println("submit btn clicked")
-                    //                            if (AppUtils.isNetworkConnected(mContext)) {
-                    //                                if (text_content.equals("")) {
-                    //                                    AppUtils.setErrorForEditText(text_content, mContext.getString(R.string.mandatory_field));
-                    //                                } else if (text_dialog.equals("")) {
-                    //                                    AppUtils.setErrorForEditText(text_dialog, mContext.getString(R.string.mandatory_field));
-                    //
-                    //                                } else {
-                    //                                    sendEmailToStaff(URL_SEND_EMAIL_TO_STAFF_PTA);
-                    //                                }
-                    //                            } else {
-                    //                                AppUtils.showDialogAlertDismiss((Activity) mContext, "Network Error", mContext.getString(R.string.no_internet), R.drawable.nonetworkicon, R.drawable.roundred);
-                    //
-                    //                            }
-                    if (text_dialog!!.text.toString() == "") {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext as Activity,
-                            mContext.getString(R.string.alert_heading),
-                            "Please enter subject",
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else if (text_content!!.text.toString() == "") {
-                        AppUtils.showDialogAlertDismiss(
-                            mContext as Activity,
-                            mContext.getString(R.string.alert_heading),
-                            "Please enter content",
-                            R.drawable.exclamationicon,
-                            R.drawable.round
-                        )
-                    } else {
-                        emailvalidationcheck( text_dialog!!.text.toString(),text_content!!.text.toString(),
-                            dialog!!
-                        )
-                       /* if (AppUtils.isNetworkConnected(mContext)) {
-                            println("student id" + mStudentId + "staff id" + mStaffId)
-                            sendEmailToStaff()
-                        } else {
-                            AppUtils.showDialogAlertDismiss(
-                                mContext as Activity,
-                                "Network Error",
-                                mContext.getString(R.string.no_internet),
-                                R.drawable.nonetworkicon,
-                                R.drawable.roundred
-                            )
-                        }*/
-                    }
-                }
-                dialog!!.show()
-            } else {
-                AppUtils.showDialogAlertDismiss(
-                    mContext as Activity,
-                    mContext.getString(R.string.alert_heading),
-                    "This feature is available only for registered users. Login/register to see contents.",
-                    R.drawable.exclamationicon,
-                    R.drawable.round
-                )
-            }
-        }
+
         next!!.setOnClickListener {
             val mIntent = Intent(activity, ParentsEveningCalendarActivity::class.java)
             mIntent.putExtra("staff_id", mStaffId)
@@ -362,9 +273,6 @@ class ParentsEveningFragment:Fragment() {
         val iconImageView = dialog.findViewById<View>(R.id.iconImageView) as ImageView
         val socialMediaList =
             dialog.findViewById<View>(R.id.recycler_view_social_media) as RecyclerView
-        //if(mSocialMediaArray.get())
-
-        //if(mSocialMediaArray.get())
         iconImageView.setImageResource(R.drawable.girl)
         val sdk = Build.VERSION.SDK_INT
         if (sdk < Build.VERSION_CODES.JELLY_BEAN) {
@@ -406,9 +314,6 @@ class ParentsEveningFragment:Fragment() {
                 } else {
                     selectStaffImgView!!.setImageResource(R.drawable.staff)
                 }
-                //  next.setVisibility(View.VISIBLE);
-                //  next.setVisibility(View.VISIBLE);
-                contactTeacher!!.visibility = View.VISIBLE
                 dialog.dismiss()
             }
 
@@ -425,9 +330,6 @@ class ParentsEveningFragment:Fragment() {
         val iconImageView = dialog.findViewById<View>(R.id.iconImageView) as ImageView
         val socialMediaList =
             dialog.findViewById<View>(R.id.recycler_view_social_media) as RecyclerView
-        //if(mSocialMediaArray.get())
-
-        //if(mSocialMediaArray.get())
         iconImageView.setImageResource(R.drawable.boy)
 
 
@@ -463,9 +365,6 @@ class ParentsEveningFragment:Fragment() {
                 staffRelative!!.visibility = View.INVISIBLE
                 selectStaffImgView!!.setImageResource(R.drawable.addiconinparentsevng)
                 staffNameTV!!.text = "Staff Name:-"
-                //next.setVisibility(View.GONE);
-                //next.setVisibility(View.GONE);
-                contactTeacher!!.visibility = View.INVISIBLE
                 if (!mListViewArray!![position].photo.equals("")) {
                     System.out.println("the result are::" + mListViewArray!![position].photo)
                     Glide.with(mContext)
@@ -511,17 +410,6 @@ class ParentsEveningFragment:Fragment() {
 
                         if (responseData!!.response.data.size > 0) {
                             mListViewStaffArray!!.addAll(responseData!!.response.data)
-                           /* for (i in 0 until apiResponse.getResponse().getData().size()) {
-                                val item: StaffModel = apiResponse.getResponse().getData().get(i)
-                                val gson = Gson()
-                                val eventJson = gson.toJson(item)
-                                try {
-                                    val jsonObject = JSONObject(eventJson)
-                                    mListViewStaffArray!!.add(getStaffValues(jsonObject))
-                                } catch (e: JSONException) {
-                                    e.printStackTrace()
-                                }
-                            }*/
                             staffRelative!!.visibility = View.VISIBLE
                         } else {
                             //CustomStatusDialog();
@@ -587,82 +475,7 @@ class ParentsEveningFragment:Fragment() {
             }
         })
     }
-    fun emailvalidationcheck( title: String,
-                              message: String,
-                              dialog: Dialog){
-        val EMAIL_PATTERN :String=
-            "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
-        val pattern :String= "^([a-zA-Z ]*)$"
 
-        if (title.equals("")) {
-            val toast: Toast = Toast.makeText(
-                mContext, mContext.getResources().getString(
-                    R.string.enter_subjects
-                ), Toast.LENGTH_SHORT
-            )
-            toast.show()
-        } else {
-            if (message.equals("")) {
-                val toast: Toast = Toast.makeText(
-                    mContext, mContext.getResources().getString(
-                        R.string.enter_contents
-                    ), Toast.LENGTH_SHORT
-                )
-                toast.show()
-            } else if (staffEmail.matches(EMAIL_PATTERN.toRegex())) {
-                if (title.toString().trim().matches(pattern.toRegex())) {
-                    if (title.toString().length>=500){
-                        Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
-
-                    }else{
-                        if (message.toString().trim().matches(pattern.toRegex())) {
-
-                            if (message.length <= 500) {
-                                if (AppUtils.checkInternet(mContext!!)) {
-                                    Log.e("success","Success")
-                                    sendEmailToStaff()
-                                }else{
-                                    Toast.makeText(
-                                        mContext,
-                                        mContext!!.resources.getString(R.string.no_internet),
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            } else {
-                                Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT)
-                                    .show()
-
-                            }
-                        }
-                            else {
-                            val toast: Toast = Toast.makeText(
-                                mContext, mContext.getResources().getString(
-                                    R.string.enter_valid_contents
-                                ), Toast.LENGTH_SHORT
-                            )
-                            toast.show()
-                        }
-                    }
-
-
-                } else {
-                    val toast: Toast = Toast.makeText(
-                        mContext, mContext.getResources().getString(
-                            R.string.enter_valid_subjects
-                        ), Toast.LENGTH_SHORT
-                    )
-                    toast.show()
-                }
-            } else {
-                val toast: Toast = Toast.makeText(
-                    mContext, mContext.getResources().getString(
-                        R.string.enter_valid_mail
-                    ), Toast.LENGTH_SHORT
-                )
-                toast.show()
-            }
-        }
-    }
     private fun sendEmailToStaff() {
         var homebannerbody = SendemailstaffptaApiModel(
             mStudentId, mStaffId,
@@ -710,8 +523,178 @@ class ParentsEveningFragment:Fragment() {
 
             override fun onFailure(call: Call<SendemailstaffptaResponseModel>, t: Throwable) {
                 progressBarDialog!!.dismiss()
-                //Log.e("failed",t.toString())
             }
         })
     }
 }
+
+//        contactTeacher!!.setOnClickListener {
+//            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
+//                dialog = Dialog(mContext)
+//                dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                dialog!!.setContentView(R.layout.alert_send_email_dialog)
+//                dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+//                dialog!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+//                val dialogCancelButton = dialog!!.findViewById<View>(R.id.cancelButton) as Button
+//                val submitButton = dialog!!.findViewById<View>(R.id.submitButton) as Button
+//                text_dialog = dialog!!.findViewById<View>(R.id.text_dialog) as EditText
+//                text_content = dialog!!.findViewById<View>(R.id.text_content) as EditText
+//                // text_dialog.setSelection(0);
+//                //text_content.setSelection(0);
+//                text_dialog!!.onFocusChangeListener =
+//                    View.OnFocusChangeListener { v, hasFocus ->
+//                        if (hasFocus) {
+//                            text_dialog!!.hint = ""
+//                            text_dialog!!.gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
+//                            text_dialog!!.setPadding(5, 5, 0, 0)
+//                        } else {
+//                            text_dialog!!.hint = "Enter your subject here..."
+//                            text_dialog!!.gravity = Gravity.CENTER
+//                        }
+//                    }
+//                text_content!!.onFocusChangeListener =
+//                    View.OnFocusChangeListener { v, hasFocus ->
+//                        if (hasFocus) {
+//                            text_content!!.gravity = Gravity.LEFT
+//                        } else {
+//                            text_content!!.gravity = Gravity.CENTER
+//                        }
+//                    }
+//                dialogCancelButton.setOnClickListener { dialog!!.dismiss() }
+//                submitButton.setOnClickListener {
+//                    println("submit btn clicked")
+//                    //                            if (AppUtils.isNetworkConnected(mContext)) {
+//                    //                                if (text_content.equals("")) {
+//                    //                                    AppUtils.setErrorForEditText(text_content, mContext.getString(R.string.mandatory_field));
+//                    //                                } else if (text_dialog.equals("")) {
+//                    //                                    AppUtils.setErrorForEditText(text_dialog, mContext.getString(R.string.mandatory_field));
+//                    //
+//                    //                                } else {
+//                    //                                    sendEmailToStaff(URL_SEND_EMAIL_TO_STAFF_PTA);
+//                    //                                }
+//                    //                            } else {
+//                    //                                AppUtils.showDialogAlertDismiss((Activity) mContext, "Network Error", mContext.getString(R.string.no_internet), R.drawable.nonetworkicon, R.drawable.roundred);
+//                    //
+//                    //                            }
+//                    if (text_dialog!!.text.toString() == "") {
+//                        AppUtils.showDialogAlertDismiss(
+//                            mContext as Activity,
+//                            mContext.getString(R.string.alert_heading),
+//                            "Please enter subject",
+//                            R.drawable.exclamationicon,
+//                            R.drawable.round
+//                        )
+//                    } else if (text_content!!.text.toString() == "") {
+//                        AppUtils.showDialogAlertDismiss(
+//                            mContext as Activity,
+//                            mContext.getString(R.string.alert_heading),
+//                            "Please enter content",
+//                            R.drawable.exclamationicon,
+//                            R.drawable.round
+//                        )
+//                    } else {
+//                        emailvalidationcheck( text_dialog!!.text.toString(),text_content!!.text.toString(),
+//                            dialog!!
+//                        )
+//                       /* if (AppUtils.isNetworkConnected(mContext)) {
+//                            println("student id" + mStudentId + "staff id" + mStaffId)
+//                            sendEmailToStaff()
+//                        } else {
+//                            AppUtils.showDialogAlertDismiss(
+//                                mContext as Activity,
+//                                "Network Error",
+//                                mContext.getString(R.string.no_internet),
+//                                R.drawable.nonetworkicon,
+//                                R.drawable.roundred
+//                            )
+//                        }*/
+//                    }
+//                }
+//                dialog!!.show()
+//            } else {
+//                AppUtils.showDialogAlertDismiss(
+//                    mContext as Activity,
+//                    mContext.getString(R.string.alert_heading),
+//                    "This feature is available only for registered users. Login/register to see contents.",
+//                    R.drawable.exclamationicon,
+//                    R.drawable.round
+//                )
+//            }
+//        }
+
+//fun emailvalidationcheck( title: String,
+//                          message: String,
+//                          dialog: Dialog){
+//    val EMAIL_PATTERN :String=
+//        "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+//    val pattern :String= "^([a-zA-Z ]*)$"
+//
+//    if (title.equals("")) {
+//        val toast: Toast = Toast.makeText(
+//            mContext, mContext.getResources().getString(
+//                R.string.enter_subjects
+//            ), Toast.LENGTH_SHORT
+//        )
+//        toast.show()
+//    } else {
+//        if (message.equals("")) {
+//            val toast: Toast = Toast.makeText(
+//                mContext, mContext.getResources().getString(
+//                    R.string.enter_contents
+//                ), Toast.LENGTH_SHORT
+//            )
+//            toast.show()
+//        } else if (staffEmail.matches(EMAIL_PATTERN.toRegex())) {
+//            if (title.toString().trim().matches(pattern.toRegex())) {
+//                if (title.toString().length>=500){
+//                    Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
+//
+//                }else{
+//                    if (message.toString().trim().matches(pattern.toRegex())) {
+//
+//                        if (message.length <= 500) {
+//                            if (AppUtils.checkInternet(mContext!!)) {
+//                                Log.e("success","Success")
+//                                sendEmailToStaff()
+//                            }else{
+//                                Toast.makeText(
+//                                    mContext,
+//                                    mContext!!.resources.getString(R.string.no_internet),
+//                                    Toast.LENGTH_SHORT
+//                                ).show()
+//                            }
+//                        } else {
+//                            Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT)
+//                                .show()
+//
+//                        }
+//                    }
+//                    else {
+//                        val toast: Toast = Toast.makeText(
+//                            mContext, mContext.getResources().getString(
+//                                R.string.enter_valid_contents
+//                            ), Toast.LENGTH_SHORT
+//                        )
+//                        toast.show()
+//                    }
+//                }
+//
+//
+//            } else {
+//                val toast: Toast = Toast.makeText(
+//                    mContext, mContext.getResources().getString(
+//                        R.string.enter_valid_subjects
+//                    ), Toast.LENGTH_SHORT
+//                )
+//                toast.show()
+//            }
+//        } else {
+//            val toast: Toast = Toast.makeText(
+//                mContext, mContext.getResources().getString(
+//                    R.string.enter_valid_mail
+//                ), Toast.LENGTH_SHORT
+//            )
+//            toast.show()
+//        }
+//    }
+//}

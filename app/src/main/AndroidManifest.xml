@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,7 +11,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
@@ -19,57 +22,118 @@
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/app_icon"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
+        android:theme="@style/Theme.NASManilaKotlin"
         android:usesCleartextTraffic="false"
         tools:ignore="HardcodedDebugMode"
-        android:theme="@style/Theme.NASManilaKotlin"
         tools:targetApi="n">
-
-        <activity android:name=".activities.parent_essential.ParentEssentialActivityNew"
+        <activity
+            android:name=".activities.parentevening.MeetingSlotListingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.pdf.PDFViewActivity"
+        <activity
+            android:name=".activities.parentevening.ReviewAppointmentsRecyclerViewActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.parentevening.ParentsEveningCalendarActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".activities.web_view.LoadUrlWebViewActivity"
+        <activity
+            android:name=".activities.parent_essential.ParentEssentialActivityNew"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".fragments.about_us.FacilityActivity"
+        <activity
+            android:name=".activities.pdf.PDFViewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".fragments.about_us.AccreditationsActivity"
+        <activity
+            android:name=".activities.web_view.LoadUrlWebViewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.terms_of_service.TermsOfServiceActivity"
+        <activity
+            android:name=".fragments.about_us.FacilityActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.notification.VideoAlertActivity"
+        <activity
+            android:name=".fragments.about_us.AccreditationsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.notification.ImageAlertActivity"
+        <activity
+            android:name=".activities.terms_of_service.TermsOfServiceActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.notification.AudioAlertActivity"
+        <activity
+            android:name=".activities.notification.VideoAlertActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.notification.TextAlertActivity"
+        <activity
+            android:name=".activities.notification.ImageAlertActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.parent_essential.ParentEssentialActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".activities.pdf.PdfReaderNextActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".activities.pdf.PdfReaderActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".activities.tutorial.TutorialActivity"
+        <activity
+            android:name=".activities.notification.AudioAlertActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.contact_us.StaffDirectoryActivity"
+        <activity
+            android:name=".activities.notification.TextAlertActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.contact_us.StaffListActivity"
+        <activity
+            android:name=".activities.parent_essential.ParentEssentialActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.absence.LeaveRequestSubmissionActivity"
+        <activity
+            android:name=".activities.pdf.PdfReaderNextActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.absence.LeavesDetailActivity"
+        <activity
+            android:name=".activities.pdf.PdfReaderActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.enrichment.CcaActivity"
+        <activity
+            android:name=".activities.tutorial.TutorialActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.enrichment.CCA_Activity"
+        <activity
+            android:name=".activities.contact_us.StaffDirectoryActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.enrichment.CCASelectionActivity"
+        <activity
+            android:name=".activities.contact_us.StaffListActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.enrichment.CCAsReviewAfterSubmissionActivity"
+        <activity
+            android:name=".activities.absence.LeaveRequestSubmissionActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activities.enrichment.CCAsReviewActivity"
+        <activity
+            android:name=".activities.absence.LeavesDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.enrichment.CcaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.enrichment.CCA_Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.enrichment.CCASelectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.enrichment.CCAsReviewAfterSubmissionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activities.enrichment.CCAsReviewActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activities.nas_today.NasTodayDetailWebViewActivityNew"
@@ -85,17 +149,18 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".activities.home.HomeListAppCompatActivity"
-            android:theme="@style/CustomTheme"/>
-
+        <activity
+            android:name=".activities.home.HomeListAppCompatActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTheme" />
         <activity
             android:name=".activities.splash.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:exported="true">
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -138,4 +203,5 @@
             </intent-filter>
         </service>
     </application>
+
 </manifest>

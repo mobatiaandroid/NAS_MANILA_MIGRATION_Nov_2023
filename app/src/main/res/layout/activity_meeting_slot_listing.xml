@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+
+    <RelativeLayout
+        android:id="@+id/relativeHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/imageViewSlotInfo"
+        android:layout_below="@+id/relativeHeader"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+            android:id="@+id/dateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+
+            android:singleLine="true"
+            android:text="Select a date:"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/listTxtClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Student   :"
+                android:textSize="15sp" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+                android:id="@+id/studentNameTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80"
+                android:text="Select a date:"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Class        :"
+                android:textSize="15sp" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+                android:id="@+id/studentClassTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80"
+                android:singleLine="true"
+                android:text="Select a date:"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/staffLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/staff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Staff           :" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80">
+
+                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+                    android:id="@+id/staffTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/cancelTextView"
+                    android:text="Select a date:"
+                    android:textSize="15sp" />
+
+                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                    android:id="@+id/cancelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/slotcancelbyuser_curved_rel_layout"
+                    android:gravity="center"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="25dp"
+                    android:paddingBottom="2dp"
+                    android:singleLine="true"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/vpmlBtn"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/rounded_rec_blue"
+            android:text="Click here for VPM Link"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/choose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:singleLine="true"
+                android:text="Please choose a time slot" />
+
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/reviewConfirmTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/slotbookedbyuser_curved_rel_layout"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingTop="3dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="3dp"
+                android:singleLine="true"
+                android:text="REVIEW &amp; CONFIRM"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_alloted_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:overScrollMode="never"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/infoRoomImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/relativeHeader"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/infoicon_new" />
+
+    <ImageView
+        android:id="@+id/imageViewSlotInfo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/infoforparentseveningslot" />
+
+    <ProgressBar
+        android:id="@+id/progressDialogAdd"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@anim/customspinner"
+        android:visibility="gone"
+
+        />
+</RelativeLayout>
+
+    <!--
+    <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    
+    
+        <include
+            android:id="@+id/includeRel"
+            layout="@layout/layout_activity_header" />
+    
+        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
+            android:id="@+id/dateheader"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includeRel" />
+    
+        <ImageView
+            android:id="@+id/infoRoomImg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/includeRel"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/infoicon_new"
+            app:layout_constraintBottom_toBottomOf="@+id/dateheader"
+            app:layout_constraintEnd_toEndOf="@+id/dateheader" />
+    
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dateheader">
+    
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/listTxtClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Student   :"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+    
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentNameTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80"
+                android:text="Select a date:"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+    
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/studentClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Class        :"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+    
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80">
+    
+                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                    android:id="@+id/studentclassTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/cancelTextView"
+                    android:text="Select a date:"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+    
+                <com.nas.alreem.commonviews.CustomTextViewSemiBold
+                    android:id="@+id/cancelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/red"
+                    android:gravity="center"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="25dp"
+                    android:paddingBottom="2dp"
+                    android:singleLine="true"
+                    android:text="Cancel"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+    
+        </LinearLayout>
+    
+        <LinearLayout
+            android:id="@+id/staffLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:weightSum="100"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+    
+            <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                android:id="@+id/staff"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="20"
+                android:singleLine="true"
+                android:text="Staff           :"
+                android:textColor="@color/black" />
+    
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="80">
+    
+                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                    android:id="@+id/staffTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/confirmTextView"
+                    android:text="Select a date:"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+    
+                <com.nas.alreem.commonviews.CustomTextViewSemiBold
+                    android:id="@+id/confirmTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:paddingLeft="25dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="25dp"
+                    android:paddingBottom="2dp"
+                    android:singleLine="true"
+                    android:text="@string/review_confirm"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+    
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_timeslot"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:overScrollMode="never"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewSlotInfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staffLinear">
+    
+        </androidx.recyclerview.widget.RecyclerView>
+    
+        <include
+            android:id="@+id/progressDialog"
+            layout="@layout/custom_progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_timeslot"
+            app:layout_constraintEnd_toEndOf="@+id/recycler_timeslot"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/staffLinear" />
+        <ImageView
+            android:id="@+id/imageViewSlotInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/infoforparentseveningslot"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    
+        <ProgressBar
+            android:id="@+id/progressDialogAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@anim/customspinner"
+            android:visibility="gone"
+    
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>-->
