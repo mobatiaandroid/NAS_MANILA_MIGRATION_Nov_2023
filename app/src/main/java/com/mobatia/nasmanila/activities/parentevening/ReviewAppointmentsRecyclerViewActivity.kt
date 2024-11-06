@@ -6,13 +6,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.security.AppUriAuthenticationPolicy
-import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +23,7 @@ import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.HeaderManager
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
+import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,7 +34,7 @@ class ReviewAppointmentsRecyclerViewActivity : AppCompatActivity() {
     //    lateinit var backRelative: RelativeLayout
 //    lateinit var heading: TextView
 //    lateinit var logoClickImgView: ImageView
-    lateinit var progressDialogAdd: ProgressBar
+    lateinit var progressDialogAdd: ProgressBarDialog
     lateinit var review_rec: RecyclerView
     lateinit var review_list: ArrayList<PTAReviewResponseModel.PTAReviewResponse.ReviewListModel>
     lateinit var home_icon: ImageView
@@ -59,7 +57,7 @@ class ReviewAppointmentsRecyclerViewActivity : AppCompatActivity() {
     }
 
     private fun initfn() {
-        progressDialogAdd = findViewById(R.id.progressDialogAdd)
+        progressDialogAdd = ProgressBarDialog(mContext)
 //        heading = findViewById(R.id.heading)
 //        backRelative = findViewById(R.id.backRelative)
 //        logoClickImgView = findViewById(R.id.logoClickImgView)
@@ -89,7 +87,7 @@ class ReviewAppointmentsRecyclerViewActivity : AppCompatActivity() {
         heading = findViewById(R.id.heading)
         heading.text = "Parents' Meeting"
         if (AppUtils.isNetworkConnected(mContext)) {
-            reviewlistcall()
+            reviewlistcall(progressDialogAdd, mContext, review_rec)
 
         } else {
             AppUtils.showDialogAlertDismiss(
@@ -117,37 +115,46 @@ class ReviewAppointmentsRecyclerViewActivity : AppCompatActivity() {
 
     }
 
-    fun reviewlistcall() {
+    fun reviewlistcall(
+        progressDialog: ProgressBarDialog,
+        mContext: Context,
+        review_rec: RecyclerView
+    ) {
         review_list = ArrayList()
 
-        progressDialogAdd.visibility = View.VISIBLE
+        progressDialog.show()
         val token = PreferenceManager.getAccessToken(mContext)
 
         val call: Call<PTAReviewResponseModel> =
             ApiClient.getClient.ptaReviewList("Bearer " + token)
         call.enqueue(object : Callback<PTAReviewResponseModel> {
             override fun onFailure(call: Call<PTAReviewResponseModel>, t: Throwable) {
-                progressDialogAdd.visibility = View.GONE
+                progressDialog.dismiss()
             }
 
             override fun onResponse(
                 call: Call<PTAReviewResponseModel>,
                 response: Response<PTAReviewResponseModel>
             ) {
-                progressDialogAdd.visibility = View.GONE
+                progressDialog.dismiss()
                 //val arraySize :Int = response.body()!!.responseArray.studentList.size
                 if (response.body()!!.response.statusCode == "303") {
                     review_list.addAll(response.body()!!.response.data)
                     if (review_list.size > 0) {
-                        progressDialogAdd.visibility = View.GONE
+                        progressDialog.dismiss()
                         review_rec.layoutManager = LinearLayoutManager(mContext)
 
                         var review_adapter = ReviewAdapter(
-                            mContext, review_list, ReviewAppointmentsRecyclerViewActivity(),
-                            progressDialogAdd, review_rec
+                           mContext, review_list, ReviewAppointmentsRecyclerViewActivity(),
+                            progressDialog, review_rec
                         )
                         review_rec.adapter = review_adapter
                     } else {
+                        var review_adapter = ReviewAdapter(
+                            mContext, ArrayList(), ReviewAppointmentsRecyclerViewActivity(),
+                            progressDialog, review_rec
+                        )
+                       review_rec.adapter = review_adapter
                         AppUtils.showDialogAlertDismiss(
                             mContext,
                             "Alert",

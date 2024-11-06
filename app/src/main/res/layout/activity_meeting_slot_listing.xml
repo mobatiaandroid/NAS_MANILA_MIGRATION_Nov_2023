@@ -126,7 +126,7 @@
                     android:text="Select a date:"
                     android:textSize="15sp" />
 
-                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
+                <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhite
                     android:id="@+id/cancelTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

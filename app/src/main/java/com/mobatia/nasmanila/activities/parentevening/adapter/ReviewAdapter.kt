@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +27,7 @@ import com.mobatia.nasmanila.activities.parentevening.model.PTAReviewResponseMod
 import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
+import com.mobatia.nasmanila.common.common_classes.ProgressBarDialog
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,7 +39,7 @@ internal class ReviewAdapter(
     private val mContext: Context,
     private var reviewList: ArrayList<PTAReviewResponseModel.PTAReviewResponse.ReviewListModel>,
     private val reviewActivity: ReviewAppointmentsRecyclerViewActivity,
-    private val progressDialog: ProgressBar,
+    private val progressDialog: ProgressBarDialog,
     private val reviewRecyclerView: RecyclerView,
 ) : RecyclerView.Adapter<ReviewAdapter.MyViewHolder>() {
 
@@ -68,7 +68,7 @@ internal class ReviewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        progressDialog.visibility = View.GONE
+        progressDialog.dismiss()
         idList.clear()
 
         val review = reviewList[position]
@@ -275,14 +275,13 @@ internal class ReviewAdapter(
                 response: Response<GeneralSubmitResponseModel>
             ) {
                 if (response.isSuccessful) {
-                    AppUtils.showDialogAlertDismiss(
+                    showDialogAlertDismiss(
                         mContext,
                         "Alert",
                         "Appointment cancelled successfully",
                         R.drawable.exclamationicon,
                         R.drawable.roundred
                     )
-                    refreshList()
                 } else {
                     AppUtils.showDialogAlertDismiss(
                         mContext,
@@ -308,6 +307,33 @@ internal class ReviewAdapter(
 
     private fun refreshList() {
         reviewRecyclerView.layoutManager = LinearLayoutManager(mContext)
-        reviewActivity.reviewlistcall()
+        reviewActivity.reviewlistcall(progressDialog, mContext, reviewRecyclerView)
+    }
+    fun showDialogAlertDismiss(
+        context: Context?,
+        msgHead: String?,
+        msg: String?,
+        ico: Int,
+        bgIcon: Int
+    ) {
+        val dialog = Dialog(context!!)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+        val icon = dialog.findViewById<View>(R.id.iconImageView) as ImageView
+        icon.setBackgroundResource(bgIcon)
+        icon.setImageResource(ico)
+        val text = dialog.findViewById<View>(R.id.textDialog) as TextView
+        val textHead = dialog.findViewById<View>(R.id.alertHead) as TextView
+        text.text = msg
+        textHead.text = msgHead
+        val dialogButton = dialog.findViewById<View>(R.id.btnOK) as Button
+        dialogButton.setOnClickListener {
+            refreshList()
+
+            dialog.dismiss() }
+
+        dialog.show()
     }
 }

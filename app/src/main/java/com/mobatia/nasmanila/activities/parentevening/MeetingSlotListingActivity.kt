@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.Button
@@ -72,6 +73,8 @@ class MeetingSlotListingActivity : AppCompatActivity() {
     private var staffNameText = ""
     private var staffId = ""
     private var confirmedLink = ""
+    var isSlotConfirmed = false
+    var isSlotBookedByUser = false
     lateinit var info: ImageView
     private val timeSlotList = ArrayList<PTATimeSlotsResponseModel.PTAResponseData.Slot>()
     private var timeSlotListPost = ArrayList<PTATimeSlotsResponseModel.PTAResponseData.Slot>()
@@ -137,12 +140,12 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         studentClass.text = studentClassText
         staffName.text = staffNameText
         dateSelected = formatDateString(dateString)
-        dateHeader.text = dateSelected
+        dateHeader.text = AppUtils.dateConversionY(dateSelected).toString()
     }
 
     private fun formatDateString(inputDateStr: String): String {
         val inputFormat: DateFormat = SimpleDateFormat("d/M/yyyy")
-        val outputFormat: DateFormat = SimpleDateFormat("dd MMMM yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val date: Date = inputFormat.parse(inputDateStr) ?: Date()
         return outputFormat.format(date)
     }
@@ -154,8 +157,8 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         }
         recyclerView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-
-                if (timeSlotList.get(position).status.equals("1")) {
+                Log.e("confirm", confirmedslotBookedByUser.toString())
+                if (timeSlotList[position].status == "1") {
                     AppUtils.showDialogAlertDismiss(
                         mContext,
                         "Alert",
@@ -164,7 +167,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
                         R.drawable.roundred
                     )
 
-                } else if (!alreadyslotBookedByUser) {
+                } else if (!confirmedslotBookedByUser) {
                     timeSlotListPost = java.util.ArrayList()
                     timeSlotListPost.add(timeSlotList[position])
                     if (timeSlotListPost.get(0).bookingStatus
@@ -202,12 +205,12 @@ class MeetingSlotListingActivity : AppCompatActivity() {
 
                     }
                 } else {
-                    if (timeSlotList.get(position).status.equals("2")
+                    if (timeSlotList.get(position).status.equals("3")
                     ) {
                         AppUtils.showDialogAlertDismiss(
                             mContext,
                             "Alert",
-                            "This slot is reserved by you for the Parents' Meeting. Click 'Cancel' option to cancel this appointment.",
+                            "This slot is booked by you for the Parents' Meeting. Click 'Cancel' option to cancel this appointment.",
                             R.drawable.exclamationicon,
                             R.drawable.roundred
                         )
@@ -237,17 +240,17 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         info.setOnClickListener { showRoomListDialog() }
 //        confirmButton.setOnClickListener { showReviewAlertDialog() }
         cancelButton.setOnClickListener {
-            if (timeSlotListPost.firstOrNull()?.bookingStatus == "y") {
-                showApiAlert(mContext, "Do you want to cancel this appointment?", "Confirm", 2)
-            } else {
-                AppUtils.showDialogAlertDismiss(
-                    mContext as Activity?,
-                    "Alert",
-                    "Booking and cancellation date is over.",
-                    R.drawable.nonetworkicon,
-                    R.drawable.roundred
-                )
-            }
+//            if (timeSlotListPost.firstOrNull()?.bookingStatus == "y") {
+            showApiAlert(mContext, "Do you want to cancel this appointment?", "Confirm", 2)
+//            } else {
+//                AppUtils.showDialogAlertDismiss(
+//                    mContext as Activity?,
+//                    "Alert",
+//                    "Booking and cancellation date is over.",
+//                    R.drawable.exclamationicon,
+//                    R.drawable.roundred
+//                )
+//            }
         }
         videoLinkButton.setOnClickListener {
             confirmedLink.takeIf { it.isNotEmpty() }?.let {
@@ -297,8 +300,13 @@ class MeetingSlotListingActivity : AppCompatActivity() {
 
     private fun fetchTimeSlotList() {
         progressBarDialog.show()
+        timeSlotList.clear()
+        isSlotConfirmed = false
+        isSlotBookedByUser = false
         val token = PreferenceManager.getAccessToken(mContext)
-        val formattedDate = formatDateStringForApi(dateSelected)
+        Log.e("date", dateSelected)
+//        val formattedDate = formatDateStringForApi(dateSelected)
+        val formattedDate = dateSelected
         var paramObject: JsonObject = JsonObject()
         paramObject.addProperty("student_id", studentId)
         paramObject.addProperty("staff_id", staffId)
@@ -339,20 +347,15 @@ class MeetingSlotListingActivity : AppCompatActivity() {
             Toast.makeText(mContext, "No data available!", Toast.LENGTH_SHORT).show()
             return
         }
+        timeSlotList.clear()
+        timeSlotList.addAll(response.response.availableDates)
 
-        timeSlotList.apply {
-            timeSlotList.clear()
-            timeSlotList.addAll(response.response.availableDates)
-        }
-        val isSlotConfirmed = timeSlotList.any { it.status == "3" }
-        val isSlotBookedByUser = timeSlotList.any { it.status == "2" }
 
-        confirmedLink = timeSlotList.firstOrNull { it.status == "3" }?.vpml.orEmpty()
 
         videoLinkButton.visibility =
             if (isSlotConfirmed && confirmedLink.isNotEmpty()) View.VISIBLE else View.GONE
 //        confirmButton.visibility = if (isSlotBookedByUser) View.VISIBLE else View.GONE
-        cancelButton.visibility = if (isSlotBookedByUser) View.VISIBLE else View.GONE
+        cancelButton.visibility = if (isSlotConfirmed) View.VISIBLE else View.GONE
 
         for (i in timeSlotList.indices) {
             if (timeSlotList[i].status.equals("2")) {
@@ -366,10 +369,11 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         }
         for (i in timeSlotList.indices) {
             if (timeSlotList[i].status.equals("3")) {
+                Log.e("timeslot",timeSlotList[i].slotStartTime.toString())
                 confirmedslotBookedByUser = true
                 confirmedLink = timeSlotList[i].vpml.toString()
 //                confirmButton.visibility = View.GONE
-                cancelButton.visibility = View.GONE
+                cancelButton.visibility = View.VISIBLE
             }
         }
         if (confirmedslotBookedByUser) {
@@ -378,7 +382,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
             } else {
                 videoLinkButton.visibility = View.VISIBLE
             }
-            cancelButton.visibility = View.INVISIBLE
+            cancelButton.visibility = View.VISIBLE
 //            confirmButton.visibility = View.INVISIBLE
         } else if (alreadyslotBookedByUser) {
 
@@ -444,7 +448,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         paramObject.addProperty("student_id", studentId)
         paramObject.addProperty("staff_id", staffId)
         paramObject.addProperty("date", dateSelected)
-        paramObject.addProperty("pta_time_slot_id", timeSlotListPost[0].slotId.toString())
+        paramObject.addProperty("pta_time_slot_id", timeSlotListPost[0].slotId)
 
         ApiClient.getClient.pta_insert(paramObject, "Bearer $token")
             .enqueue(object : Callback<GeneralSubmitResponseModel> {
@@ -458,6 +462,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
                             showToast("Appointment confirmed successfully!")
                         } else {
                             showToast("Appointment cancelled successfully!")
+                            cancelButton.visibility = View.GONE
                         }
 
                         fetchTimeSlotList()
