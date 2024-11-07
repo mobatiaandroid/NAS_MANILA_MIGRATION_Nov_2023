@@ -73,8 +73,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
     private var staffNameText = ""
     private var staffId = ""
     private var confirmedLink = ""
-    var isSlotConfirmed = false
-    var isSlotBookedByUser = false
+
     lateinit var info: ImageView
     private val timeSlotList = ArrayList<PTATimeSlotsResponseModel.PTAResponseData.Slot>()
     private var timeSlotListPost = ArrayList<PTATimeSlotsResponseModel.PTAResponseData.Slot>()
@@ -301,8 +300,7 @@ class MeetingSlotListingActivity : AppCompatActivity() {
     private fun fetchTimeSlotList() {
         progressBarDialog.show()
         timeSlotList.clear()
-        isSlotConfirmed = false
-        isSlotBookedByUser = false
+
         val token = PreferenceManager.getAccessToken(mContext)
         Log.e("date", dateSelected)
 //        val formattedDate = formatDateStringForApi(dateSelected)
@@ -349,50 +347,31 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         }
         timeSlotList.clear()
         timeSlotList.addAll(response.response.availableDates)
-
-
-
-        videoLinkButton.visibility =
-            if (isSlotConfirmed && confirmedLink.isNotEmpty()) View.VISIBLE else View.GONE
-//        confirmButton.visibility = if (isSlotBookedByUser) View.VISIBLE else View.GONE
-        cancelButton.visibility = if (isSlotConfirmed) View.VISIBLE else View.GONE
-
-        for (i in timeSlotList.indices) {
-            if (timeSlotList[i].status.equals("2")) {
-
-                timeSlotListPost.add(timeSlotList[i])
-                alreadyslotBookedByUser = true
-
-//                confirmButton.visibility = View.GONE
-                cancelButton.visibility = View.GONE
-            }
-        }
+        val isConfirmedSlotPresent = response.response.availableDates.any { it.status == "3" }
+        confirmedslotBookedByUser = isConfirmedSlotPresent
+        updateButtonAndLinkVisibility()
         for (i in timeSlotList.indices) {
             if (timeSlotList[i].status.equals("3")) {
                 Log.e("timeslot",timeSlotList[i].slotStartTime.toString())
                 confirmedslotBookedByUser = true
+                timeSlotListPost.add(timeSlotList[i])
                 confirmedLink = timeSlotList[i].vpml.toString()
-//                confirmButton.visibility = View.GONE
                 cancelButton.visibility = View.VISIBLE
             }
         }
-        if (confirmedslotBookedByUser) {
-            if (confirmedLink.equals("")) {
-                videoLinkButton.visibility = View.GONE
-            } else {
-                videoLinkButton.visibility = View.VISIBLE
-            }
-            cancelButton.visibility = View.VISIBLE
-//            confirmButton.visibility = View.INVISIBLE
-        } else if (alreadyslotBookedByUser) {
 
-            cancelButton.visibility = View.VISIBLE
-//            confirmButton.visibility = View.VISIBLE
-        } else {
-            cancelButton.visibility = View.INVISIBLE
-//            confirmButton.visibility = View.INVISIBLE
-        }
         recyclerView.adapter = TimeslotAdapter(mContext, timeSlotList, cancelButton)
+    }
+
+    private fun updateButtonAndLinkVisibility() {
+        if (confirmedslotBookedByUser) {
+            videoLinkButton.visibility =
+                if (confirmedslotBookedByUser && confirmedLink.isNotEmpty()) View.VISIBLE else View.GONE
+            cancelButton.visibility = View.VISIBLE
+        } else {
+            cancelButton.visibility = View.GONE
+            videoLinkButton.visibility = View.GONE
+        }
     }
 
     private fun showReviewAlertDialog() {

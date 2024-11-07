@@ -1279,5 +1279,45 @@ class PreferenceManager {
             CCAItemId = sharedPreferences.getString("staff_id", "").toString()
             return CCAItemId
         }
+
+        fun setPTABooked(context: Context?, b: Boolean) {
+            val prefs = context!!.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            val editor = prefs.edit()
+            editor.putBoolean("pta_booked", b)
+            editor.commit()
+        }
+
+        fun getPTABooked(context: Context?): Boolean {
+            var b = false
+            val prefs = context!!.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            b = prefs.getBoolean("pta_booked", false)
+            return b
+        }
+
+        fun setPTABookedID(context: Context?, id: String) {
+            val prefs = context!!.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            val editor = prefs.edit()
+            editor.putString("pta_booked_id", id)
+            editor.commit()
+        }
+
+        fun getPTABookedID(context: Context?): String {
+            var b = ""
+            val prefs = context!!.getSharedPreferences(
+                sharedPrefNas,
+                Context.MODE_PRIVATE
+            )
+            b = prefs.getString("pta_booked_id", "").toString()
+            return b
+        }
     }
 }

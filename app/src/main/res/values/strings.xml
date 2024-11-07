@@ -519,6 +519,16 @@
     <string name="enter_valid_mail">Please enter a valid email</string>
     <string name="parents_meeting">Parents\' Meeting</string>
     <string name="cannot_continue">Cannot continue. Please try again later.</string>
+    <string name="alert">Alert</string>
+    <string name="slot_reserved">Reserved Only - Please review and confirm booking.</string>
+    <string name="confirm">Confirm</string>
+    <string name="slot_cancel_prompt">Do you want to cancel this appointment?</string>
+    <string name="slot_unavailable">This slot is not available.</string>
+    <string name="slot_confirmed">Your time slot is already confirmed.</string>
+    <string name="slot_confirm_prompt">Do you want to confirm this appointment?</string>
+    <string name="slot_confirm_prompt_on">Do you want to confirm your appointment on</string>
+    <string name="slot_booked_message_first">This slot is reserved by you for the Parent\'s Meeting. Click \'Cancel\' option to cancel this appointment.</string>
+    <string name="slot_booked_message_second">Another Slot is already booked by you. If you want to take appointment on this time, please cancel earlier appointment and try.</string>
 
     <string-array name="Months">
         <item> January </item>
