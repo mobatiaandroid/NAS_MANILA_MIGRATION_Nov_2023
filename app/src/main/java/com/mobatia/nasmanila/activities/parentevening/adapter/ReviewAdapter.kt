@@ -57,7 +57,7 @@ internal class ReviewAdapter(
         val confirmImage: ImageView = view.findViewById(R.id.confirmAppointment)
         val confirmIcon: ImageView = view.findViewById(R.id.confirmationImageview)
         val addToCalendarImage: ImageView = view.findViewById(R.id.addTocalendar)
-        val vpmlButton: Button = view.findViewById(R.id.vpml)
+        val vpmlButton: TextView = view.findViewById(R.id.vpml)
     }
 
     @NonNull
@@ -151,16 +151,35 @@ internal class ReviewAdapter(
         holder: MyViewHolder
     ) {
         with(holder) {
+            // Confirm Image Visibility
             confirmImage.visibility =
                 if (review.status == 2 && review.bookingOpen == "y") View.VISIBLE else View.GONE
-            cancelImage.visibility =
-                if (review.status == 3 && review.bookingOpen == "y") View.VISIBLE else View.GONE
+
+            // Cancel Image Visibility and behavior
+            if (review.status == 3 && review.bookingOpen == "y") {
+                cancelImage.visibility = View.VISIBLE
+                cancelImage.alpha = 1.0f // fully visible
+                cancelImage.isClickable = true
+            } else {
+                // If cancellation date is over, make it semi-transparent and unclickable
+                cancelImage.alpha = 0.5f // 50% transparency
+                cancelImage.isClickable = false
+            }
+
+            // Add to Calendar Image Visibility
             addToCalendarImage.visibility =
                 if (review.status != 2 || review.bookingOpen == "n") View.VISIBLE else View.GONE
+
+            // VPML button visibility
             vpmlButton.visibility = if (review.vpml.isEmpty()) View.GONE else View.VISIBLE
-            confirmIcon.setBackgroundResource(if (review.status == 2) R.drawable.doubtinparticipatingsmallicon else R.drawable.tick_icon)
+
+            // Confirmation Icon Background
+            confirmIcon.setBackgroundResource(
+                if (review.status == 2) R.drawable.doubtinparticipatingsmallicon else R.drawable.tick_icon
+            )
         }
     }
+
 
     private fun setupListeners(
         holder: MyViewHolder,

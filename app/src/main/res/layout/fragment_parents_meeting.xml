@@ -1,62 +1,114 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
+
     <RelativeLayout
         android:id="@+id/titleRel"
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <com.mobatia.nasmanila.custom_views.custom_text.CustomFontDJ5TextWhite
             android:id="@+id/titleTextView"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/split_bg"
+            android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:textColor="@color/white"
-            android:textSize="17dp"
-            android:gravity="center"
             android:text="Title"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/white"
+            android:textSize="17dp" />
+
         <ImageView
             android:id="@+id/infoImg"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginRight="5dp"
-            android:visibility="gone"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/infoptaicon"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/infoptaicon"
+            android:visibility="gone" />
     </RelativeLayout>
+
     <LinearLayout
+        android:id="@+id/select_cat"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/titleRel"
+        app:layout_constraintTop_toBottomOf="@id/titleRel"
+        android:layout_margin="8dp"
+        android:padding="2dp"
+        android:background="@drawable/event_greyfill"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/bookingButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:fontFamily="@font/source_sans_pro"
+            android:layout_weight=".33"
+            android:background="@drawable/event_spinnerfill"
+            android:gravity="center"
+            android:text="Booking"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/reviewButton"
+            android:layout_width="0dp"
+            android:fontFamily="@font/source_sans_pro"
+            android:layout_height="match_parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_weight=".33"
+            android:gravity="center"
+            android:text="Review"
+            android:textColor="@color/black" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bookingLinear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
+        android:layout_height="0dp"
         android:layout_below="@+id/titleRel"
         android:orientation="vertical"
-        >
+        android:weightSum="100"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_cat">
+
         <RelativeLayout
             android:id="@+id/studentRelative"
 
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#FBB425"
             android:layout_margin="10dp"
-            android:layout_weight="50">
+            android:layout_weight="50"
+            android:background="#FBB425">
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                 android:id="@+id/selectStudentTitle"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
                 android:text="Select Child"
-                android:singleLine="true" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
 
             <com.github.siyamed.shapeimageview.CircularImageView
@@ -67,109 +119,130 @@
                 android:src="@drawable/addiconinparentsevng"
                 app:siBorderColor="#FBB425"
                 app:siBorderWidth="1dp" />
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                 android:id="@+id/studentNameTV"
                 style="@style/textstyleblack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:layout_alignParentBottom="true"
-                android:textSize="16dp"
                 android:layout_margin="20dp"
-                android:textStyle="bold"
+                android:gravity="left"
                 android:text="Student Name:-"
-                />
-            <ImageView
-                android:id="@+id/reviewImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/review_confirm"
-                android:layout_alignParentRight="true"
-                android:visibility="visible" />
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlackSemiBold
                 android:id="@+id/reviewTitle"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:singleLine="false"
+                android:text="Review &amp; \nConfirm"
+                android:textColor="@color/white"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                android:textColor="@color/white"
-                android:text="Review &amp; \nConfirm"
-                android:singleLine="false" />
+                android:visibility="gone" />
 
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/staffRelative"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="#43C8D8"
-            android:visibility="invisible"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="50">
+            android:layout_marginBottom="10dp"
+            android:layout_weight="50"
+            android:background="#43C8D8"
+            android:visibility="invisible">
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                 android:id="@+id/selectTeacherTitle"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="18dp"
-                android:textStyle="bold"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:singleLine="true"
                 android:text="Select Staff"
-                android:singleLine="true" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <com.github.siyamed.shapeimageview.CircularImageView
                 android:id="@+id/selectStaffImgView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                app:siBorderWidth="1dp"
+                android:src="@drawable/addiconinparentsevng"
                 app:siBorderColor="#43C8D8"
-                android:src="@drawable/addiconinparentsevng"/>
+                app:siBorderWidth="1dp" />
+
             <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextBlack
                 android:id="@+id/staffNameTV"
                 style="@style/textstyleblack"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
                 android:layout_alignParentBottom="true"
-                android:textSize="16dp"
                 android:layout_margin="20dp"
-                android:textStyle="bold"
                 android:layout_toLeftOf="@+id/next"
+                android:gravity="left"
                 android:text="Staff Name:-"
-                />
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/next"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:visibility="gone"
+                android:layout_alignParentBottom="true"
                 android:layout_margin="10dp"
-                android:src="@drawable/continueiconcalender"/>
+                android:src="@drawable/continueiconcalender"
+                android:visibility="gone" />
 
         </RelativeLayout>
-        <com.mobatia.nasmanila.custom_views.custom_text.CustomFontSansProTextWhite
-            android:id="@+id/contactTeacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button"
-            android:layout_gravity="center"
-            android:text="Contact Teacher"
-            android:gravity="center"
-            android:textSize="18dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:visibility="invisible"
-            android:textColor="@color/white"
-            android:layout_marginBottom="5dp"/>
+
+
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/reviewLinear"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:weightSum="100"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_cat">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reviewRecycler"
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="90"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tick_icon"/>
+            <TextView
+                android:fontFamily="@font/source_sans_pro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BOOKING CONFIRMED BY USER"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

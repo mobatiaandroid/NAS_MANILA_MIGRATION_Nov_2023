@@ -9,19 +9,19 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +29,8 @@ import com.bumptech.glide.Glide
 import com.mobatia.nasmanila.R
 import com.mobatia.nasmanila.activities.parentevening.ParentsEveningCalendarActivity
 import com.mobatia.nasmanila.activities.parentevening.ReviewAppointmentsRecyclerViewActivity
+import com.mobatia.nasmanila.activities.parentevening.adapter.ReviewAdapter
+import com.mobatia.nasmanila.activities.parentevening.model.PTAReviewResponseModel
 import com.mobatia.nasmanila.common.api.ApiClient
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.DividerItemDecoration
@@ -42,8 +44,6 @@ import com.mobatia.nasmanila.fragments.absence.model.StudentlistApiModel
 import com.mobatia.nasmanila.fragments.absence.model.StudentlistResponseModel
 import com.mobatia.nasmanila.fragments.parents_meeting.adapter.ParentsEveningStaffAdapter
 import com.mobatia.nasmanila.fragments.parents_meeting.adapter.ParentsEveningStudentAdapter
-import com.mobatia.nasmanila.fragments.parents_meeting.model.SendemailstaffptaApiModel
-import com.mobatia.nasmanila.fragments.parents_meeting.model.SendemailstaffptaResponseModel
 import com.mobatia.nasmanila.fragments.parents_meeting.model.StaffPtaModel
 import com.mobatia.nasmanila.fragments.parents_meeting.model.StafflistApiModel
 import com.mobatia.nasmanila.fragments.parents_meeting.model.StafflistResponseModel
@@ -54,6 +54,12 @@ import retrofit2.Response
 class ParentsEveningFragment:Fragment() {
     private var mRootView: View? = null
     lateinit var mContext: Context
+    lateinit var bookingLinear: LinearLayout
+    lateinit var reviewLinear: LinearLayout
+    lateinit var reviewButton: TextView
+    lateinit var bookingButton: TextView
+    lateinit var reviewRecycler: RecyclerView
+    lateinit var reviewList: ArrayList<PTAReviewResponseModel.PTAReviewResponse.ReviewListModel>
     var progressBarDialog: ProgressBarDialog? = null
     private val mAboutUsList: ListView? = null
     private val mTitle: String? = null
@@ -67,13 +73,13 @@ class ParentsEveningFragment:Fragment() {
     private var staffRelative: RelativeLayout? =
         null
     private  var studentRelative: RelativeLayout? = null
-    private  var relMain: RelativeLayout? = null
+    private  var relMain: ConstraintLayout? = null
     private var selectStaffImgView: ImageView? =
         null
     private  var selectStudentImgView: ImageView? = null
     private  var next: ImageView? = null
     private  var infoImg: ImageView? = null
-    private  var reviewImageView: ImageView? = null
+//    private  var reviewImageView: ImageView? = null
     var mTitleTextView: TextView? =
         null
     var studentNameTV: TextView? = null
@@ -87,11 +93,8 @@ class ParentsEveningFragment:Fragment() {
     var dialog: Dialog? = null
     var text_dialog: EditText? = null
     var text_content: EditText? = null
+    var select_val: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -116,8 +119,88 @@ class ParentsEveningFragment:Fragment() {
                 R.drawable.roundred
             )
         }
+        selectCategory()
         return mRootView
     }
+
+    private fun selectCategory() {
+        bookingButton.setOnClickListener(View.OnClickListener {
+            progressBarDialog!!.show()
+            select_val = 0
+            if (AppUtils.checkInternet(mContext)) {
+                getStudentList()
+            } else {
+                AppUtils.showDialogAlertDismiss(
+                    mContext as Activity,
+                    "Network Error",
+                    getString(R.string.no_internet),
+                    R.drawable.nonetworkicon,
+                    R.drawable.roundred
+                )
+            }
+            updateCategoryUI(
+                R.drawable.event_spinnerfill,
+                R.drawable.event_grey,
+                View.VISIBLE,
+                View.GONE,
+                R.color.white,
+                R.color.black,0
+            )
+        })
+
+        reviewButton.setOnClickListener(View.OnClickListener {
+            progressBarDialog!!.show()
+            select_val = 1
+            if (AppUtils.checkInternet(mContext)) {
+                reviewlistcall(progressBarDialog!!, mContext, reviewRecycler)
+
+            } else {
+                AppUtils.showDialogAlertDismiss(
+                    mContext as Activity,
+                    "Network Error",
+                    getString(R.string.no_internet),
+                    R.drawable.nonetworkicon,
+                    R.drawable.roundred
+                )
+            }
+
+            updateCategoryUI(
+                R.drawable.event_grey,
+                R.drawable.event_spinnerfill,
+                View.GONE,
+                View.VISIBLE,
+                R.color.black,
+                R.color.white,1
+            )
+
+        })
+    }
+
+    private fun updateCategoryUI(
+        absenceButtonBackground: Int,
+        pickupButtonBackground: Int,
+        bookingLinearVisibility: Int,
+        reviewLinearVisibility: Int,
+        bookingColor: Int,
+        reviewColor: Int,
+        selected:Int
+    ) {
+        bookingButton.setBackgroundResource(absenceButtonBackground)
+        Log.e("color", bookingColor.toString()+" "+reviewColor.toString())
+        bookingButton.setTextColor(bookingColor)
+        reviewButton.setBackgroundResource(pickupButtonBackground)
+        reviewButton.setTextColor(reviewColor)
+        bookingLinear.visibility = bookingLinearVisibility
+        reviewLinear.visibility = reviewLinearVisibility
+        if (selected == 0){
+            bookingButton.setTextColor(resources.getColor(R.color.white))
+            reviewButton.setTextColor(resources.getColor(R.color.black))
+        }else{
+            bookingButton.setTextColor(resources.getColor(R.color.black))
+            reviewButton.setTextColor(resources.getColor(R.color.white))
+        }
+    }
+
     private fun getStudentList() {
         mListViewArray= ArrayList()
         progressBarDialog!!.show()
@@ -229,9 +312,13 @@ class ParentsEveningFragment:Fragment() {
         staffRelative = mRootView!!.findViewById(R.id.staffRelative)
         mTitleTextView!!.setText(NaisClassNameConstants.PARENT_EVENING)
         relMain = mRootView!!.findViewById(R.id.relMain)
-        reviewImageView = mRootView!!.findViewById(R.id.reviewImageView)
+//        reviewImageView = mRootView!!.findViewById(R.id.reviewImageView)
         infoImg = mRootView!!.findViewById(R.id.infoImg)
-
+        reviewButton = mRootView!!.findViewById(R.id.reviewButton)
+        reviewLinear = mRootView!!.findViewById(R.id.reviewLinear)
+        bookingButton = mRootView!!.findViewById(R.id.bookingButton)
+        bookingLinear = mRootView!!.findViewById(R.id.bookingLinear)
+        reviewRecycler = mRootView!!.findViewById(R.id.reviewRecycler)
         selectStaffImgView!!.setOnClickListener {
             if (mListViewStaffArray!!.size > 0) {
                 showStaffList()
@@ -256,11 +343,7 @@ class ParentsEveningFragment:Fragment() {
             mIntent.putExtra("studentClass", mClass)
             mContext.startActivity(mIntent)
         }
-        reviewImageView!!.setOnClickListener {
-            val mIntent = Intent(activity, ReviewAppointmentsRecyclerViewActivity::class.java)
 
-            mContext.startActivity(mIntent)
-        }
 
     }
 
@@ -476,225 +559,72 @@ class ParentsEveningFragment:Fragment() {
         })
     }
 
-    private fun sendEmailToStaff() {
-        var homebannerbody = SendemailstaffptaApiModel(
-            mStudentId, mStaffId,
-            text_dialog!!.text.toString(), text_content!!.text.toString()
-        )
-        val call: Call<SendemailstaffptaResponseModel> = ApiClient.getClient.sendemailstaffpta(
-            "Bearer " + PreferenceManager.getAccessToken(mContext),
-            homebannerbody
-        )
-        progressBarDialog!!.show()
-        call.enqueue(object : Callback<SendemailstaffptaResponseModel> {
-            override fun onResponse(call: Call<SendemailstaffptaResponseModel>, response: Response<SendemailstaffptaResponseModel>) {
-                progressBarDialog!!.dismiss()
-                val responseData = response.body()
-                if (response.body()!!.responsecode.equals("200")){
-                    progressBarDialog!!.dismiss()
-                    var status_code=response.body()!!.response.statuscode
-                    if (status_code.equals("303")){
+    fun reviewlistcall(
+        progressDialog: ProgressBarDialog,
+        mContext: Context,
+        review_rec: RecyclerView
+    ) {
+        reviewList = ArrayList()
 
-                        dialog!!.dismiss()
+        progressDialog.show()
+        val token = PreferenceManager.getAccessToken(mContext)
+
+        val call: Call<PTAReviewResponseModel> =
+            ApiClient.getClient.ptaReviewList("Bearer " + token)
+        call.enqueue(object : Callback<PTAReviewResponseModel> {
+            override fun onFailure(call: Call<PTAReviewResponseModel>, t: Throwable) {
+                progressDialog.dismiss()
+            }
+
+            override fun onResponse(
+                call: Call<PTAReviewResponseModel>,
+                response: Response<PTAReviewResponseModel>
+            ) {
+                progressDialog.dismiss()
+                //val arraySize :Int = response.body()!!.responseArray.studentList.size
+                if (response.body()!!.response.statusCode == "303") {
+                    reviewList.addAll(response.body()!!.response.data)
+                    if (reviewList.size > 0) {
+                        progressDialog.dismiss()
+                        review_rec.layoutManager = LinearLayoutManager(mContext)
+
+                        var review_adapter = ReviewAdapter(
+                            mContext, reviewList, ReviewAppointmentsRecyclerViewActivity(),
+                            progressDialog, review_rec
+                        )
+                        review_rec.adapter = review_adapter
+                    } else {
+                        var review_adapter = ReviewAdapter(
+                            mContext, ArrayList(), ReviewAppointmentsRecyclerViewActivity(),
+                            progressDialog, review_rec
+                        )
+                        review_rec.adapter = review_adapter
                         AppUtils.showDialogAlertDismiss(
-                            mContext as Activity,
-                            "Success",
-                            "Successfully sent email to staff",
-                            R.drawable.tick,
-                            R.drawable.round
+                            mContext,
+                            "Alert",
+                            "No Appointments Available.",
+                            R.drawable.exclamationicon,
+                            R.drawable.roundred
                         )
 
-                    } else {
-                        val toast = Toast.makeText(mContext, "Email not sent", Toast.LENGTH_SHORT)
-                        toast.show()
                     }
 
+
                 } else {
-                    progressBarDialog!!.dismiss()
                     AppUtils.showDialogAlertDismiss(
                         mContext,
                         "Alert",
-                        mContext!!.getString(R.string.common_error),
+                        "Cannot continue. Please try again later.",
                         R.drawable.exclamationicon,
-                        R.drawable.round
+                        R.drawable.roundred
                     )
+
                 }
+
+
             }
 
-            override fun onFailure(call: Call<SendemailstaffptaResponseModel>, t: Throwable) {
-                progressBarDialog!!.dismiss()
-            }
         })
+
     }
 }
-
-//        contactTeacher!!.setOnClickListener {
-//            if (!PreferenceManager.getAccessToken(mContext).equals("")) {
-//                dialog = Dialog(mContext)
-//                dialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//                dialog!!.setContentView(R.layout.alert_send_email_dialog)
-//                dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-//                dialog!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-//                val dialogCancelButton = dialog!!.findViewById<View>(R.id.cancelButton) as Button
-//                val submitButton = dialog!!.findViewById<View>(R.id.submitButton) as Button
-//                text_dialog = dialog!!.findViewById<View>(R.id.text_dialog) as EditText
-//                text_content = dialog!!.findViewById<View>(R.id.text_content) as EditText
-//                // text_dialog.setSelection(0);
-//                //text_content.setSelection(0);
-//                text_dialog!!.onFocusChangeListener =
-//                    View.OnFocusChangeListener { v, hasFocus ->
-//                        if (hasFocus) {
-//                            text_dialog!!.hint = ""
-//                            text_dialog!!.gravity = Gravity.LEFT or Gravity.CENTER_VERTICAL
-//                            text_dialog!!.setPadding(5, 5, 0, 0)
-//                        } else {
-//                            text_dialog!!.hint = "Enter your subject here..."
-//                            text_dialog!!.gravity = Gravity.CENTER
-//                        }
-//                    }
-//                text_content!!.onFocusChangeListener =
-//                    View.OnFocusChangeListener { v, hasFocus ->
-//                        if (hasFocus) {
-//                            text_content!!.gravity = Gravity.LEFT
-//                        } else {
-//                            text_content!!.gravity = Gravity.CENTER
-//                        }
-//                    }
-//                dialogCancelButton.setOnClickListener { dialog!!.dismiss() }
-//                submitButton.setOnClickListener {
-//                    println("submit btn clicked")
-//                    //                            if (AppUtils.isNetworkConnected(mContext)) {
-//                    //                                if (text_content.equals("")) {
-//                    //                                    AppUtils.setErrorForEditText(text_content, mContext.getString(R.string.mandatory_field));
-//                    //                                } else if (text_dialog.equals("")) {
-//                    //                                    AppUtils.setErrorForEditText(text_dialog, mContext.getString(R.string.mandatory_field));
-//                    //
-//                    //                                } else {
-//                    //                                    sendEmailToStaff(URL_SEND_EMAIL_TO_STAFF_PTA);
-//                    //                                }
-//                    //                            } else {
-//                    //                                AppUtils.showDialogAlertDismiss((Activity) mContext, "Network Error", mContext.getString(R.string.no_internet), R.drawable.nonetworkicon, R.drawable.roundred);
-//                    //
-//                    //                            }
-//                    if (text_dialog!!.text.toString() == "") {
-//                        AppUtils.showDialogAlertDismiss(
-//                            mContext as Activity,
-//                            mContext.getString(R.string.alert_heading),
-//                            "Please enter subject",
-//                            R.drawable.exclamationicon,
-//                            R.drawable.round
-//                        )
-//                    } else if (text_content!!.text.toString() == "") {
-//                        AppUtils.showDialogAlertDismiss(
-//                            mContext as Activity,
-//                            mContext.getString(R.string.alert_heading),
-//                            "Please enter content",
-//                            R.drawable.exclamationicon,
-//                            R.drawable.round
-//                        )
-//                    } else {
-//                        emailvalidationcheck( text_dialog!!.text.toString(),text_content!!.text.toString(),
-//                            dialog!!
-//                        )
-//                       /* if (AppUtils.isNetworkConnected(mContext)) {
-//                            println("student id" + mStudentId + "staff id" + mStaffId)
-//                            sendEmailToStaff()
-//                        } else {
-//                            AppUtils.showDialogAlertDismiss(
-//                                mContext as Activity,
-//                                "Network Error",
-//                                mContext.getString(R.string.no_internet),
-//                                R.drawable.nonetworkicon,
-//                                R.drawable.roundred
-//                            )
-//                        }*/
-//                    }
-//                }
-//                dialog!!.show()
-//            } else {
-//                AppUtils.showDialogAlertDismiss(
-//                    mContext as Activity,
-//                    mContext.getString(R.string.alert_heading),
-//                    "This feature is available only for registered users. Login/register to see contents.",
-//                    R.drawable.exclamationicon,
-//                    R.drawable.round
-//                )
-//            }
-//        }
-
-//fun emailvalidationcheck( title: String,
-//                          message: String,
-//                          dialog: Dialog){
-//    val EMAIL_PATTERN :String=
-//        "^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-z0-9])?\\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
-//    val pattern :String= "^([a-zA-Z ]*)$"
-//
-//    if (title.equals("")) {
-//        val toast: Toast = Toast.makeText(
-//            mContext, mContext.getResources().getString(
-//                R.string.enter_subjects
-//            ), Toast.LENGTH_SHORT
-//        )
-//        toast.show()
-//    } else {
-//        if (message.equals("")) {
-//            val toast: Toast = Toast.makeText(
-//                mContext, mContext.getResources().getString(
-//                    R.string.enter_contents
-//                ), Toast.LENGTH_SHORT
-//            )
-//            toast.show()
-//        } else if (staffEmail.matches(EMAIL_PATTERN.toRegex())) {
-//            if (title.toString().trim().matches(pattern.toRegex())) {
-//                if (title.toString().length>=500){
-//                    Toast.makeText(mContext, "Subject is too long", Toast.LENGTH_SHORT).show()
-//
-//                }else{
-//                    if (message.toString().trim().matches(pattern.toRegex())) {
-//
-//                        if (message.length <= 500) {
-//                            if (AppUtils.checkInternet(mContext!!)) {
-//                                Log.e("success","Success")
-//                                sendEmailToStaff()
-//                            }else{
-//                                Toast.makeText(
-//                                    mContext,
-//                                    mContext!!.resources.getString(R.string.no_internet),
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                            }
-//                        } else {
-//                            Toast.makeText(mContext, "Message is too long", Toast.LENGTH_SHORT)
-//                                .show()
-//
-//                        }
-//                    }
-//                    else {
-//                        val toast: Toast = Toast.makeText(
-//                            mContext, mContext.getResources().getString(
-//                                R.string.enter_valid_contents
-//                            ), Toast.LENGTH_SHORT
-//                        )
-//                        toast.show()
-//                    }
-//                }
-//
-//
-//            } else {
-//                val toast: Toast = Toast.makeText(
-//                    mContext, mContext.getResources().getString(
-//                        R.string.enter_valid_subjects
-//                    ), Toast.LENGTH_SHORT
-//                )
-//                toast.show()
-//            }
-//        } else {
-//            val toast: Toast = Toast.makeText(
-//                mContext, mContext.getResources().getString(
-//                    R.string.enter_valid_mail
-//                ), Toast.LENGTH_SHORT
-//            )
-//            toast.show()
-//        }
-//    }
-//}
