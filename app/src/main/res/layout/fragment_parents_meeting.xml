@@ -225,24 +225,17 @@
             android:layout_margin="8dp"
             android:layout_weight="90"
             android:layout_height="match_parent" />
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:visibility="gone"
+            android:layout_gravity="center"
+            android:background="@drawable/infopta_review"
+            android:visibility="visible"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tick_icon"/>
-            <TextView
-                android:fontFamily="@font/source_sans_pro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BOOKING CONFIRMED BY USER"/>
-        </LinearLayout>
+        </ImageView>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

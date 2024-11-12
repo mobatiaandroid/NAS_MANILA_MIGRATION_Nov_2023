@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit
 object ApiClient {
 
     //    Live
-    var BASE_URL = "http://gama.mobatia.in:8080/nais-manilav10/public/"
+//    var BASE_URL = "http://gama.mobatia.in:8080/nais-manilav10/public/"
     //    DEV
-//    var BASE_URL = "https://cms.naismanila.edu.ph/"
+    var BASE_URL = "https://cms.naismanila.edu.ph/"
 
     /**
      * Credentials Live - athul.m@mobatia.com - Password1! DEV -
