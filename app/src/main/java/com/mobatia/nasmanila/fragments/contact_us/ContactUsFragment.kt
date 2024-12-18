@@ -162,12 +162,9 @@ class ContactUsFragment() : Fragment(), LocationListener,
                         desc!!.text = description
                         if (responseData!!.response.data.contacts.size > 0) {
                             for (i in 0..responseData!!.response.data.contacts.size) {
-                                //	System.out.println("length"+contact.length());
                                 if (i < responseData!!.response.data.contacts.size) {
                                     val questionsObject: ContactUsListModel=
                                         responseData!!.response.data.contacts[i]
-                                    println("working")
-                                    //JSONObject cObj = contact.getJSONObject(i);
                                     val contactUsModel = ContactUsListModel()
                                     contactUsModel.email=questionsObject.email
                                     contactUsModel.phone=questionsObject.phone
@@ -175,7 +172,6 @@ class ContactUsFragment() : Fragment(), LocationListener,
                                     contactUsModelsArrayList.add(contactUsModel)
                                 } else if (i == responseData!!.response.data.contacts.size
                                 ) {
-                                    println("working ****")
                                     val contactUsModel = ContactUsListModel()
                                     contactUsModel.phone=""
                                     contactUsModel.email=""
@@ -197,19 +193,7 @@ class ContactUsFragment() : Fragment(), LocationListener,
                                 mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
 
                                 mMap.animateCamera(CameraUpdateFactory.zoomTo(13f))
-                            /*    if (!isGPSEnabled!!) {
-                                    val callGPSSettingIntent = Intent(
-                                        Settings.ACTION_LOCATION_SOURCE_SETTINGS
-                                    )
-                                    startActivity(callGPSSettingIntent)
-                                } else {
-                                    val url =
-                                        "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=Nord Anglia International School Manila - Manila"
 
-                                    val i = Intent(Intent.ACTION_VIEW)
-                                    i.data = Uri.parse(url)
-                                    startActivity(i)
-                                }*/
                                 mMap.setOnInfoWindowClickListener {
 
                                     if (!isGPSEnabled!!) {
@@ -226,52 +210,7 @@ class ContactUsFragment() : Fragment(), LocationListener,
                                         startActivity(i)
                                     }
                                 }
-                                /*mMap.setOnInfoWindowClickListener {
-                                    if (AppUtils.isNetworkConnected(mContext)) {
-                                        if (!isGPSEnabled) {
-                                            val callGPSSettingIntent = Intent(
-                                                Settings.ACTION_LOCATION_SOURCE_SETTINGS
-                                            )
-                                            startActivity(callGPSSettingIntent)
-                                        } else {
-                                            val intent =
-                                                Intent(mContext, LoadUrlWebViewActivity::class.java)
-                                            intent.putExtra(
-                                                "url",
-                                                "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=Nord Anglia International School Manila - Manila"
-                                            )
-                                            intent.putExtra("tab_type", "Contact Us")
-                                            startActivity(intent)
-                                        }
-                                        //startActivity(intent);
-                                    } else {
-                                        AppUtils.showDialogAlertDismiss(
-                                            mContext as Activity,
-                                            "Network Error",
-                                            getString(R.string.no_internet),
-                                            R.drawable.nonetworkicon,
-                                            R.drawable.roundred
-                                        )
-                                    }
-                                }*/
 
-                         /*       mMap.setOnInfoWindowClickListener {
-                                    if (!isGPSEnabled!!) {
-                                        val callGPSSettingIntent = Intent(
-                                            Settings.ACTION_LOCATION_SOURCE_SETTINGS
-                                        )
-                                        startActivity(callGPSSettingIntent)
-                                    } else {
-                                        //val url = "http://maps.google.com/maps?saddr=$c_latitude,$c_longitude&daddr=The British International School,Abudhabi"
-                                        val url = "http://maps.google.com/maps?saddr=" + c_latitude + "," + c_longitude + "&daddr=Nord Anglia International School Manila - Manila"
-
-                                        val i = Intent(Intent.ACTION_VIEW)
-                                        i.data = Uri.parse(url)
-                                        startActivity(i)
-                                    }
-
-
-                                }*/
                             }
 
 
@@ -386,8 +325,6 @@ class ContactUsFragment() : Fragment(), LocationListener,
                 if (location != null) {
                     lat = location.latitude
                     lng = location.longitude
-                    println("lat---$lat")
-                    println("lat---$lng")
                 }
             }
         }
@@ -420,7 +357,6 @@ contactList!!.addOnItemClickListener(object :OnItemClickListener{
     }
 
 })
-        //relMain = mRootView.findViewById<View>(R.id.relMain) as RelativeLayout
     }
 
     override fun onLocationChanged(location: Location) {

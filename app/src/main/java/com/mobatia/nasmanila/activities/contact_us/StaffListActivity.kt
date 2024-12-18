@@ -95,7 +95,6 @@ class StaffListActivity:AppCompatActivity() {
                                     ArrayList<Categori>()
 
 
-                                // System.out.println("staffdept----name--1--" + j + "---" + keyArray);
                                 mStaffDeptList = ArrayList()
                                 for (departmentMap in response.body()!!.response.data.staffs) {
 
@@ -109,10 +108,8 @@ class StaffListActivity:AppCompatActivity() {
                                 mStaffListView!!.adapter = customStaffDeptAdapter
                              hashmap[deptArrayList[j]] = mStaffDeptList
                             }
-                            println("hashmap size--" + hashmap.size + "--" + mStaffDeptList!!.size)
 
-                            /* StaffAdapterAdapterNew customStaffDeptAdapter = new StaffAdapterAdapterNew(mContext, list);
-                                mStaffListView.setAdapter(customStaffDeptAdapter);*/if (hashmap.size == 1 && mStaffDeptList!!.size == 0) {
+                            if (hashmap.size == 1 && mStaffDeptList!!.size == 0) {
                                 AppUtils.showDialogAlertFinish(
                                     mContext as Activity,
                                     mContext.getString(R.string.alert_heading),
@@ -121,29 +118,15 @@ class StaffListActivity:AppCompatActivity() {
                                     R.drawable.round
                                 )
                             } else {
-                                /*StaffAdapterAdapterNew customStaffDeptAdapter = new StaffAdapterAdapterNew(mContext, deptArrayList, hashmap);
-                                    mStaffListView.setAdapter(customStaffDeptAdapter);*/
+
                             }
                         } else {
                             mStaffDeptList = java.util.ArrayList()
                             for (j in 0 until response.body()!!.response.data.staffs
                                 .size) {
-                                //  JSONObject staffObject = staffArray.getJSONObject(j);
-                                /*  StaffModel item = apiResponse.getResponse().getData().getStaffs().get(j);
-                                    Gson gson = new Gson();
-                                    String eventJson = gson.toJson(item);
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(eventJson);
 
-                                        mStaffDeptList.add(addStaffDeptDetails(jsonObject));
 
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }*/
-
-                                //System.out.println("staffdept----name--"+currentKey);
                             }
-                            println("staffdept----name--" + mStaffDeptList!!.size)
                             val customStaffDeptAdapter =
                                 CustomStaffDeptRecyclerAdapter(mContext, mStaffDeptList!!, "")
                             mStaffListView!!.adapter = customStaffDeptAdapter

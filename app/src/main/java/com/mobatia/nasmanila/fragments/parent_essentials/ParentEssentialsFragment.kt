@@ -410,7 +410,6 @@ class ParentEssentialsFragment() : Fragment() {
             }
             model.submenu=subMenNewsLetterModels
         } catch (ex: Exception) {
-            println("Exception is$ex")
         }
 
         return model

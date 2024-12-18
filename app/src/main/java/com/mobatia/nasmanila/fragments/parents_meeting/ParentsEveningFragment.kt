@@ -186,7 +186,6 @@ class ParentsEveningFragment:Fragment() {
         selected:Int
     ) {
         bookingButton.setBackgroundResource(absenceButtonBackground)
-        Log.e("color", bookingColor.toString()+" "+reviewColor.toString())
         bookingButton.setTextColor(bookingColor)
         reviewButton.setBackgroundResource(pickupButtonBackground)
         reviewButton.setTextColor(reviewColor)
@@ -298,7 +297,6 @@ class ParentsEveningFragment:Fragment() {
     }
 
     private fun initialiseUI() {
-        Log.e("Parents Evening Fragment", "Here")
 
         mTitleTextView = mRootView!!.findViewById(R.id.titleTextView)
         studentNameTV = mRootView!!.findViewById(R.id.studentNameTV)
@@ -449,7 +447,6 @@ class ParentsEveningFragment:Fragment() {
                 selectStaffImgView!!.setImageResource(R.drawable.addiconinparentsevng)
                 staffNameTV!!.text = "Staff Name:-"
                 if (!mListViewArray!![position].photo.equals("")) {
-                    System.out.println("the result are::" + mListViewArray!![position].photo)
                     Glide.with(mContext)
                         .load(mListViewArray!![position].photo.toString())
                         .placeholder(R.drawable.student).error(R.drawable.student)

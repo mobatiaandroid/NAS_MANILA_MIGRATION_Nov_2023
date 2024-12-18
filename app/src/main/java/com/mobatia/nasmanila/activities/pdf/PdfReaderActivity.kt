@@ -108,7 +108,6 @@ class PdfReaderActivity  : AppCompatActivity() {
             false
         }
         if (mLoadUrl != null && !mErrorFlag) {
-            println("BISAD load url $mLoadUrl")
             mWebView!!.loadUrl(mLoadUrl!!)
         } else {
             mProgressRelLayout!!.clearAnimation()
@@ -122,7 +121,6 @@ class PdfReaderActivity  : AppCompatActivity() {
         mWebView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 view.loadUrl(url)
-                println("===Page LOADING1111===$url")
                 if (mProgressRelLayout!!.visibility == View.GONE) mProgressRelLayout!!.visibility =
                     View.VISIBLE
                 return true
@@ -131,7 +129,6 @@ class PdfReaderActivity  : AppCompatActivity() {
             override fun onPageFinished(view: WebView, url: String) {
                 mProgressRelLayout!!.clearAnimation()
                 mProgressRelLayout!!.visibility = View.GONE
-                println("===Page LOADING2222===")
                 if (AppUtils.checkInternet(mContext!!) && loadingFlag) {
                     view.settings.cacheMode = WebSettings.LOAD_NO_CACHE
                     view.loadUrl(url)
@@ -139,7 +136,6 @@ class PdfReaderActivity  : AppCompatActivity() {
                 } else if (!AppUtils.checkInternet(mContext!!) && loadingFlag) {
                     view.settings.cacheMode = WebSettings.LOAD_CACHE_ONLY
                     view.loadUrl(url)
-                    println("CACHE LOADING")
                     loadingFlag = false
                 }
             }

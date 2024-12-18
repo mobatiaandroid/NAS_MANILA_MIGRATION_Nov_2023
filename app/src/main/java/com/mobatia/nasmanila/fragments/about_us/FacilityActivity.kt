@@ -75,7 +75,6 @@ class FacilityActivity : AppCompatActivity() {
             desc = intent.getStringExtra("desc")
             title =  intent.getStringExtra("title")
             bannerimg =  intent.getStringExtra("banner_image")
-            println("Image url--$bannerimg")
             if (bannerimg != "") {
                 bannerUrlImageArray.add(bannerimg!!)
 

@@ -156,7 +156,6 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         }
         recyclerView.addOnItemClickListener(object : OnItemClickListener {
             override fun onItemClicked(position: Int, view: View) {
-                Log.e("confirm", confirmedslotBookedByUser.toString())
                 if (timeSlotList[position].status == "1") {
                     AppUtils.showDialogAlertDismiss(
                         mContext,
@@ -302,7 +301,6 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         timeSlotList.clear()
 
         val token = PreferenceManager.getAccessToken(mContext)
-        Log.e("date", dateSelected)
 //        val formattedDate = formatDateStringForApi(dateSelected)
         val formattedDate = dateSelected
         var paramObject: JsonObject = JsonObject()
@@ -352,7 +350,6 @@ class MeetingSlotListingActivity : AppCompatActivity() {
         updateButtonAndLinkVisibility()
         for (i in timeSlotList.indices) {
             if (timeSlotList[i].status.equals("3")) {
-                Log.e("timeslot",timeSlotList[i].slotStartTime.toString())
                 confirmedslotBookedByUser = true
                 timeSlotListPost.add(timeSlotList[i])
                 confirmedLink = timeSlotList[i].vpml.toString()

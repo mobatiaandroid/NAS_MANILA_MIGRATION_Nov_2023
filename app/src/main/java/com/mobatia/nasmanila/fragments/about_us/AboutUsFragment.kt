@@ -163,16 +163,13 @@ mAboutUsListArray=ArrayList()
                            // mAboutUsListArray!!.addAll(responseData!!.response.data)
                             for (i in responseData!!.response.data.indices) {
                                 if (i >= 0) {
-                                    Log.e("data",
-                                        responseData!!.response.data.get(i).description!!
-                                    )
+
                                     mAboutUsListArray!!.add( responseData!!.response.data.get(i))
                                     /*val item: AboutUsModel = responseData!!.response.data.get(i)
                                     val gson = Gson()
                                     val eventJson = gson.toJson(item)
                                     try {
                                         val jsonObject = JSONObject(eventJson)
-                                        Log.e("jsonObject", jsonObject.toString());
                                         mAboutUsListArray!!.add(getSearchValues(jsonObject))
                                     } catch (e: JSONException) {
                                         e.printStackTrace()
@@ -658,9 +655,7 @@ mAboutUsListArray=ArrayList()
 
 
                     mContext!!.startActivity(mIntent)
-                    System.out.println(
-                        "faci array--" + mAboutUsListArray!![position].items!!.size
-                    )
+
                 } else if (mAboutUsListArray!![position].tab_type
                         .equals("Accreditations & Examinations")
                 ) {
@@ -721,41 +716,6 @@ mAboutUsListArray=ArrayList()
                 }
             }
         })
-//        fun onItemClick(
-//            parent: AdapterView<*>?, view: View?, position: Int,
-//            id: Long
-//        ) {
-////		if (position==0)
-////		{
-////			Intent mIntent=new Intent(getActivity(),StaffDirectoryActivity.class);
-////			mContext.startActivity(mIntent);
-////
-////		}else
-//            if (mAboutUsListArray!![position].getTabType().equals("Facilities")) {
-//                val mIntent = Intent(activity, FacilityActivity::class.java)
-//                mIntent.putExtra("array", mAboutUsListArray[position].getAboutusModelArrayList())
-//                mIntent.putExtra("desc", mAboutUsListArray[position].getItemDesc())
-//                mIntent.putExtra("title", mAboutUsListArray[position].getTabType())
-//                mIntent.putExtra("banner_image", mAboutUsListArray[position].getImageUrl())
-//                mContext!!.startActivity(mIntent)
-//                System.out.println(
-//                    "faci array--" + mAboutUsListArray[position].getAboutusModelArrayList().size()
-//                )
-//            } else if (mAboutUsListArray[position].getTabType()
-//                    .equals("Accreditations & Examinations")
-//            ) {
-//                val mIntent = Intent(mContext, AccreditationsActivity::class.java)
-//                mIntent.putExtra("array", mAboutUsListArray[position].getAboutusModelArrayList())
-//                mIntent.putExtra("desc", mAboutUsListArray[position].getItemDesc())
-//                mIntent.putExtra("title", mAboutUsListArray[position].getTabType())
-//                mIntent.putExtra("banner_image", mAboutUsListArray[position].getImageUrl())
-//                mContext!!.startActivity(mIntent)
-//            } else {
-//                val intent = Intent(mContext, LoadUrlWebViewActivity::class.java)
-//                intent.putExtra("url", mAboutUsListArray[position].getUrl())
-//                intent.putExtra("tab_type", mAboutUsListArray[position].getTabType())
-//                mContext!!.startActivity(intent)
-//            }
-//        }
+
     }
 }

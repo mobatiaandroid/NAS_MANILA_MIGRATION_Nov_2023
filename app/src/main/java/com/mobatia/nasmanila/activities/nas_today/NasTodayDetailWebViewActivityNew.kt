@@ -49,8 +49,6 @@ class NasTodayDetailWebViewActivityNew : AppCompatActivity() {
         if (extras != null) {
             mLoadUrl = extras!!.getString("webViewComingDetail")
             pdf = extras!!.getString("pdf")
-            println("webViewComingUpDetail$mLoadUrl")
-            Log.e("Webview", mLoadUrl!!)
         }
         //		Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(mContext));
         initialiseUI()
@@ -138,7 +136,6 @@ class NasTodayDetailWebViewActivityNew : AppCompatActivity() {
                         startActivity(intent)
                         true
                     } else {
-                        println("NAS load url $mLoadUrl")
                         view.loadDataWithBaseURL(
                             "file:///android_asset/fonts/",
                             mLoadUrl!!, "text/html; charset=utf-8", "utf-8", "about:blank"
@@ -176,7 +173,6 @@ class NasTodayDetailWebViewActivityNew : AppCompatActivity() {
                 false
             }
             if (mLoadUrl != null && !mErrorFlag) {
-                println("NAS load url $mLoadUrl")
                 //mWebView.loadData(mLoadUrl, "text/html", "UTF-8");
                 mWebView!!.loadDataWithBaseURL(
                     "file:///android_asset/",

@@ -205,7 +205,6 @@ class CcaActivity:AppCompatActivity(), AdapterView.OnItemClickListener {
                     }
                 dialogCancelButton.setOnClickListener { dialog.dismiss() }
                 submitButton.setOnClickListener {
-                    println("submit btn clicked")
                     //						sendEmailToStaff(URL_SEND_EMAIL_TO_STAFF);
                     if (text_dialog!!.text.toString() == "") {
                         AppUtils.showDialogAlertDismiss(

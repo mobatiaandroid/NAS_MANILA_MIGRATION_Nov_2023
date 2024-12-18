@@ -231,7 +231,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
                 fToken[0] = token
-                Log.e("token", token)
                 PreferenceManager.setFCMID(mContext!!, token)
             } else {
             }
@@ -388,19 +387,7 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
         //imageButton = view.findViewById<View>(R.id.action_bar_back) as ImageView
         navigation_menu = view.findViewById(R.id.action_bar_back)
-        /*imageButton!!.setOnClickListener {
-            val fm = supportFragmentManager
-            val currentFragment = fm.findFragmentById(R.id.frame_container)
-            println(
-                "nas current fragment "
-                        + currentFragment!!.javaClass.toString()
-            )
-            if (mDrawerLayout!!.isDrawerOpen(linearLayout!!)) {
-                mDrawerLayout!!.closeDrawer(linearLayout!!)
-            } else {
-                mDrawerLayout!!.openDrawer(linearLayout!!)
-            }
-        }*/
+
 
         imageButton2 =
             view.findViewById<View>(R.id.action_bar_forward) as ImageView
@@ -629,12 +616,9 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
             }
             val fm = supportFragmentManager
             val currentFragment = fm.findFragmentById(R.id.frame_container)
-            println(
-                "nas current fragment "
-                        + currentFragment!!.javaClass.toString()
-            )
+
             if (!(currentFragment
-                    .javaClass
+                    !!.javaClass
                     .toString()
                     .equals(
                         "class com.mobatia.nasmanila.fragments.settings.SettingsFragment",
@@ -1229,7 +1213,6 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         if (PreferenceManager.getIfHomeItemClickEnabled(mContext)) {
-            println("Position homelist:$position")
             if (PreferenceManager.getAccessToken(mContext).equals("")) {
                 imageButton2!!.setVisibility(View.GONE)
             } else {
@@ -1363,12 +1346,9 @@ class HomeListAppCompatActivity:AppCompatActivity(), AdapterView.OnItemClickList
                 val fm = supportFragmentManager
                 val currentFragment = fm
                     .findFragmentById(R.id.frame_container)
-                println(
-                    "nas current fragment "
-                            + currentFragment!!.javaClass.toString()
-                )
+
                 if ((currentFragment
-                        .javaClass
+                        !!.javaClass
                         .toString()
                         .equals(
                             "class com.mobatia.nasmanila.fragments.settings.SettingsFragment",

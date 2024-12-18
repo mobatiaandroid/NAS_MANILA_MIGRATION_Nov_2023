@@ -77,7 +77,6 @@ class AudioAlertActivity : AppCompatActivity(), OnSeekCompleteListener ,
             position = extras!!.getInt("position")
             message = extras!!.getString("message")!!
             url = extras!!.getString("url")!!
-            Log.e("url",url)
             date = extras!!.getString("date")!!
             pushfrom = extras!!.getString("pushfrom")!!
             type = extras!!.getString("type")!!
@@ -118,31 +117,9 @@ class AudioAlertActivity : AppCompatActivity(), OnSeekCompleteListener ,
         textcontent = findViewById<View>(R.id.txt) as TextView
         seekBarProgress = findViewById<View>(R.id.seekBarProgress) as SeekBar
         playerIamge = findViewById<View>(R.id.imageViewPauseIndicator) as ImageView
-//        url = alertlist!![position]!!.pushURL!!
-//        textcontent!!.text = alertlist!![position]!!.pushTitle
-//        println("check url$url")
         seekBarProgress!!.progress = 0
 
-      /*  seekBarProgress!!.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (!fromUser) {
-                    textViewPlayed!!.text = (AppUtils.durationInSecondsToString(progress))
-                }
-            }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (player!!.isPlaying) {
-                    progressBarWait!!.visibility = View.GONE
-                    player!!.seekTo(seekBar!!.progress * 1000)
-                }
-            }
-
-
-        })*/
         player = MediaPlayer()
         player!!.setOnPreparedListener {
 
@@ -195,7 +172,6 @@ class AudioAlertActivity : AppCompatActivity(), OnSeekCompleteListener ,
             flag = !flag*/
             if (!isplayclicked) {
                 if (player!!.isPlaying) {
-                    println("is come click second")
                     player!!.pause()
                     playerIamge!!.background = resources
                         .getDrawable(R.drawable.mic)
@@ -272,7 +248,6 @@ class AudioAlertActivity : AppCompatActivity(), OnSeekCompleteListener ,
 
         try {
             seekBarProgress!!.setProgress((player!!.getCurrentPosition().toFloat() / player!!.getDuration() * 100).toInt())
-            System.out.print("seekbar"+seekBarProgress)
             handler2.postDelayed(updater, 1000)
         }catch (e:InterruptedException)
         {
@@ -344,7 +319,6 @@ private fun Play3()
             player!!.prepare()
 
         } catch (exception: Exception) {
-            println("failed for load" + exception.message)
         }
 
 

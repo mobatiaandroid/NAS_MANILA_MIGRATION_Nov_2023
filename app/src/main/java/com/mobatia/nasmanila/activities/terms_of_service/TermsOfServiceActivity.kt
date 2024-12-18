@@ -174,10 +174,8 @@ class TermsOfServiceActivity : AppCompatActivity() {
         web!!.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
                 progressBarDialog!!.show()
-                println("testing2")
                 if (newProgress == 100)
                 {
-                    println("testing1")
                    progressBarDialog!!.dismiss()
 
                 }

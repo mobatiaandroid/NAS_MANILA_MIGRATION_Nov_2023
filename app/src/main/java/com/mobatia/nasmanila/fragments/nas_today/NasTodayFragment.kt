@@ -121,7 +121,6 @@ class NasTodayFragment(nasToday: String, tabNasToday: String) : Fragment() {
                                             try {
                                                 mNoticeDate = sdfcalender!!.parse(mDate)
                                             } catch (ex: ParseException) {
-                                                Log.e("Date", "Parsing error")
                                             }
                                             val mDateTime: String? =responseData.response.data.get(i).date
                                             var mTime: Date? = Date()
@@ -133,7 +132,6 @@ class NasTodayFragment(nasToday: String, tabNasToday: String) : Fragment() {
                                                 val startTime = format2.format(mTime)
                                                 responseData.response.data.get(i).time = startTime
                                             } catch (ex: ParseException) {
-                                                Log.e("Date", "Parsing error")
                                             }
 //			String dayOfTheWeek = (String) DateFormat.format("EEEE", mNoticeDate); // Thursday
                                             //			String dayOfTheWeek = (String) DateFormat.format("EEEE", mNoticeDate); // Thursday

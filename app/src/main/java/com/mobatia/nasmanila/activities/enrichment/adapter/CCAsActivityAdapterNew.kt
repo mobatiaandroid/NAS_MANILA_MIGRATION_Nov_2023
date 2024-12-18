@@ -162,10 +162,8 @@ class CCAsActivityAdapterNew : RecyclerView.Adapter<CCAsActivityAdapterNew.MyVie
                             for (i in mCCAchoiceModel1!!.indices) {
                                 if (pos == i) {
                                     mCCAchoiceModel1!![i]!!.status=("1")
-                                    System.out.println("Choice1:" + mCCAchoiceModel1!![pos]!!.cca_item_name)
                                 } else {
                                     mCCAchoiceModel1!![i]!!.status=("0")
-                                    System.out.println("Choice1Else:" + mCCAchoiceModel1!![pos]!!.cca_item_name)
                                 }
                             }
                             val mCCAsActivityAdapter = CCAsChoiceListActivityAdapter(
@@ -181,7 +179,6 @@ class CCAsActivityAdapterNew : RecyclerView.Adapter<CCAsActivityAdapterNew.MyVie
                         }
 
                         override fun onLongClickItem(v: View?, position: Int) {
-                            println("On Long Click Item interface")
                         }
                     })
             )
@@ -209,7 +206,6 @@ class CCAsActivityAdapterNew : RecyclerView.Adapter<CCAsActivityAdapterNew.MyVie
                         }
 
                         override fun onLongClickItem(v: View?, position: Int) {
-                            println("On Long Click Item interface")
                         }
                     })
             )
@@ -217,7 +213,6 @@ class CCAsActivityAdapterNew : RecyclerView.Adapter<CCAsActivityAdapterNew.MyVie
     }
 
     override fun getItemCount(): Int {
-//       System.out.println("Adapter---size" + mCcaArrayList.size());
         return count
     }
 

@@ -158,7 +158,6 @@ class PdfReaderNextActivity : AppCompatActivity() {
                 } else if (!AppUtils.checkInternet(mContext!!) && loadingFlag) {
                     view.settings.cacheMode = WebSettings.LOAD_CACHE_ONLY
                     view.loadUrl(url)
-                    println("CACHE LOADING")
                     loadingFlag = false
                 }
             }
@@ -201,7 +200,6 @@ class PdfReaderNextActivity : AppCompatActivity() {
             false
         }
         if (mLoadUrl != null && !mErrorFlag) {
-            println("NAIS load url $mLoadUrl")
             mWebView!!.loadUrl(mLoadUrl!!)
         } else {
             mProgressRelLayout!!.clearAnimation()

@@ -500,7 +500,6 @@ if (responseData!!.responsecode.equals("200")){
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
                 fToken[0] = token
-                Log.e("token", token)
                 PreferenceManager.setFCMID(context!!, token)
             } else {
             }

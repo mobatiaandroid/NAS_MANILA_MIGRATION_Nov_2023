@@ -48,9 +48,6 @@ class CustomStaffDeptRecyclerAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
        var pos = position
-        System.out.println("Inside list item adapter---" + mStaffList.get(position).name)
-        System.out.println("Inside list item adapter---" + mStaffList.get(position).staffEmail)
-        println("position per mail$position")
 
         if (dept == "") {
             holder.deptLayout.visibility = View.GONE
@@ -106,7 +103,6 @@ class CustomStaffDeptRecyclerAdapter(
                 })
                 dialog.findViewById<View>(R.id.cancelButton).setOnClickListener { dialog.dismiss() }
                 dialog.findViewById<View>(R.id.submitButton).setOnClickListener {
-                    println("submit btn clicked")
                     /* if (AppUtils.isNetworkConnected(mContext)) {
                                                           if (text_content.equals("")) {
                                                               AppUtils.setErrorForEditText(text_content, mContext.getString(R.string.mandatory_field));
@@ -139,8 +135,6 @@ class CustomStaffDeptRecyclerAdapter(
                     )
                 } else {
                     if (AppUtils.isNetworkConnected(mContext)) {
-                        println("clicked position count$position")
-                        System.out.println("Email id Passing" + mStaffList[position].staffEmail)
                         emailvalidationcheck( mStaffList[position].staffEmail,text_dialog.text.toString(),text_content.text.toString(),dialog)
                         /*if (AppUtils.checkInternet(mContext)) {
                             sendEmailToStaff(

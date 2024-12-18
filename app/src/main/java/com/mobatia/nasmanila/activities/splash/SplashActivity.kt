@@ -6,20 +6,22 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Debug
 import android.os.Handler
-import android.view.View
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mobatia.nasmanila.R
-
 import com.mobatia.nasmanila.activities.home.HomeListAppCompatActivity
 import com.mobatia.nasmanila.activities.login.LoginActivity
 import com.mobatia.nasmanila.activities.tutorial.TutorialActivity
 import com.mobatia.nasmanila.common.common_classes.AppUtils
 import com.mobatia.nasmanila.common.common_classes.PreferenceManager
+import com.mobatia.nasmanila.common.constants.AdvancedEmulatorDetector
+import com.mobatia.nasmanila.common.constants.EmulatorDetector
 import com.scottyab.rootbeer.RootBeer
 
 
@@ -34,7 +36,16 @@ class SplashActivity : AppCompatActivity() {
             val rootBeer = RootBeer(context)
             if (rootBeer.isRooted()) {
                 showDeviceIsRootedPopUp(context)
-            } else {
+            } else if (isDebuggerConnected()) {
+                showDeviceIsRootedPopUp(context)
+            } else if (AppUtils.isDeveloperModeEnabled(context)) {
+                AppUtils.showDeviceIsDeveloperPopUp(context)
+            }
+            if (AdvancedEmulatorDetector().isEmulator() || EmulatorDetector().isEmulator()) {
+                Toast.makeText(this, "Emulators are not supported.", Toast.LENGTH_LONG).show()
+                finish()
+            }
+            else {
                 Handler().postDelayed({
                     if (PreferenceManager.getIsFirstLaunch(context) &&
                         PreferenceManager.getAccessToken(context).toString().equals("")
@@ -66,6 +77,9 @@ class SplashActivity : AppCompatActivity() {
                 R.drawable.nonetworkicon,
                 R.drawable.roundred)
         }
+    }
+    fun isDebuggerConnected(): Boolean {
+        return Debug.isDebuggerConnected()
     }
     private fun showDeviceIsRootedPopUp(mContext: Context) {
         val dialog = Dialog(mContext)

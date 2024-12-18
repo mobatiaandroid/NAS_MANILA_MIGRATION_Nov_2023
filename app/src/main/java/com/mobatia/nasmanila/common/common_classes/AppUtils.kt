@@ -10,7 +10,8 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.StateListDrawable
 import android.net.ConnectivityManager
 import android.os.Build
-import android.util.Log
+import android.provider.Settings
+import android.provider.Settings.SettingNotFoundException
 import android.util.Patterns
 import android.view.View
 import android.view.Window
@@ -486,6 +487,40 @@ class AppUtils {
                     activity.finish()
                 }
             }
+            dialog.show()
+        }
+
+        fun isDeveloperModeEnabled(context: Context): Boolean {
+            try {
+                val devMode = Settings.Global.getInt(
+                    context.contentResolver,
+                    Settings.Global.DEVELOPMENT_SETTINGS_ENABLED
+                )
+                return devMode == 1 // 1 indicates Developer Mode is ON
+            } catch (e: SettingNotFoundException) {
+                e.printStackTrace()
+                return false // Developer Mode setting not found, assume it's off
+            }
+        }
+
+        fun showDeviceIsDeveloperPopUp(mContext: Context?) {
+            val dialog = Dialog(mContext!!)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.alert_dialogue_ok_layout)
+            val icon = dialog.findViewById<ImageView>(R.id.iconImageView)
+            icon.setBackgroundResource(R.drawable.round)
+            icon.setImageResource(R.drawable.alert)
+            val text = dialog.findViewById<TextView>(R.id.textDialog)
+            val textHead = dialog.findViewById<TextView>(R.id.alertHead)
+            text.text =
+                "You have enabled Developer options/USB debugging on your phone. Please disable both to use the app for security reasons."
+            textHead.text = "Disable Developer Option"
+
+            val dialogButton = dialog.findViewById<Button>(R.id.btnOK)
+            dialogButton.setOnClickListener { dialog.dismiss() }
+
             dialog.show()
         }
     }

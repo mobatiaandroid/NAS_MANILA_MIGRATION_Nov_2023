@@ -60,7 +60,6 @@ class CCAsActivityAdapter(
 //        mCcaArrayListAdapter.add("CCA"+(position+1));
 //        mCcaArrayListAdapter.add("CCA"+(position+2));
             if (position == 0) {
-                Log.e("size", mCCAchoiceModel1!!.size.toString())
                 if (mCCAchoiceModel1!!.size > 0) {
                     if (mCCAchoiceModel2!!.size <= 0) {
                         AppController.weekList!!.get(dayPosition).choiceStatus1="1"
@@ -99,15 +98,10 @@ class CCAsActivityAdapter(
                     for (i in mCCAchoiceModel1!!.indices) {
                         if (pos == i) {
                             mCCAchoiceModel1!!.get(i)!!.status="1"
-                            System.out.println(
-                                "Choice1:" + mCCAchoiceModel1!!.get(pos)!!.cca_item_name
-                            )
+
                         } else {
                             mCCAchoiceModel1!!.get(i)!!.status="0"
-                            System.out.println(
-                                "Choice1Else:" + mCCAchoiceModel1!!.get(pos)!!
-                                    .cca_item_name
-                            )
+
                         }
                     }
                     val mCCAsActivityAdapter = CCAsChoiceListActivityAdapter(

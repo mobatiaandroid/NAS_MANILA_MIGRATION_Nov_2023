@@ -171,18 +171,13 @@ class NasTodayAdapter : BaseAdapter{
                 } else {
                     desc = mNasTodayList[position].description!!.replace(" ".toRegex(), "&nbsp;")
                 }
-                println("decription::$desc")
                 webViewComingUpDetail =
                     "$webViewComingUpDetail<p class='description'>" + desc.replace(
                         "\n".toRegex(),
                         "<br>"
                     ) + "</p>" + "</body>\n</html>"
-                Log.e("webviewComingupDetail", webViewComingUpDetail)
                 val mIntent = Intent(mContext, NasTodayDetailWebViewActivityNew::class.java)
-                println("result is::" + mNasTodayList[position].image)
                 mIntent.putExtra("webViewComingDetail", webViewComingUpDetail)
-                Log.v("detail:: ", webViewComingUpDetail)
-                Log.v("desc:: ", mNasTodayList[position].description!!)
                 mIntent.putExtra("pdf", mNasTodayList[position].pdf)
                 mContext.startActivity(mIntent)
             }

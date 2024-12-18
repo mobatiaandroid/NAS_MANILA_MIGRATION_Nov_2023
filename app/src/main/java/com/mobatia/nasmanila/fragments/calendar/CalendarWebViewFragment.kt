@@ -191,105 +191,7 @@ progressBar.visibility=View.VISIBLE
                 }
             }
         }
-     /*   progressBar.visibility = View.VISIBLE
-        anim = RotateAnimation(
-            0F, 360F, Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF, 0.5f
-        )
-        anim!!.setInterpolator(mContext, android.R.interpolator.linear)
-        anim!!.repeatCount = Animation.INFINITE
-        anim!!.duration = 1000
-        progressBar.animation = anim
-        progressBar.startAnimation(anim)
-        mWebView!!.isFocusable = true
-        mWebView!!.isFocusableInTouchMode = true
-        mWebView!!.setBackgroundColor(0X00000000)
-        mWebView!!.isVerticalScrollBarEnabled = false
-        mWebView!!.isHorizontalScrollBarEnabled = false
-        mWebView!!.webChromeClient = WebChromeClient()
 
-        mwebSettings = mWebView!!.settings
-        mwebSettings!!.saveFormData = true
-        mwebSettings!!.builtInZoomControls = false
-        mwebSettings!!.setSupportZoom(false)
-
-        mwebSettings!!.pluginState = WebSettings.PluginState.ON
-        mwebSettings!!.setRenderPriority(WebSettings.RenderPriority.HIGH)
-        mwebSettings!!.javaScriptCanOpenWindowsAutomatically = true
-        mwebSettings!!.domStorageEnabled = true
-        mwebSettings!!.databaseEnabled = true
-        mwebSettings!!.defaultTextEncodingName = "utf-8"
-        mwebSettings!!.loadsImagesAutomatically = true
-
-//        mWebView!!.settings.setAppCacheMaxSize((10 * 1024 * 1024).toLong()) // 5MB
-
-//        mWebView!!.settings.setAppCachePath(
-//            mContext!!.cacheDir.absolutePath
-//        )
-        mWebView!!.settings.allowFileAccess = true
-//        mWebView!!.settings.setAppCacheEnabled(true)
-        mWebView!!.settings.javaScriptEnabled = true
-        mWebView!!.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-
-        mWebView!!.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                view.loadUrl(url)
-                return true
-            }
-            override fun onPageFinished(view: WebView, url: String) {
-                progressBar.clearAnimation()
-                // progressBar.visibility = View.GONE
-                if (AppUtils.checkInternet(mContext!!) && loadingFlag) {
-                    view.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-                    view.loadUrl(url)
-                    loadingFlag = false
-                } else if (!AppUtils.checkInternet(mContext!!) && loadingFlag) {
-                    view.settings.cacheMode = WebSettings.LOAD_CACHE_ONLY
-                    view.loadUrl(url)
-                    println("CACHE LOADING")
-                    loadingFlag = false
-                }
-            }
-
-            override fun onReceivedError(
-                view: WebView, errorCode: Int,
-                description: String, failingUrl: String
-            ) {
-                progressBar.clearAnimation()
-                progressBar.visibility = View.GONE
-                if (AppUtils.checkInternet(mContext!!)) {
-                    AppUtils.showAlertFinish(
-                        mContext as Activity?, resources
-                            .getString(R.string.common_error), "",
-                        resources.getString(R.string.ok), false
-                    )
-                }
-                super.onReceivedError(view, errorCode, description, failingUrl)
-            }
-        }
-
-        mErrorFlag = mLoadUrl == ""
-        if (mLoadUrl != null && !mErrorFlag) {
-            println("BISAD load url $mLoadUrl")
-            mWebView!!.loadUrl(mLoadUrl)
-        } else {
-            progressBar.clearAnimation()
-            //progressBar.visibility = View.GONE
-            AppUtils.showAlertFinish(
-                mContext as Activity?, resources
-                    .getString(R.string.common_error_loading_page), "",
-                resources.getString(R.string.ok), false
-            )
-        }
-        mWebView!!.webChromeClient = object : WebChromeClient() {
-
-            override fun onProgressChanged(view: WebView, newProgress: Int) {
-                progressBar.progress = newProgress
-                if (newProgress == 100) {
-                    progressBar.visibility = View.GONE
-                }
-            }
-        }*/
     }
 
     private fun initialiseUI() {
@@ -329,7 +231,6 @@ progressBar.visibility=View.VISIBLE
 
         override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
             //progressDialogAdd.visibility= View.GONE
-            System.out.println("ERROR"+error)
             //Toast.makeText(activity, "Got Error! $error", Toast.LENGTH_SHORT).show()
         }
     }

@@ -576,9 +576,7 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
                     val tomorrow = calendar!!.time
                     tomorrowAsString = dateFormatt.format(tomorrow)
 
-                    //System.out.println(todayAsString);
-                    println("Tomorrow--$tomorrowAsString")
-                    //  enterEndDate.setText(tomorrowAsString);
+
                 } catch (e: ParseException) {
                     e.printStackTrace()
                 }
@@ -605,16 +603,12 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
                         R.drawable.round
                     )
 
-                    //break;
                 } else {
                     enterEndDate!!.setText(AppUtils.dateConversionY(toDate))
                 }
 
-                //AppUtils.showDialogAlertDismiss((Activity) mContext, getString(R.string.alert_heading), getString(R.string.enter_enddate), R.drawable.infoicon,  R.drawable.round);
             }
-            /*
-                  enterEndDate.setText(AppUtils.dateConversionY(toDate));
-      */try {
+       try {
             val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
             val strDate = sdf.parse(toDate)
             c = Calendar.getInstance()
@@ -633,9 +627,7 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
 
         //milliseconds
         var different = endDate.time - startDate.time
-        println("startDate : $startDate")
-        println("endDate : $endDate")
-        println("different : $different")
+
         val secondsInMilli: Long = 1000
         val minutesInMilli = secondsInMilli * 60
         val hoursInMilli = minutesInMilli * 60
@@ -647,11 +639,7 @@ class LeaveRequestSubmissionActivity :AppCompatActivity(){
         val elapsedMinutes = different / minutesInMilli
         different = different % minutesInMilli
         val elapsedSeconds = different / secondsInMilli
-        System.out.printf(
-            "%d days, %d hours, %d minutes, %d seconds%n",
-            elapsedDays,
-            elapsedHours, elapsedMinutes, elapsedSeconds
-        )
+
     }
     fun showDialogSuccess(
         activity: Activity?,

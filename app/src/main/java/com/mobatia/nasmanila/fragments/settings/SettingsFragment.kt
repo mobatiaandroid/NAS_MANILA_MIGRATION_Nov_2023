@@ -242,9 +242,7 @@ class SettingsFragment() : Fragment() {
                         val activityList = pm.queryIntentActivities(
                             emailIntent, 0
                         )
-                        println("packge size" + activityList.size)
                         for (app in activityList) {
-                            println("packge name" + app.activityInfo.name)
                             if (app.activityInfo.name.contains("com.google.android.gm")) {
                                 val activity = app.activityInfo
                                 val name = ComponentName(

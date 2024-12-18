@@ -107,17 +107,7 @@ class ImageAlertActivity : AppCompatActivity() {
         mWebView!!.loadDataWithBaseURL("file:///android_asset/fonts/",htmlData,"text/html; charset=utf-8", "utf-8", "about:blank")
 
 
-      /*  pushNotificationDetail = "$pushNotificationDetail<p class='description'>$mDate</p>"
-        System.out.println("URL IMAGE" + url)
-        if (!url.equals("")) {
-            pushNotificationDetail =
-                "$pushNotificationDetail<center><img src='$mLoadUrl'width='100%', height='auto'>"
-        }
-        pushNotificationDetail = """
-            $pushNotificationDetail</body>
-            </html>
-            """.trimIndent()
-        mLoadUrl = pushNotificationDetail*/
+
     }
     private fun initialiseUI() {
         relativeHeader = findViewById<View>(R.id.relativeHeader) as? RelativeLayout
@@ -159,135 +149,15 @@ class ImageAlertActivity : AppCompatActivity() {
 
         mWebView!!.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-                //progressDialog.visibility = View.VISIBLE
                 progressBarDialog!!.show()
-                println("testing2")
                 if (newProgress == 100)
                 {
-                    println("testing1")
                     progressBarDialog!!.dismiss()
-                   // progressDialog.visibility = View.GONE
 
                 }
             }
         }
-        /*mWebView!!.settings.javaScriptEnabled = true
-        mWebView!!.settings.setSupportZoom(false)
-        mWebView!!.settings.cacheMode=WebSettings.LOAD_NO_CACHE
-        mWebView!!.settings.javaScriptCanOpenWindowsAutomatically = true
-        mWebView!!.settings.domStorageEnabled = true
-        mWebView!!.settings.databaseEnabled = true
-        mWebView!!.settings.defaultTextEncodingName = "utf-8"
-        mWebView!!.settings.loadsImagesAutomatically = true
-        mWebView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        mWebView!!.settings.allowFileAccess = true
-        mWebView!!.setBackgroundColor(Color.TRANSPARENT)
-        mWebView!!.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null)
-        if (mLoadUrl != null && !mErrorFlag) {
-            println("NAS load url $mLoadUrl")
-            //mWebView.loadData(mLoadUrl, "text/html", "UTF-8");
-            mWebView!!.loadDataWithBaseURL(
-                "file:///android_asset/fonts/",
-                mLoadUrl!!, "text/html; charset=utf-8", "utf-8", "about:blank"
-            )
-            //mWebView.loadData(mLoadUrl, "text/html; charset=utf-8", "utf-8");
-        } else {
-        mWebView!!.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
 
-                return if (url.startsWith("http:") || url.startsWith("https:") || url.startsWith("www.")) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                    startActivity(intent)
-                    true
-                } else {
-                    view.loadDataWithBaseURL(
-                        "file:///android_asset/fonts/",
-                        mLoadUrl!!,
-                        "text/html; charset=utf-8",
-                        "utf-8",
-                        "about:blank"
-                    )
-                    true
-                }
-            }
-
-            override fun onPageFinished(view: WebView, url: String) {
-                progressBarDialog!!.dismiss()
-                if (AppUtils.checkInternet(mContext!!) && loadingFlag) {
-                    view.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-                    view.loadDataWithBaseURL(
-                        "file:///android_asset/",
-                        mLoadUrl!!,
-                        "text/html; charset=utf-8",
-                        "utf-8",
-                        "about:blank"
-                    )
-                    loadingFlag = false
-                } else if (!AppUtils.checkInternet(mContext!!) && loadingFlag) {
-                    view.settings.cacheMode = WebSettings.LOAD_CACHE_ONLY
-
-                    view.loadDataWithBaseURL(
-                        "file:///android_asset/",
-                        mLoadUrl!!,
-                        "text/html; charset=utf-8",
-                        "utf-8",
-                        "about:blank"
-                    )
-                    loadingFlag = false
-                }
-            }
-
-            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                super.onPageStarted(view, url, favicon)
-            }
-
-            override fun onReceivedError(
-                view: WebView, errorCode: Int,
-                description: String, failingUrl: String
-            ) {
-                *//* progressBar!!.clearAnimation()
-                progressBar!!.visibility = View.GONE*//*
-                progressBarDialog!!.dismiss()
-                if (AppUtils.checkInternet(mContext!!)) {
-                    AppUtils.showAlertFinish(
-                        mContext as Activity?, resources
-                            .getString(R.string.common_error), "",
-                        resources.getString(R.string.ok), false
-                    )
-                }
-                super.onReceivedError(view, errorCode, description, failingUrl)
-            }
-        }
-        mErrorFlag = mLoadUrl.equals("")
-        if (mLoadUrl != null && !mErrorFlag) {
-            mWebView!!.loadDataWithBaseURL(
-                "file:///android_asset/",
-                mLoadUrl!!,
-                "text/html; charset=utf-8",
-                "utf-8",
-                "about:blank"
-            )
-        } else {
-            progressBarDialog!!.dismiss()
-            // progressBar!!.clearAnimation()
-            AppUtils.showAlertFinish(
-                mContext as Activity?, resources
-                    .getString(R.string.common_error_loading_page), "",
-                resources.getString(R.string.ok), false
-            )
-        }
-    }
-        mWebView!!.webChromeClient = object : WebChromeClient() {
-
-            override fun onProgressChanged(view: WebView, newProgress: Int) {
-                progressBarDialog!!.show()
-                //progressBar!!.progress = newProgress
-                if (newProgress == 100) {
-                    progressBarDialog!!.dismiss()
-                  //  progressBar!!.visibility = View.GONE
-                }
-            }
-        }*/
     }
 
 }

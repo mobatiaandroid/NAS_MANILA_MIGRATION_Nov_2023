@@ -1217,7 +1217,6 @@ class HomeScreenRegisteredUserFragment2( s: String,
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token: String ->
             if (!TextUtils.isEmpty(token)) {
                 fToken[0] = token
-                Log.e("token", token)
                 PreferenceManager.setFCMID(mContext!!, token)
             } else {
             }

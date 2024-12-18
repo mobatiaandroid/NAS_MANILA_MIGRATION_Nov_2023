@@ -610,11 +610,8 @@ class HomeListActivity : AppCompatActivity() {
         settingsButton.setOnClickListener {
             val fm = supportFragmentManager
             val currentFragment = fm.findFragmentById(R.id.frame_container)
-            println(
-                "nas current fragment "
-                        + currentFragment!!.javaClass.toString()
-            )
-            if (!currentFragment.javaClass.toString().equals(
+
+            if (!currentFragment!!.javaClass.toString().equals(
                     "class com.mobatia.nasmanila.fragments.settings.SettingsFragment",
                     ignoreCase = true
                 )) {

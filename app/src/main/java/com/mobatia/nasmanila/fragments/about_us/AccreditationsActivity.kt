@@ -50,7 +50,6 @@ class AccreditationsActivity : AppCompatActivity(), AdapterView.OnItemClickListe
             /*mAboutUsListArray = extras!!
                 .getSerializable("array") as ArrayList<AboutUsModel>?*/
             bannner_img = extras!!.getString("banner_image")
-            println("Image url--$bannner_img")
             if (bannner_img != "") {
                 bannerUrlImageArray.add(bannner_img!!)
             }

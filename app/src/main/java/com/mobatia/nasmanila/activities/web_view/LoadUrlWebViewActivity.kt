@@ -110,7 +110,6 @@ class LoadUrlWebViewActivity : AppCompatActivity() {
                 } else if (!AppUtils.checkInternet(mContext!!) && loadingFlag) {
                     view.settings.cacheMode = WebSettings.LOAD_CACHE_ONLY
                     view.loadUrl(url)
-                    println("CACHE LOADING")
                     loadingFlag = false
                 }
             }
@@ -134,7 +133,6 @@ class LoadUrlWebViewActivity : AppCompatActivity() {
 
         mErrorFlag = mLoadUrl == ""
         if (mLoadUrl != null && !mErrorFlag) {
-            println("BISAD load url $mLoadUrl")
             mWebView!!.loadUrl(mLoadUrl!!)
         } else {
             progressBar.clearAnimation()

@@ -160,35 +160,7 @@ class CCA_Activity:AppCompatActivity() {
 
         })
 
-      /*  socialMediaList.addOnItemTouchListener(
-            RecyclerItemListener(mContext, socialMediaList,
-                object : RecyclerTouchListener() {
-                    fun onClickItem(v: View?, position: Int) {
-                        dialog.dismiss()
-                        studentName.setText(mStudentArray.get(position).getmName())
-                        stud_id = mStudentArray.get(position).getmId()
-                        stud_name = mStudentArray.get(position).getmName()
-                        stud_class = mStudentArray.get(position).getmClass()
-                        stud_img = mStudentArray.get(position).getmPhoto()
-                        if (stud_img != "") {
-                            Picasso.with(mContext).load(AppUtils.replace(stud_img))
-                                .placeholder(R.drawable.student).fit().into(studImg)
-                        } else {
-                            studImg!!.setImageResource(R.drawable.student)
-                        }
-                        textViewYear!!.text = "Class : " + mStudentArray.get(position).getmClass()
-                        PreferenceManager.setCCAStudentIdPosition(
-                            mContext,
-                            position.toString() + ""
-                        )
-                        getCCAListAPI(stud_id)
-                    }
 
-                    fun onLongClickItem(v: View?, position: Int) {
-                        println("On Long Click Item interface")
-                    }
-                })
-        )*/
         dialog.show()
     }
 

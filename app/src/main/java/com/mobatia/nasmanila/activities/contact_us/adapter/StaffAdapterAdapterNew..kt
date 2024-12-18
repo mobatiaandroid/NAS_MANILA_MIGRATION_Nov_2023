@@ -30,16 +30,9 @@ class StaffAdapterAdapterNew(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
 
-        // System.out.println("Adapter---" + position + "--" + hashmap.get(deptArrayList.get(position)).size());
         if (mStaffModels[position].staffList!!.size > 0) {
             holder.deptName.setText(mStaffModels[position].departmentName)
-        } /*else if(hashmap.get(deptArrayList.get(position)).size()>0&&deptArrayList.size()==1){
-           holder.deptLayout.setVisibility(View.GONE);
-           //Toast.makeText(mContext)
-           //AppUtils.showDialogAlertFinish();
-           AppUtils.showDialogAlertFinish((Activity) mContext, mContext.getString(R.string.alert_heading), mContext.getString(R.string.no_details_available), R.drawable.exclamationicon, R.drawable.round);
-
-       }*/ else {
+        }  else {
             holder.deptLayout.visibility = View.GONE
         }
 

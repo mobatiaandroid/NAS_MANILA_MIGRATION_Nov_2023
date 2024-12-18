@@ -96,7 +96,6 @@ class VideoAlertActivity : AppCompatActivity() {
         val frameVideo = "<html>" + "<br><iframe width=\"320\" height=\"250\" src=\""
         val url_Video = frameVideo + url + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>"
         val urlYoutube = url_Video.replace("watch?v=", "embed/")
-        println("urlYoutube:$urlYoutube")
         webView!!.loadData(urlYoutube, "text/html", "utf-8")
 
 //		webView.loadUrl(videolist.get(position).getUrl());

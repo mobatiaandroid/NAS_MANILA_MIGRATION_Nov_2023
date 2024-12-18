@@ -139,11 +139,7 @@ class CCASelectionActivity :AppCompatActivity(){
         submitBtn!!.getBackground().setAlpha(150)
        submitBtn!!.setVisibility(View.INVISIBLE)
         submitBtn!!.setOnClickListener(View.OnClickListener { //              for (int i=0;i<CCADetailModelArrayList!!.size();i++)
-            //              {
-            //                  System.out.println("Choice1 "+CCADetailModelArrayList!!.get(i).getDay()+":"+CCADetailModelArrayList!!.get(i).getChoice1());
-            //                  System.out.println("Choice2 "+CCADetailModelArrayList!!.get(i).getDay()+":"+CCADetailModelArrayList!!.get(i).getChoice2());
-            //              }
-            //if(AppController.AppController.filledFlag == 1){
+
             if (AppController.filled) {
 
                 val mInent = Intent(mContext, CCAsReviewActivity::class.java)
@@ -506,7 +502,6 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                     for (m in weekPosition until AppController.weekList!!.size) {
                         if (AppController.weekListWithData!!.contains(m)) {
                             weekPosition = m
-                            println("weekposition:m:$weekPosition")
                             break
                         }
                     }
@@ -593,7 +588,6 @@ weekRecyclerList!!.addOnItemClickListener(object :OnItemClickListener{
                     break
                 }
             }
-            println("weekposition123456::$weekPosition")
             if (weekPosition == 6) {
                 weekRecyclerList!!.layoutManager!!.scrollToPosition(weekPosition)
             } else {

@@ -161,7 +161,6 @@ class ParentEssentialActivityNew : AppCompatActivity() {
             text_content = dialog.findViewById<View>(R.id.text_content) as EditText
             dialogCancelButton.setOnClickListener { dialog.dismiss() }
             submitButton.setOnClickListener {
-                println("submit btn clicked")
                 //                        sendEmailToStaff(URL_SEND_EMAIL_TO_STAFF);
                 if (text_dialog!!.text.toString() == "") {
                     AppUtils.showDialogAlertDismiss(

@@ -100,15 +100,10 @@ class CCAsActivityAdapterr(
                     for (i in mCCAchoiceModel1!!.indices) {
                         if (pos == i) {
                             mCCAchoiceModel1!!.get(i)!!.status="1"
-                            System.out.println(
-                                "Choice1:" + mCCAchoiceModel1!!.get(pos)!!.cca_item_name
-                            )
+
                         } else {
                             mCCAchoiceModel1!!.get(i)!!.status="0"
-                            System.out.println(
-                                "Choice1Else:" + mCCAchoiceModel1!!.get(pos)!!
-                                    .cca_item_name
-                            )
+
                         }
                     }
                     val mCCAsActivityAdapter = CCAsChoiceListActivityAdapter(

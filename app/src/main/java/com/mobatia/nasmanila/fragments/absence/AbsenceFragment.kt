@@ -588,6 +588,7 @@ socialMediaList.addOnItemClickListener(object :OnItemClickListener{
     override fun onResume() {
         super.onResume()
         //other stuff
+
         if (firstVisit) {
             //do stuff for first visit only
             firstVisit = false
